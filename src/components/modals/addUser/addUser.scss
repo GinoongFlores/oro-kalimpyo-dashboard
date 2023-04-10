@@ -1,0 +1,39 @@
+.form {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 25px;
+
+	.buttonCenter {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+	}
+}
+
+.addWrapper {
+	width: 100%;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.addTitle {
+		// padding: 0 40px;
+		color: gray;
+		font-size: 24px;
+	}
+
+	.link {
+		color: #0a9351;
+		text-decoration: none;
+		font-size: 16px;
+		font-weight: 400px;
+		border: 1px solid #0a9351;
+		border-radius: 5px;
+		padding: 5px;
+		cursor: pointer;
+	}
+}

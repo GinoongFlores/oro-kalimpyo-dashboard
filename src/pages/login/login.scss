@@ -1,0 +1,39 @@
+.formWrapper {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+	.error {
+		color: red;
+	}
+
+	.loginForm {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.titleForm {
+			margin-bottom: 2.5rem;
+		}
+	}
+
+	.formHeader {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 2.5rem;
+
+		.logoRow {
+			gap: 2rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			img {
+				width: 6rem;
+				height: 6rem;
+			}
+		}
+	}
+}
