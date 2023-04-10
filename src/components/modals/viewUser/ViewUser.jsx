@@ -11,15 +11,17 @@ import { useEffect, useState } from "react";
 
 const ViewUser = ({ params }) => {
 	// const [readUser, setReadUser] = useState([]);
-	const { id, name, email, number, password, barangay, address } = params.row;
+	const { id, name, email, number, gender, user_type, barangay, address } =
+		params.row;
 
 	// The values object holds the values of the params.row object to be used in the useState hook
 	const values = {
 		id: id,
 		name: name,
 		email: email,
-		password: password,
 		number: number,
+		gender: gender,
+		user_type: user_type,
 		barangay: barangay,
 		address: address,
 	};
@@ -66,7 +68,7 @@ const ViewUser = ({ params }) => {
 				centered
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Admin Information</Modal.Title>
+					<Modal.Title>User Information</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<div className="item--viewPage">

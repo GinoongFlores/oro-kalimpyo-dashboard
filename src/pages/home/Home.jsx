@@ -6,7 +6,7 @@ import "./home.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import UserData from "../../components/userDataTable/UserData";
-import CompletedData from "../../components/completedDataTable/CompletedData";
+import { TbcData } from "../../components/tbcDataTable/TbcData";
 
 const Home = () => {
 	return (
@@ -14,10 +14,10 @@ const Home = () => {
 			<Sidebar />
 			<div className="homeContainer">
 				<Navbar />
-
-				<UserData />
+				<TbcData />
 				<div className="listContainer">
-					<CompletedData />
+					<h2 className="listTitle">Nazareth Users</h2>
+					<UserData />
 				</div>
 			</div>
 		</div>

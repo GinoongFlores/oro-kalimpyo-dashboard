@@ -68,7 +68,7 @@ const Login = () => {
 				</div>
 			</div>
 			<Form className="loginForm" onSubmit={handleLogin}>
-				<h2 className="titleForm">Welcome CLENRO Admin</h2>
+				<h2 className="titleForm">Nazareth Barangay Admin</h2>
 				<Form.Group className="mb-3" controlId="formLogin">
 					<Form.Label>Email</Form.Label>
 					<Form.Control

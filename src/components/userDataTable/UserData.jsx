@@ -19,8 +19,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { userColumns } from "../../dataColumns/UsersTableSource";
 
 // Modals and Pages
-// import EditUser from "../../components/modals/editUser/EditUser";
-// import ViewUser from "../../components/modals/viewUser/ViewUser";
+import EditUser from "../modals/editUser/EditUser";
+import ViewUser from "../modals/viewUser/ViewUser";
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);
@@ -29,13 +29,13 @@ const UserData = () => {
 		{
 			field: "action",
 			headerName: "Action",
-			width: 120,
+			width: 200,
 			renderCell: (params) => {
 				return (
 					<>
 						<div className="cellAction">
-							{/* <ViewUser params={params} />
-							<EditUser params={params} /> */}
+							<ViewUser params={params} />
+							<EditUser params={params} />
 							<button
 								onClick={() => handleDelete(params.row.id)}
 								className="deleteButton"
@@ -89,11 +89,9 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Barangay Users</div>
 				<div style={{ height: 300, width: "100%" }}>
 					{userData && (
 						<DataGrid
-							className="dataGrid"
 							rows={userData.map((user, index) => {
 								return {
 									...user,

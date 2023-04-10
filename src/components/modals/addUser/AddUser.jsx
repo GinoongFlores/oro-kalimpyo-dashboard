@@ -28,7 +28,16 @@ const initialState = {
 };
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
-	const { name, number, email, password, barangay, address } = state;
+	const {
+		name,
+		number,
+		gender,
+		email,
+		password,
+		user_type,
+		barangay,
+		address,
+	} = state;
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
@@ -51,12 +60,14 @@ const AddUser = () => {
 				// Signed in
 				const user = userCredential.user;
 				// console.log(user.uid);
-				set(ref(db, "/BarangayAdmin/" + user.uid), {
+				set(ref(db, "/Nazareth_Users/" + user.uid), {
 					// set user data to the database with its uid from authentication object and the data from the form input fields
 					email: email,
+					gender: gender,
 					name: name,
 					number: number,
 					password: password,
+					user_type: user_type,
 					barangay: barangay,
 					address: address,
 					id: user.uid,
@@ -72,7 +83,16 @@ const AddUser = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault(); // Prevents the page from refreshing
-		if (!password || !name || !number || !email || !barangay || !address) {
+		if (
+			!password ||
+			!name ||
+			!number ||
+			!gender ||
+			!email ||
+			!user_type ||
+			!barangay ||
+			!address
+		) {
 			return toast.error("Please fill in all fields");
 		} else {
 			addUser();
@@ -86,14 +106,14 @@ const AddUser = () => {
 	return (
 		<>
 			<div className="addWrapper">
-				<h2 className="addTitle">Add Barangay Admin</h2>
+				<h2 className="addTitle">Add User</h2>
 				<button
 					onClick={() => {
 						handleClickOpenAdd();
 					}}
 					className="link"
 				>
-					Add new Barangay Admin
+					Add new User
 				</button>
 			</div>
 
@@ -107,7 +127,7 @@ const AddUser = () => {
 				centered
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Add A Barangay Admin</Modal.Title>
+					<Modal.Title>Add New User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form className="form" onSubmit={handleSubmit}>
@@ -132,7 +152,16 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-
+						<Form.Group className="mb-3">
+							<Form.Label>Gender</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter Gender"
+								name="gender"
+								value={gender}
+								onChange={handleInputChange}
+							/>
+						</Form.Group>
 						<Form.Group className="mb-3">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
@@ -153,7 +182,16 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-
+						<Form.Group className="mb-3">
+							<Form.Label>Type of House</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter Type of House"
+								name="user_type"
+								value={user_type}
+								onChange={handleInputChange}
+							/>
+						</Form.Group>
 						<Form.Group className="mb-3">
 							<Form.Label>Barangay</Form.Label>
 							<Form.Control
