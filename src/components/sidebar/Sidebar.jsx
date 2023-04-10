@@ -6,7 +6,6 @@ import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
 import PublishedWithChangesRoundedIcon from "@mui/icons-material/PublishedWithChangesRounded";
 import AutoDeleteRoundedIcon from "@mui/icons-material/AutoDeleteRounded";
-import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
 import dashboardLogo from "../../assets/oro-kalimpyo-small.png";
 
 // Packages
@@ -39,17 +38,15 @@ const Sidebar = () => {
 					<Link to="/users" className="sidebarLink">
 						<li>
 							<PeopleRoundedIcon className="icon" />
-							<span>Barangay Users</span>
+							<span>Nazareth Accounts</span>
 						</li>
 					</Link>
-
 					<Link to="/tbc" className="sidebarLink">
 						<li>
 							<AutoDeleteRoundedIcon className="icon" />
 							<span>Uncollected</span>
 						</li>
 					</Link>
-
 					<Link to="/completed" className="sidebarLink">
 						<li>
 							<PublishedWithChangesRoundedIcon className="icon" />
@@ -58,13 +55,6 @@ const Sidebar = () => {
 					</Link>
 
 					<p className="title">QUICK MENU</p>
-					<Link to="/barangay-admin" className="sidebarLink">
-						<li>
-							<AdminPanelSettingsRoundedIcon className="icon" />
-							<span>Barangay Admin</span>
-						</li>
-					</Link>
-
 					<li onClick={() => logout()}>
 						<ExitToAppRoundedIcon className="icon" />
 						<span>Logout</span>

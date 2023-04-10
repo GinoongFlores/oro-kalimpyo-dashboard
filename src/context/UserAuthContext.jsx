@@ -12,7 +12,7 @@ export const useAuth = () => {
 export const UserAuthContext = ({ children }) => {
 	const navigate = useNavigate();
 	const UserLogin = (email, password) => {
-		if (email === "testclenroadmin@gmail.com") {
+		if (email === "nazarethadmin@gmail.com") {
 			signInWithEmailAndPassword(auth, email, password)
 				.then((userCredential) => {
 					// Signed in

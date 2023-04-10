@@ -14,7 +14,6 @@ import Home from "./pages/home/Home";
 import ListUser from "./pages/listUsers/ListUser";
 import ListTBC from "./pages/listTBC/ListTBC";
 import ListCompleted from "./pages/listCompleted/ListCompleted";
-import ListBarangayAdmin from "./pages/listBarangayAdmin/ListBarangayAdmin";
 import AddUser from "./components/modals/addUser/AddUser";
 import Login from "./pages/login/Login";
 
@@ -69,14 +68,6 @@ function App() {
 						element={
 							<RequireAuth>
 								<ListCompleted />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path="barangay-admin"
-						element={
-							<RequireAuth>
-								<ListBarangayAdmin />
 							</RequireAuth>
 						}
 					/>

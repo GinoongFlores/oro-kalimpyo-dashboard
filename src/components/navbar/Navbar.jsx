@@ -8,7 +8,7 @@ const Navbar = () => {
 		<div className="navbar">
 			<div className="navbarWrapper">
 				<div className="search">
-					<h2>CLENRO Admin</h2>
+					<h2>Nazareth Barangay Admin</h2>
 				</div>
 				<div className="items">
 					<div className="item">

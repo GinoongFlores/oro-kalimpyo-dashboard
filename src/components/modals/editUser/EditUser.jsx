@@ -12,16 +12,16 @@ import "./editUser.scss";
 import "bootstrap/dist/css/bootstrap.min.css"; // Importing Bootstrap CSS
 
 const EditUser = ({ params }) => {
-	const { id, number, address, barangay, password, name, email } = params.row;
+	const { id, number, address, barangay, gender, name, user_type } = params.row;
 
 	const initialValue = {
 		id: id,
 		number: number,
 		address: address,
 		barangay: barangay,
-		password: password,
+		gender: gender,
 		name: name,
-		email: email,
+		user_type: user_type,
 	};
 
 	const [state, setState] = useState(initialValue); // handles the all the value of the input fields
@@ -44,8 +44,8 @@ const EditUser = ({ params }) => {
 		if (
 			!state.name ||
 			!state.number ||
-			!state.password ||
-			!state.email ||
+			!state.gender ||
+			!state.user_type ||
 			!state.barangay ||
 			!state.address
 		) {
@@ -57,9 +57,9 @@ const EditUser = ({ params }) => {
 
 	function updateUser() {
 		// update user
-		const userRef = ref(db, `/BarangayAdmin/${id}`);
+		const userRef = ref(db, `/Nazareth_Users/${id}`);
 		update(userRef, state);
-		toast.success("An Admin updated successfully");
+		toast.success("User updated successfully");
 
 		// { previous version
 		// 	set(ref(db, "Nazareth_Users/" + id), {
@@ -105,7 +105,7 @@ const EditUser = ({ params }) => {
 				centered
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Update an Admin</Modal.Title>
+					<Modal.Title>Edit User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form className="form" onSubmit={handleSubmit}>
@@ -113,7 +113,7 @@ const EditUser = ({ params }) => {
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter New Name"
+								placeholder="Enter name"
 								name="name"
 								value={state.name}
 								onChange={handleInputChange}
@@ -123,7 +123,7 @@ const EditUser = ({ params }) => {
 							<Form.Label>Number</Form.Label>
 							<Form.Control
 								type="number"
-								placeholder="Enter New Number"
+								placeholder="Enter number"
 								name="number"
 								value={state.number}
 								min="0"
@@ -131,22 +131,22 @@ const EditUser = ({ params }) => {
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">
-							<Form.Label>Email</Form.Label>
+							<Form.Label>Gender</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter New Email"
-								name="email"
-								value={state.email}
+								placeholder="Enter Gender"
+								name="gender"
+								value={state.gender}
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3">
-							<Form.Label>Password</Form.Label>
+							<Form.Label>Type of House</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter New Password"
-								name="password"
-								value={state.password}
+								placeholder="Enter Type of House"
+								name="user_type"
+								value={state.user_type}
 								onChange={handleInputChange}
 							/>
 						</Form.Group>

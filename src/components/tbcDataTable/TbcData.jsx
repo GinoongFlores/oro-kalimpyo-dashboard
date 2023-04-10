@@ -51,7 +51,7 @@ export const TbcData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Pending Contributions</div>
+				<div className="dataTableTitle">To Be Collected</div>
 				<div style={{ height: 300, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>

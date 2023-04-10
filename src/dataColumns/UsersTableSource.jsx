@@ -5,11 +5,11 @@ export const userColumns = [
 		width: 50,
 	},
 
-	// {
-	// 	field: "id",
-	// 	headerName: "ID",
-	// 	width: 100,
-	// },
+	{
+		field: "id",
+		headerName: "ID",
+		width: 100,
+	},
 
 	{
 		field: "name",
@@ -33,25 +33,22 @@ export const userColumns = [
 	},
 
 	{
+		field: "gender",
+		headerName: "Gender",
+		width: 100,
+	},
+
+	{
 		field: "email",
 		headerName: "Email",
 		width: 200,
-		renderCell: (props) => {
-			return (
-				<>
-					<div className={`cellWidth ${props.row.email}`}>
-						<p>{props.row.email}</p>
-					</div>
-				</>
-			);
-		},
 	},
 
-	// {
-	// 	field: "password",
-	// 	headerName: "Password",
-	// 	width: 120,
-	// },
+	{
+		field: "user_type",
+		headerName: "Type of HouseHold",
+		width: 200,
+	},
 
 	{
 		field: "barangay",
@@ -62,7 +59,7 @@ export const userColumns = [
 	{
 		field: "address",
 		headerName: "Address",
-		width: 230,
+		width: 190,
 
 		renderCell: (props) => {
 			return (

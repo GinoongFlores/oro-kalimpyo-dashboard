@@ -14,7 +14,7 @@ import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 // import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
 // Modals
-import ViewTBC from "../modals/viewTBC/ViewTBC";
+// import ViewTBC from "../../pages/viewTBC/ViewTBC";
 
 const actionColumn = [
 	{
@@ -24,14 +24,14 @@ const actionColumn = [
 		renderCell: (params) => {
 			return (
 				<>
-					<div className="cellAction">{/* <ViewTBC params={params} /> */}</div>
+					{/* <div className="cellAction"><ViewTBC params={params} /></div> */}
 				</>
 			);
 		},
 	},
 ];
 
-const CompletedData = () => {
+export const CompletedData = () => {
 	const [cData, setTbcData] = useState([]);
 
 	useEffect(() => {
@@ -73,5 +73,3 @@ const CompletedData = () => {
 		</>
 	);
 };
-
-export default CompletedData;
