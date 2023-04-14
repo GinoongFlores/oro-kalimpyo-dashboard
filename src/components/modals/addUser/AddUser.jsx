@@ -206,7 +206,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						
+
 						<Form.Group className="mb-3">
 							<Form.Label>Type of House</Form.Label>
 							<Form.Control
