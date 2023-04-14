@@ -22,6 +22,7 @@ const initialState = {
 	gender: "",
 	email: "",
 	password: "",
+	confirm_password: "",
 	user_type: "",
 	barangay: "",
 	address: "",
@@ -34,6 +35,7 @@ const AddUser = () => {
 		gender,
 		email,
 		password,
+		confirm_password,
 		user_type,
 		barangay,
 		address,
@@ -95,9 +97,21 @@ const AddUser = () => {
 		) {
 			return toast.error("Please fill in all fields");
 		} else {
-			addUser();
-			setState(initialState);
-			toast.success("User added successfully");
+			if (
+				!password ||
+				!confirm_password ||
+				!name ||
+				!number ||
+				!email ||
+				!barangay ||
+				!address
+			) {
+				return toast.error("Please fill in all fields");
+			} else {
+				addUser();
+				setState(initialState);
+				toast.success("User added successfully");
+			}
 		}
 	};
 
@@ -182,6 +196,17 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
+						<Form.Group>
+							<Form.Label>Confirm Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Enter Password"
+								name="confirm_password"
+								value={confirm_password}
+								onChange={handleInputChange}
+							/>
+						</Form.Group>
+						
 						<Form.Group className="mb-3">
 							<Form.Label>Type of House</Form.Label>
 							<Form.Control
@@ -192,6 +217,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
+
 						<Form.Group className="mb-3">
 							<Form.Label>Barangay</Form.Label>
 							<Form.Control
