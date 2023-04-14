@@ -22,13 +22,15 @@ const initialState = {
 	gender: "",
 	email: "",
 	password: "",
+	confirm_password: "",
 	user_type: "",
 	barangay: "",
 	address: "",
 };
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
-	const { name, number, email, password, barangay, address } = state;
+	const { name, number, email, password, confirm_password, barangay, address } =
+		state;
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
@@ -72,12 +74,24 @@ const AddUser = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault(); // Prevents the page from refreshing
-		if (!password || !name || !number || !email || !barangay || !address) {
-			return toast.error("Please fill in all fields");
+		if (state.password != state.confirm_password) {
+			toast.error("Password does not match");
 		} else {
-			addUser();
-			setState(initialState);
-			toast.success("User added successfully");
+			if (
+				!password ||
+				!confirm_password ||
+				!name ||
+				!number ||
+				!email ||
+				!barangay ||
+				!address
+			) {
+				return toast.error("Please fill in all fields");
+			} else {
+				addUser();
+				setState(initialState);
+				toast.success("User added successfully");
+			}
 		}
 	};
 
@@ -150,6 +164,16 @@ const AddUser = () => {
 								placeholder="Enter Password"
 								name="password"
 								value={password}
+								onChange={handleInputChange}
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3">
+							<Form.Label>Confirm Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Enter Password"
+								name="confirm_password"
+								value={confirm_password}
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
