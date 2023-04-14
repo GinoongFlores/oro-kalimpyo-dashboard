@@ -14,8 +14,8 @@ const firebaseConfig = {
 	projectId: "orokalimpyo",
 	storageBucket: "orokalimpyo.appspot.com",
 	messagingSenderId: "772158884703",
-	appId: "1:772158884703:web:c520e88c2a2a57569c04ea",
-	measurementId: "G-L10TR9T1BW",
+	appId: "1:772158884703:web:9a4cb8d12bffbd769c04ea",
+	measurementId: "G-8T329G2ZVR",
 };
 
 // Initialize Firebase
