@@ -11,6 +11,9 @@ import { useAuth } from "../../context/UserAuthContext";
 import Logo from "../../assets/oro-kalimpyo.png";
 import LogoCdo from "../../assets/cdo-seal.png";
 import SlDevs from "../../assets/sldevs.png";
+import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
+import { Icon } from "@mui/material";
 
 const initialState = {
 	email: "",
@@ -21,6 +24,7 @@ const Login = () => {
 	const { UserLogin } = useAuth();
 	const navigate = useNavigate();
 	const [error, setError] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const [user, setUser] = useState(initialState);
 	const { email, password } = user;
 
@@ -54,6 +58,10 @@ const Login = () => {
 		setUser({ ...user, [name]: value });
 	};
 
+	const togglePasswordVisibility = () => {
+		setShowPassword(!showPassword);
+	};
+
 	return (
 		<div className="formWrapper">
 			<div className="formHeader">
@@ -83,14 +91,23 @@ const Login = () => {
 				<Form.Group className="mb-3">
 					<Form.Label>Password</Form.Label>
 					<Form.Control
-						type="password"
+						type={showPassword ? "text" : "password"}
 						placeholder="Enter Password"
 						aria-describedby="admin password"
 						value={password}
 						name="password"
 						onChange={handleInputChange}
 					/>
+
+					<i onClick={togglePasswordVisibility}>
+						{showPassword ? (
+							<VisibilityOffRoundedIcon className="icon" />
+						) : (
+							<VisibilityRoundedIcon className="icon" />
+						)}
+					</i>
 				</Form.Group>
+
 				{error && <p className="error">{error}</p>}
 				<Button variant="success" size="md" type="submit">
 					Login
