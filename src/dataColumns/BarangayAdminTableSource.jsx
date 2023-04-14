@@ -47,11 +47,11 @@ export const BarangayAdmin = [
 		},
 	},
 
-	// {
-	// 	field: "password",
-	// 	headerName: "Password",
-	// 	width: 120,
-	// },
+	{
+		field: "password",
+		headerName: "Password",
+		width: 120,
+	},
 
 	{
 		field: "barangay",
