@@ -71,6 +71,7 @@ const AddUser = () => {
 					address: address,
 					id: user.uid,
 				});
+				toast.success("User added successfully");
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -82,33 +83,25 @@ const AddUser = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault(); // Prevents the page from refreshing
+
 		if (
-			!password ||
+			!gender ||
 			!name ||
 			!number ||
-			!gender ||
 			!email ||
-			!user_type ||
 			!barangay ||
-			!address
+			!address ||
+			!user_type ||
+			!password ||
+			!confirm_password
 		) {
 			return toast.error("Please fill in all fields");
+		} else if (state.password != state.confirm_password) {
+			toast.error("Password does not match");
 		} else {
-			if (
-				!password ||
-				!confirm_password ||
-				!name ||
-				!number ||
-				!email ||
-				!barangay ||
-				!address
-			) {
-				return toast.error("Please fill in all fields");
-			} else {
-				addUser();
-				setState(initialState);
-				toast.success("User added successfully");
-			}
+			addUser();
+			setState(initialState);
+			// toast.success("User added successfully");
 		}
 	};
 
