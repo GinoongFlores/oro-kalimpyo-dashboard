@@ -89,21 +89,23 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ height: 300, width: "100%" }}>
-					{userData && (
-						<DataGrid
-							rows={userData.map((user, index) => {
-								return {
-									...user,
-									list: index + 1,
-								};
-							})}
-							columns={userColumns.concat(actionColumn)}
-							pageSize={5}
-							rowsPerPageOptions={[5]}
-							components={{ Toolbar: GridToolbar }}
-						/>
-					)}
+				<div style={{ height: 600, width: "100%" }}>
+					<div style={{ display: "flex", height: "100%" }}>
+						{userData && (
+							<DataGrid
+								rows={userData.map((user, index) => {
+									return {
+										...user,
+										list: index + 1,
+									};
+								})}
+								columns={userColumns.concat(actionColumn)}
+								pageSize={5}
+								rowsPerPageOptions={[5]}
+								components={{ Toolbar: GridToolbar }}
+							/>
+						)}
+					</div>
 				</div>
 			</div>
 		</>

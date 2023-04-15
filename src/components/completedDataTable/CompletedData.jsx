@@ -50,7 +50,7 @@ export const CompletedData = () => {
 		<>
 			<div className="dataTable">
 				<div className="dataTableTitle">Completed Contributions</div>
-				<div style={{ height: 300, width: "100%" }}>
+				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
