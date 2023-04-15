@@ -29,6 +29,7 @@ const UserData = () => {
 		{
 			field: "action",
 			headerName: "Action",
+			headerClassName: "headerTheme",
 			width: 200,
 			renderCell: (params) => {
 				return (
@@ -100,7 +101,7 @@ const UserData = () => {
 									};
 								})}
 								columns={userColumns.concat(actionColumn)}
-								pageSize={5}
+								pageSize={9}
 								rowsPerPageOptions={[5]}
 								components={{ Toolbar: GridToolbar }}
 							/>
