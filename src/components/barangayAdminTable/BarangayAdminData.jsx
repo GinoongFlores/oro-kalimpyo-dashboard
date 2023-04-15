@@ -25,6 +25,7 @@ const BarangayAdminData = () => {
 		{
 			field: "action",
 			headerName: "Action",
+			headerClassName: "headerTheme",
 			width: 200,
 			renderCell: (params) => {
 				return (
@@ -85,22 +86,24 @@ const BarangayAdminData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ height: 300, width: "100%" }}>
-					{userData && (
-						<DataGrid
-							className="dataGrid"
-							rows={userData.map((user, index) => {
-								return {
-									...user,
-									list: index + 1,
-								};
-							})}
-							columns={BarangayAdmin.concat(actionColumn)}
-							pageSize={5}
-							rowsPerPageOptions={[5]}
-							components={{ Toolbar: GridToolbar }}
-						/>
-					)}
+				<div style={{ display: "flex", height: "100%" }}>
+					<div style={{ height: 600, width: "100%" }}>
+						{userData && (
+							<DataGrid
+								className="dataGrid"
+								rows={userData.map((user, index) => {
+									return {
+										...user,
+										list: index + 1,
+									};
+								})}
+								columns={BarangayAdmin.concat(actionColumn)}
+								pageSize={9}
+								rowsPerPageOptions={[9]}
+								components={{ Toolbar: GridToolbar }}
+							/>
+						)}
+					</div>
 				</div>
 			</div>
 		</>
