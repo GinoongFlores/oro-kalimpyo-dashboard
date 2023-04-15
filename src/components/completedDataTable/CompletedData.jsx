@@ -11,10 +11,9 @@ import { ref, onValue } from "firebase/database";
 
 // Table Columns
 import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
-// import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
 // Modals
-// import ViewTBC from "../../pages/viewTBC/ViewTBC";
+import ViewC from "../modals/viewC/ViewC";
 
 const actionColumn = [
 	{
@@ -24,7 +23,9 @@ const actionColumn = [
 		renderCell: (params) => {
 			return (
 				<>
-					{/* <div className="cellAction"><ViewTBC params={params} /></div> */}
+					<div className="cellAction">
+						<ViewC params={params} />
+					</div>
 				</>
 			);
 		},
