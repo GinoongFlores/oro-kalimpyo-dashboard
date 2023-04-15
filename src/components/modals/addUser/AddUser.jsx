@@ -13,9 +13,6 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
-import Navbar from "../../navbar/Navbar";
-import Sidebar from "../../sidebar/Sidebar";
-
 const initialState = {
 	name: "",
 	number: "",
