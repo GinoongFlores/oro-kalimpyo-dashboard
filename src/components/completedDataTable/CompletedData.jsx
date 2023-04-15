@@ -19,6 +19,7 @@ const actionColumn = [
 	{
 		field: "action",
 		headerName: "Action",
+		headerClassName: "headerTheme",
 		width: 150,
 		renderCell: (params) => {
 			return (
@@ -61,8 +62,8 @@ export const CompletedData = () => {
 									};
 								})}
 								columns={CompletedTableSource.concat(actionColumn)}
-								pageSize={5}
-								rowsPerPageOptions={[5]}
+								pageSize={9}
+								rowsPerPageOptions={[9]}
 								// getRowId={(row) => rows.id}
 								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
