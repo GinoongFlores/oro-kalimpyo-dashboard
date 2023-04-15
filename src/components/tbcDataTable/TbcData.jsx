@@ -19,6 +19,7 @@ const actionColumn = [
 	{
 		field: "action",
 		headerName: "Action",
+		headerClassName: "headerTheme",
 		width: 150,
 		renderCell: (params) => {
 			return (
@@ -52,7 +53,7 @@ export const TbcData = () => {
 		<>
 			<div className="dataTable">
 				<div className="dataTableTitle">Pending Contributions</div>
-				<div style={{ height: 300, width: "100%" }}>
+				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
@@ -63,8 +64,8 @@ export const TbcData = () => {
 									};
 								})}
 								columns={TbcTableSource.concat(actionColumn)}
-								pageSize={5}
-								rowsPerPageOptions={[5]}
+								pageSize={9}
+								rowsPerPageOptions={[9]}
 								// getRowId={(row) => rows.id}
 								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
