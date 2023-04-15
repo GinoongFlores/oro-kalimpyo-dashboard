@@ -22,7 +22,7 @@ const Sidebar = () => {
 					{/* <div className="logo">
 						<img src={dashboardLogo} alt="" />
 					</div> */}
-					<span className="logo">Test Dashboard</span>
+					<span className="logo">Barangay Admin</span>
 				</Link>
 			</div>
 			<hr />
