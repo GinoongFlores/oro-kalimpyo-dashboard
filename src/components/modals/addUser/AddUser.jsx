@@ -92,7 +92,6 @@ const AddUser = () => {
 			setState(initialState);
 			toast.success("User added successfully");
 		}
-		}
 	};
 
 	// console.log(state);
@@ -125,7 +124,7 @@ const AddUser = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form className="form" onSubmit={handleSubmit}>
-						<Form.Group className="mb-3" controlId="formBasicEmail">
+						<Form.Group className="mb-3 fields" controlId="formBasicEmail">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type="text"
@@ -135,7 +134,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Number</Form.Label>
 							<Form.Control
 								type="number"
@@ -147,7 +146,7 @@ const AddUser = () => {
 							/>
 						</Form.Group>
 
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
@@ -157,7 +156,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Password</Form.Label>
 							<Form.Control
 								type="password"
@@ -167,7 +166,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Confirm Password</Form.Label>
 							<Form.Control
 								type="password"
@@ -178,7 +177,7 @@ const AddUser = () => {
 							/>
 						</Form.Group>
 
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Barangay</Form.Label>
 							<Form.Control
 								type="text"
@@ -188,7 +187,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Address</Form.Label>
 							<Form.Control
 								type="text"
