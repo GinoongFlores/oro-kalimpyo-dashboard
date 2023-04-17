@@ -16,7 +16,6 @@ import { ref, push, set, child, onValue } from "firebase/database";
 const initialState = {
 	name: "",
 	number: "",
-	gender: "",
 	email: "",
 	password: "",
 	confirm_password: "",
@@ -24,12 +23,15 @@ const initialState = {
 	barangay: "",
 	address: "",
 };
+
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
+	const [genderSelect, setGenderSelect] = useState("");
+	const [error, setError] = useState("");
+
 	const {
 		name,
 		number,
-		gender,
 		email,
 		password,
 		confirm_password,
@@ -43,6 +45,7 @@ const AddUser = () => {
 	const handleClickOpenAdd = () => {
 		setOpenAdd(true);
 	};
+
 	const handleCloseAdd = () => {
 		setOpenAdd(false);
 	};
@@ -50,8 +53,10 @@ const AddUser = () => {
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setState({ ...state, [name]: value });
+
+		// set the value of the select input field
 	};
-	// console.log(state);
+	console.log(state);
 
 	const addUser = () => {
 		createUserWithEmailAndPassword(auth, email, password)
@@ -62,7 +67,7 @@ const AddUser = () => {
 				set(ref(db, "/Nazareth_Users/" + user.uid), {
 					// set user data to the database with its uid from authentication object and the data from the form input fields
 					email: email,
-					gender: gender,
+					gender: genderSelect,
 					name: name,
 					number: number,
 					password: password,
@@ -76,7 +81,9 @@ const AddUser = () => {
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
-				toast.error(errorCode, errorMessage);
+
+				toast.error(errorMessage);
+
 				// ..
 			});
 	};
@@ -85,7 +92,6 @@ const AddUser = () => {
 		e.preventDefault(); // Prevents the page from refreshing
 
 		if (
-			!gender ||
 			!name ||
 			!number ||
 			!email ||
@@ -93,7 +99,8 @@ const AddUser = () => {
 			!address ||
 			!user_type ||
 			!password ||
-			!confirm_password
+			!confirm_password ||
+			!genderSelect
 		) {
 			return toast.error("Please fill in all fields");
 		} else if (state.password != state.confirm_password) {
@@ -105,6 +112,7 @@ const AddUser = () => {
 		}
 	};
 
+	console.log(genderSelect);
 	// console.log(state);
 
 	return (
@@ -135,7 +143,7 @@ const AddUser = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form className="form" onSubmit={handleSubmit}>
-						<Form.Group className="mb-3" controlId="formBasicEmail">
+						<Form.Group className="mb-3 fields" controlId="formBasicEmail">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type="text"
@@ -145,7 +153,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Number</Form.Label>
 							<Form.Control
 								type="number"
@@ -156,7 +164,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						{/* <Form.Group className="mb-3 fields">
 							<Form.Label>Gender</Form.Label>
 							<Form.Control
 								type="text"
@@ -165,8 +173,26 @@ const AddUser = () => {
 								value={gender}
 								onChange={handleInputChange}
 							/>
+						</Form.Group> */}
+						<Form.Group className="mb-3 fields">
+							<Form.Label>Gender</Form.Label>
+							<Form.Select
+								name="gender"
+								onChange={(e) => setGenderSelect(e.target.value)}
+								aria-label="gender"
+								value={genderSelect}
+							>
+								<option value="">Select Gender</option>
+								<option name="gender" value="Male">
+									Male
+								</option>
+								<option name="gender" value="Female">
+									Female
+								</option>
+							</Form.Select>
 						</Form.Group>
-						<Form.Group className="mb-3">
+
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
@@ -176,7 +202,8 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Password</Form.Label>
 							<Form.Control
 								type="password"
@@ -186,7 +213,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group>
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Confirm Password</Form.Label>
 							<Form.Control
 								type="password"
@@ -197,7 +224,7 @@ const AddUser = () => {
 							/>
 						</Form.Group>
 
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Type of House</Form.Label>
 							<Form.Control
 								type="text"
@@ -208,7 +235,7 @@ const AddUser = () => {
 							/>
 						</Form.Group>
 
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Barangay</Form.Label>
 							<Form.Control
 								type="text"
@@ -218,7 +245,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Address</Form.Label>
 							<Form.Control
 								type="text"
