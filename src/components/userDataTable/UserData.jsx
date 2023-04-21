@@ -29,7 +29,8 @@ const UserData = () => {
 		{
 			field: "action",
 			headerName: "Action",
-			width: 120,
+			headerClassName: "headerTheme",
+			width: 200,
 			renderCell: (params) => {
 				return (
 					<>
@@ -53,7 +54,7 @@ const UserData = () => {
 		// console.log(id);
 		// delete also the user for the authentication
 		if (window.confirm("Are you sure you want to delete this user?")) {
-			const userRef = ref(db, `/Nazareth_Users/${id}`);
+			const userRef = ref(db, `/Users/${id}`);
 			// console.log(`/Nazareth_Users/${id}`);
 			// console.log(userRef);
 			remove(userRef)
@@ -76,7 +77,7 @@ const UserData = () => {
 
 	// Read data from firebase database
 	const getData = () => {
-		const usersRef = ref(db, "/Nazareth_Users/");
+		const usersRef = ref(db, "/Users/");
 		const readData = onValue(usersRef, (snapshot) => {
 			const data = snapshot.val();
 			setUserData(Object.values(data));
@@ -90,22 +91,23 @@ const UserData = () => {
 		<>
 			<div className="dataTable">
 				<div className="dataTableTitle">Barangay Users</div>
-				<div style={{ height: 300, width: "100%" }}>
-					{userData && (
-						<DataGrid
-							className="dataGrid"
-							rows={userData.map((user, index) => {
-								return {
-									...user,
-									list: index + 1,
-								};
-							})}
-							columns={userColumns.concat(actionColumn)}
-							pageSize={5}
-							rowsPerPageOptions={[5]}
-							components={{ Toolbar: GridToolbar }}
-						/>
-					)}
+				<div style={{ height: 600, width: "100%" }}>
+					<div style={{ display: "flex", height: "100%" }}>
+						{userData && (
+							<DataGrid
+								rows={userData.map((user, index) => {
+									return {
+										...user,
+										list: index + 1,
+									};
+								})}
+								columns={userColumns.concat(actionColumn)}
+								pageSize={9}
+								rowsPerPageOptions={[9]}
+								components={{ Toolbar: GridToolbar }}
+							/>
+						)}
+					</div>
 				</div>
 			</div>
 		</>

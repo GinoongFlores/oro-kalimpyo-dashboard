@@ -7,7 +7,14 @@ import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../firebase";
-import { ref, onValue } from "firebase/database";
+import {
+	ref,
+	onValue,
+	onChildAdded,
+	onChildChanged,
+	child,
+	getDatabase,
+} from "firebase/database";
 
 // Table Columns
 import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
@@ -20,6 +27,7 @@ const actionColumn = [
 	{
 		field: "action",
 		headerName: "Action",
+		headerClassName: "headerTheme",
 		width: 150,
 		renderCell: (params) => {
 			return (
@@ -35,13 +43,29 @@ const CompletedData = () => {
 	const [cData, setTbcData] = useState([]);
 
 	useEffect(() => {
-		const tbcRef = ref(db, "/Nazareth_C_Contributions/");
-		const readData = onValue(tbcRef, (snapshot) => {
-			const data = snapshot.val();
-			setTbcData(Object.values(data));
+		const tbcRef = ref(db, "/C_Contributions/");
+		// const readData = onValue(tbcRef, (snapshot) => {
+		// 	const data = snapshot.val();
+		// 	setTbcData(Object.values(data));
+		// });
+
+		const readChildren = onValue(tbcRef, (snapshot) => {
+			snapshot.forEach((childSnapshot) => {
+				const childKey = childSnapshot.key;
+				const childData = childSnapshot.val();
+
+				setTbcData(Object.values(childData));
+
+				console.log(childKey, childData);
+			});
 		});
+
+		console.log(cData);
+
 		return () => {
-			readData(); // return to prevent memory leak
+			// readData(); // return to prevent memory leak
+			readChildren();
+			// readData();
 		};
 	}, []);
 
@@ -49,7 +73,7 @@ const CompletedData = () => {
 		<>
 			<div className="dataTable">
 				<div className="dataTableTitle">Completed Contributions</div>
-				<div style={{ height: 300, width: "100%" }}>
+				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
@@ -60,8 +84,8 @@ const CompletedData = () => {
 									};
 								})}
 								columns={CompletedTableSource.concat(actionColumn)}
-								pageSize={5}
-								rowsPerPageOptions={[5]}
+								pageSize={9}
+								rowsPerPageOptions={[9]}
 								// getRowId={(row) => rows.id}
 								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
