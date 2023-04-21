@@ -22,13 +22,15 @@ const initialState = {
 	gender: "",
 	email: "",
 	password: "",
+	confirm_password: "",
 	user_type: "",
 	barangay: "",
 	address: "",
 };
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
-	const { name, number, email, password, barangay, address } = state;
+	const { name, number, email, password, confirm_password, barangay, address } =
+		state;
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
@@ -72,8 +74,19 @@ const AddUser = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault(); // Prevents the page from refreshing
-		if (!password || !name || !number || !email || !barangay || !address) {
+
+		if (
+			!password ||
+			!confirm_password ||
+			!name ||
+			!number ||
+			!email ||
+			!barangay ||
+			!address
+		) {
 			return toast.error("Please fill in all fields");
+		} else if (state.password != state.confirm_password) {
+			toast.error("Password does not match");
 		} else {
 			addUser();
 			setState(initialState);
@@ -111,7 +124,7 @@ const AddUser = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form className="form" onSubmit={handleSubmit}>
-						<Form.Group className="mb-3" controlId="formBasicEmail">
+						<Form.Group className="mb-3 fields" controlId="formBasicEmail">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type="text"
@@ -121,7 +134,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Number</Form.Label>
 							<Form.Control
 								type="number"
@@ -133,7 +146,7 @@ const AddUser = () => {
 							/>
 						</Form.Group>
 
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
@@ -143,7 +156,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Password</Form.Label>
 							<Form.Control
 								type="password"
@@ -153,8 +166,18 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
+						<Form.Group className="mb-3 fields">
+							<Form.Label>Confirm Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Enter Password"
+								name="confirm_password"
+								value={confirm_password}
+								onChange={handleInputChange}
+							/>
+						</Form.Group>
 
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Barangay</Form.Label>
 							<Form.Control
 								type="text"
@@ -164,7 +187,7 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Address</Form.Label>
 							<Form.Control
 								type="text"

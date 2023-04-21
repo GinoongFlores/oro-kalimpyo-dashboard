@@ -1,5 +1,6 @@
 export const BarangayAdmin = [
 	{
+		headerClassName: "headerTheme",
 		field: "list",
 		headerName: "#",
 		width: 50,
@@ -12,6 +13,7 @@ export const BarangayAdmin = [
 	// },
 
 	{
+		headerClassName: "headerTheme",
 		field: "name",
 		headerName: "Name",
 		width: 150,
@@ -27,12 +29,14 @@ export const BarangayAdmin = [
 	},
 
 	{
+		headerClassName: "headerTheme",
 		field: "number",
 		headerName: "Number",
 		width: 120,
 	},
 
 	{
+		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
 		width: 190,
@@ -48,18 +52,21 @@ export const BarangayAdmin = [
 	},
 
 	{
+		headerClassName: "headerTheme",
 		field: "password",
 		headerName: "Password",
 		width: 120,
 	},
 
 	{
+		headerClassName: "headerTheme",
 		field: "barangay",
 		headerName: "Barangay",
 		width: 150,
 	},
 
 	{
+		headerClassName: "headerTheme",
 		field: "address",
 		headerName: "Address",
 		width: 190,
