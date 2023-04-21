@@ -13,7 +13,6 @@ import LogoCdo from "../../assets/cdo-seal.png";
 import SlDevs from "../../assets/sldevs.png";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import { Icon } from "@mui/material";
 
 const initialState = {
 	email: "",
