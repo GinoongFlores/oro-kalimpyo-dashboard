@@ -14,20 +14,17 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
 import { barangayLists } from "../../barangayLists/barangayLists";
-import Sidebar from "../../sidebar/Sidebar";
 
 const initialState = {
 	name: "",
 	number: "",
-	gender: "",
 	email: "",
 	password: "",
 	barangay: "",
 	confirm_password: "",
-	user_type: "",
-	barangay: "",
 	address: "",
 };
+
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
 	const [barangaySelect, setBarangaySelect] = useState(barangayLists[0].value);
