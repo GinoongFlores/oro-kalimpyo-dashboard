@@ -13,7 +13,7 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
-import Navbar from "../../navbar/Navbar";
+import { barangayLists } from "../../barangayLists/barangayLists";
 import Sidebar from "../../sidebar/Sidebar";
 
 const initialState = {
@@ -22,6 +22,7 @@ const initialState = {
 	gender: "",
 	email: "",
 	password: "",
+	barangay: "",
 	confirm_password: "",
 	user_type: "",
 	barangay: "",
@@ -29,7 +30,8 @@ const initialState = {
 };
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
-	const { name, number, email, password, confirm_password, barangay, address } =
+	const [barangaySelect, setBarangaySelect] = useState(barangayLists[0].value);
+	const { name, number, email, password, confirm_password, address } =
 		state;
 
 	// Modal
@@ -45,7 +47,6 @@ const AddUser = () => {
 		const { name, value } = e.target;
 		setState({ ...state, [name]: value });
 	};
-	// console.log(state);
 
 	const addUser = () => {
 		createUserWithEmailAndPassword(auth, email, password)
@@ -59,7 +60,7 @@ const AddUser = () => {
 					name: name,
 					number: number,
 					password: password,
-					barangay: barangay,
+					barangay: barangaySelect,
 					address: address,
 					id: user.uid,
 				});
@@ -81,7 +82,7 @@ const AddUser = () => {
 			!name ||
 			!number ||
 			!email ||
-			!barangay ||
+			!barangaySelect ||
 			!address
 		) {
 			return toast.error("Please fill in all fields");
@@ -179,14 +180,18 @@ const AddUser = () => {
 
 						<Form.Group className="mb-3 fields">
 							<Form.Label>Barangay</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Barangay"
-								name="barangay"
-								value={barangay}
-								onChange={handleInputChange}
-							/>
+							<Form.Select
+								value={barangaySelect}
+								onChange={(e) => setBarangaySelect(e.target.value)}
+							>
+								{barangayLists.map((barangayList) => (
+									<option key={barangayList.value} value={barangayList.value}>
+										{barangayList.text}
+									</option>
+								))}
+							</Form.Select>
 						</Form.Group>
+
 						<Form.Group className="mb-3 fields">
 							<Form.Label>Address</Form.Label>
 							<Form.Control
