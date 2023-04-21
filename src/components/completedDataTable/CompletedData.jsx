@@ -7,7 +7,14 @@ import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../firebase";
-import { ref, onValue } from "firebase/database";
+import {
+	ref,
+	onValue,
+	onChildAdded,
+	onChildChanged,
+	child,
+	getDatabase,
+} from "firebase/database";
 
 // Table Columns
 import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
@@ -36,13 +43,29 @@ const CompletedData = () => {
 	const [cData, setTbcData] = useState([]);
 
 	useEffect(() => {
-		const tbcRef = ref(db, "/Nazareth_C_Contributions/");
-		const readData = onValue(tbcRef, (snapshot) => {
-			const data = snapshot.val();
-			setTbcData(Object.values(data));
+		const tbcRef = ref(db, "/C_Contributions/");
+		// const readData = onValue(tbcRef, (snapshot) => {
+		// 	const data = snapshot.val();
+		// 	setTbcData(Object.values(data));
+		// });
+
+		const readChildren = onValue(tbcRef, (snapshot) => {
+			snapshot.forEach((childSnapshot) => {
+				const childKey = childSnapshot.key;
+				const childData = childSnapshot.val();
+
+				setTbcData(Object.values(childData));
+
+				console.log(childKey, childData);
+			});
 		});
+
+		console.log(cData);
+
 		return () => {
-			readData(); // return to prevent memory leak
+			// readData(); // return to prevent memory leak
+			readChildren();
+			// readData();
 		};
 	}, []);
 
