@@ -54,7 +54,7 @@ const UserData = () => {
 		// console.log(id);
 		// delete also the user for the authentication
 		if (window.confirm("Are you sure you want to delete this user?")) {
-			const userRef = ref(db, `/Nazareth_Users/${id}`);
+			const userRef = ref(db, `/Users/${id}`);
 			// console.log(`/Nazareth_Users/${id}`);
 			// console.log(userRef);
 			remove(userRef)
@@ -77,7 +77,7 @@ const UserData = () => {
 
 	// Read data from firebase database
 	const getData = () => {
-		const usersRef = ref(db, "/Nazareth_Users/");
+		const usersRef = ref(db, "/Users/");
 		const readData = onValue(usersRef, (snapshot) => {
 			const data = snapshot.val();
 			setUserData(Object.values(data));

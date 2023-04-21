@@ -49,7 +49,7 @@ const ViewTBC = ({ params }) => {
 	};
 
 	const viewSpecifiedUser = () => {
-		const userRef = ref(db, `/Nazareth_TBC_Contributions/${id}`);
+		const userRef = ref(db, `/TBC_Contributions/${id}`);
 		onValue(userRef, (snapshot) => {
 			const data = snapshot.val();
 			setReadUser(data);
