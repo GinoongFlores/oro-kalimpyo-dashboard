@@ -13,7 +13,7 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
-import { barangayLists } from "../../barangayLists/barangayLists";
+import { BarangayLists } from "../../barangayLists/BarangayLists";
 
 const initialState = {
 	name: "",
@@ -27,8 +27,8 @@ const initialState = {
 
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
-	const [barangaySelect, setBarangaySelect] = useState(barangayLists[0].value);
-	const { name, number, email, password, confirm_password, address, barangay } = state;
+	const [barangaySelect, setBarangaySelect] = useState(BarangayLists[0].value);
+	const { name, number, email, password, confirm_password, address } = state;
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
@@ -180,9 +180,9 @@ const AddUser = () => {
 								value={barangaySelect}
 								onChange={(e) => setBarangaySelect(e.target.value)}
 							>
-								{barangayLists.map((barangayList) => (
+								{BarangayLists.map((barangayList) => (
 									<option key={barangayList.value} value={barangayList.value}>
-										{barangayList.text}
+										{barangayList.text.toUpperCase()}
 									</option>
 								))}
 							</Form.Select>
