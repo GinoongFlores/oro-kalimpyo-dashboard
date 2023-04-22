@@ -28,8 +28,7 @@ const initialState = {
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
 	const [barangaySelect, setBarangaySelect] = useState(barangayLists[0].value);
-	const { name, number, email, password, confirm_password, address } =
-		state;
+	const { name, number, email, password, confirm_password, address, barangay } = state;
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
