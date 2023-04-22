@@ -3,7 +3,6 @@ export const userColumns = [
 		headerClassName: "headerTheme",
 
 		field: "list",
-		headerClassName: "headerTheme",
 		headerName: "#",
 		width: 50,
 	},
