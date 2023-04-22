@@ -22,6 +22,7 @@ import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
 // Modals
 import ViewTBC from "../modals/viewTBC/ViewTBC";
+import ViewC from "../modals/viewC/ViewC";
 
 const actionColumn = [
 	{
@@ -32,7 +33,7 @@ const actionColumn = [
 		renderCell: (params) => {
 			return (
 				<>
-					<div className="cellAction">{/* <ViewTBC params={params} /> */}</div>
+					<div className="cellAction"><ViewC params={params} /></div>
 				</>
 			);
 		},
