@@ -36,7 +36,7 @@ const ViewUser = ({ params }) => {
 	};
 
 	const viewSpecifiedUser = () => {
-		const userRef = ref(db, `/Nazareth_Users/${id}`);
+		const userRef = ref(db, `/Users/${id}`);
 		onValue(userRef, (snapshot) => {
 			const data = snapshot.val();
 			setReadUser(data);
@@ -66,7 +66,7 @@ const ViewUser = ({ params }) => {
 				centered
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Admin Information</Modal.Title>
+					<Modal.Title>User Information</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<div className="item--viewPage">
@@ -86,10 +86,6 @@ const ViewUser = ({ params }) => {
 							<div className="detailItem">
 								<span className="itemKey">Number: </span>
 								<span className="itemValue">{readUser?.number}</span>
-							</div>
-							<div className="detailItem">
-								<span className="itemKey">Gender: </span>
-								<span className="itemValue">{readUser?.gender}</span>
 							</div>
 							<div className="detailItem">
 								<span className="itemKey">User Type: </span>
