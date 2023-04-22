@@ -1,4 +1,4 @@
-export const barangayLists = [
+export const BarangayLists = [
 	{
 		value: "",
 		text: "Select a Barangay",
@@ -20,15 +20,15 @@ export const barangayLists = [
 		text: "BALULANG",
 	},
 	{
-		value: "BARANGAY 1",
-		text: "BARANGAY 1",
+		value: "Barangay 1",
+		text: "Barangay 1",
 	},
 	{
-		value: "BARANGAY 2",
-		text: "BARANGAY 2",
+		value: "Barangay 2",
+		text: "Barangay 2",
 	},
 	{
-		value: "BARANGAY 3",
-		text: "BARANGAY 3",
+		value: "Barangay 3",
+		text: "Barangay 3",
 	},
 ];
