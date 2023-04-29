@@ -33,7 +33,9 @@ const actionColumn = [
 		renderCell: (params) => {
 			return (
 				<>
-					<div className="cellAction"><ViewC params={params} /></div>
+					<div className="cellAction">
+						<ViewC params={params} />
+					</div>
 				</>
 			);
 		},
@@ -44,7 +46,7 @@ const CompletedData = () => {
 	const [cData, setTbcData] = useState([]);
 
 	useEffect(() => {
-		const tbcRef = ref(db, "/C_Contributions/");
+		const tbcRef = ref(db, "/Specific_C_Contributions/");
 		// const readData = onValue(tbcRef, (snapshot) => {
 		// 	const data = snapshot.val();
 		// 	setTbcData(Object.values(data));
@@ -57,11 +59,11 @@ const CompletedData = () => {
 
 				setTbcData(Object.values(childData));
 
-				console.log(childKey, childData);
+				// console.log(childKey, childData);
 			});
 		});
 
-		console.log(cData);
+		// console.log(cData);
 
 		return () => {
 			// readData(); // return to prevent memory leak

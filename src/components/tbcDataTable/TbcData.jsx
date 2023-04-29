@@ -37,7 +37,7 @@ export const TbcData = () => {
 	const [tbcData, setTbcData] = useState([]);
 
 	useEffect(() => {
-		const tbcRef = ref(db, "/TBC_Contributions/");
+		const tbcRef = ref(db, "/Nazareth_TBC_Contributions/");
 		const readData = onValue(tbcRef, (snapshot) => {
 			const data = snapshot.val();
 			setTbcData(Object.values(data));
