@@ -1,4 +1,5 @@
 import "./addUser.scss";
+import "react-phone-number-input/style.css";
 
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,6 +9,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
+import PhoneInput from "react-phone-number-input/input";
+import {
+	isValidPhoneNumber,
+	formatPhoneNumber,
+	isPossiblePhoneNumber,
+} from "react-phone-number-input";
 
 // Firebase
 import { auth, db } from "../../../firebase";
@@ -30,18 +37,16 @@ const initialState = {
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
 	const [barangaySelect, setBarangaySelect] = useState(null);
-	const [error, setError] = useState("");
+	const { name, number, email, password, confirm_password, address } = state;
+	const [numberValue, setNumberValue] = useState();
+	const formatNumber = formatPhoneNumber(numberValue);
 
-	const {
-		name,
-		number,
-		email,
-		password,
-		confirm_password,
-		user_type,
-		barangay,
-		address,
-	} = state;
+	const testNumber = "+639123459852";
+
+	const regexNumber =
+		/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g;
+
+	// console.log(regexNumber.test(possibleNumber));
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
@@ -56,10 +61,19 @@ const AddUser = () => {
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setState({ ...state, [name]: value });
-
-		// set the value of the select input field
+		// const objVal = { ...state, [e.target.name]: e.target.value };
+		// setState(objVal);
 	};
 	console.log(state);
+
+	const handleNumberChange = (value) => {
+		setNumberValue(value);
+
+		setState({ ...state, number: value });
+	};
+
+	// console.log(barangaySelect);
+	// console.log(state);
 
 	const addUser = () => {
 		createUserWithEmailAndPassword(auth, email, password)
@@ -71,7 +85,7 @@ const AddUser = () => {
 					// set user data to the database with its uid from authentication object and the data from the form input fields
 					email: email,
 					name: name,
-					number: number,
+					number: formatNumber,
 					password: password,
 					user_type: user_type,
 					barangay: barangaySelect,
@@ -90,12 +104,28 @@ const AddUser = () => {
 			});
 	};
 
-	const handleSubmit = (e) => {
+	// console.log(state.number);
+
+	// if (regexNumber.test(formatNumber) === false) {
+	// 	console.log("invalid");
+	// } else if (
+	// 	(formatNumber.length >= 0 && formatNumber.length <= 12) ||
+	// 	formatNumber >= 13
+	// ) {
+	// 	console.log("invalid");
+	// } else {
+	// 	console.log("valid");
+	// }
+
+	const passwordValidation =
+		/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+	const handleSubmitData = (e) => {
 		e.preventDefault(); // Prevents the page from refreshing
 
 		if (
 			!name ||
-			!number ||
+			!formatNumber ||
 			!email ||
 			!barangaySelect ||
 			!address ||
@@ -104,6 +134,16 @@ const AddUser = () => {
 			!confirm_password
 		) {
 			return toast.error("Please fill in all fields");
+			// } else if (passwordValidation.test(!password)) {
+			// 	return toast.error("Please enter a valid number");
+			// }
+		} else if (regexNumber.test(formatNumber) === false) {
+			toast.error("Please enter a valid Philippine number!");
+		} else if (
+			(formatNumber.length >= 0 && formatNumber.length <= 12) ||
+			formatNumber >= 13
+		) {
+			toast.error("Philippine number is too long!");
 		} else if (state.password != state.confirm_password) {
 			toast.error("Password does not match");
 		} else {
@@ -142,7 +182,7 @@ const AddUser = () => {
 					<Modal.Title>Add New User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form className="form" onSubmit={handleSubmit}>
+					<Form className="form" name="addUser" onSubmit={handleSubmitData}>
 						<Form.Group className="mb-3 fields" controlId="formBasicEmail">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
@@ -155,13 +195,22 @@ const AddUser = () => {
 						</Form.Group>
 						<Form.Group className="mb-3 fields">
 							<Form.Label>Number</Form.Label>
-							<Form.Control
+							{/* <Form.Control
 								type="number"
 								placeholder="Enter number"
 								name="number"
 								value={number}
+								pattern="((\+[0-9]{2})|0)[.\- ]?9[0-9]{2}[.\- ]?[0-9]{3}[.\- ]?[0-9]{4}"
 								min="0"
 								onChange={handleInputChange}
+							/> */}
+							<PhoneInput
+								name="number"
+								className="PhoneInput"
+								placeholder="Enter number"
+								defaultCountry="PH"
+								value={numberValue}
+								onChange={handleNumberChange}
 							/>
 						</Form.Group>
 
@@ -198,13 +247,23 @@ const AddUser = () => {
 						</Form.Group>
 
 						<Form.Group className="mb-3 fields">
-							<Form.Label>Type of House</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Type of House"
-								name="user_type"
-								value={user_type}
-								onChange={handleInputChange}
+							<Form.Label>Barangay</Form.Label>
+							{/* <Form.Select
+								value={barangaySelect}
+								onChange={(e) => setBarangaySelect(e.target.value)}
+								isSearchable={true}
+							>
+								{BarangayLists.map((barangayList) => (
+									<option key={barangayList.value} value={barangayList.value}>
+										{barangayList.text.toUpperCase()}
+									</option>
+								))}
+							</Form.Select> */}
+							<Select
+								options={BarangayLists}
+								defaultValue={barangaySelect}
+								placeholder="Select a Barangay"
+								onChange={(e) => setBarangaySelect(e.value)}
 							/>
 						</Form.Group>
 
