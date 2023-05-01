@@ -1,4 +1,4 @@
-import "./viewUser.scss";
+import "./viewC.scss";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -9,19 +9,38 @@ import { ref, onValue } from "firebase/database";
 
 import { useEffect, useState } from "react";
 
-const ViewUser = ({ params }) => {
-	// const [readUser, setReadUser] = useState([]);
-	const { id, name, email, number, user_type, barangay, address } = params.row;
+const ViewC = ({ params }) => {
+	const {
+		id,
+		name,
+		number,
+		type,
+		address,
+		barangay,
+		brand,
+		kilo,
+		total_kilo,
+		total_contributions,
+		plastic,
+		time,
+		date,
+	} = params.row;
 
 	// The values object holds the values of the params.row object to be used in the useState hook
 	const values = {
 		id: id,
 		name: name,
-		email: email,
 		number: number,
-		user_type: user_type,
-		barangay: barangay,
+		type: type,
 		address: address,
+		barangay: barangay,
+		brand: brand,
+		kilo: kilo,
+		total_kilo: total_kilo,
+		total_contributions: total_contributions,
+		plastic: plastic,
+		time,
+		date: date,
 	};
 
 	const [readUser, setReadUser] = useState(values); // this is the state that will be used to display the data in the modal
@@ -35,8 +54,8 @@ const ViewUser = ({ params }) => {
 		setOpenView(false);
 	};
 
-	const viewSpecifiedUser = () => {
-		const userRef = ref(db, `/Nazareth_Users/${id}`);
+	const viewSpecified = () => {
+		const userRef = ref(db, `/Nazareth_C_Contributions/${id}`);
 		onValue(userRef, (snapshot) => {
 			const data = snapshot.val();
 			setReadUser(data);
@@ -44,7 +63,7 @@ const ViewUser = ({ params }) => {
 	};
 
 	useEffect(() => {
-		viewSpecifiedUser();
+		viewSpecified();
 	}, []);
 
 	return (
@@ -66,38 +85,64 @@ const ViewUser = ({ params }) => {
 				centered
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>User Information</Modal.Title>
+					<Modal.Title>Completed Contributions</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<div className="item--viewPage">
 						<div className="details--viewPage">
 							<div className="detailItem">
-								<span className="itemKey">Name: </span>
-								<span className="itemValue">{readUser?.name}</span>
-							</div>
-							<div className="detailItem">
 								<span className="itemKey">ID: </span>
 								<span className="itemValue">{readUser?.id}</span>
 							</div>
 							<div className="detailItem">
-								<span className="itemKey">Email: </span>
-								<span className="itemValue">{readUser?.email}</span>
+								<span className="itemKey">Name: </span>
+								<span className="itemValue">{readUser?.name}</span>
 							</div>
 							<div className="detailItem">
 								<span className="itemKey">Number: </span>
 								<span className="itemValue">{readUser?.number}</span>
 							</div>
 							<div className="detailItem">
-								<span className="itemKey">User Type: </span>
-								<span className="itemValue">{readUser?.user_type}</span>
+								<span className="itemKey">Type of Household: </span>
+								<span className="itemValue">{readUser?.type}</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Address: </span>
+								<span className="itemValue">{readUser?.address}</span>
 							</div>
 							<div className="detailItem">
 								<span className="itemKey">Barangay: </span>
 								<span className="itemValue">{readUser?.barangay}</span>
 							</div>
 							<div className="detailItem">
-								<span className="itemKey">Address: </span>
-								<span className="itemValue">{readUser?.address}</span>
+								<span className="itemKey">Brand Collected: </span>
+								<span className="itemValue">{readUser?.brand}</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Kilo: </span>
+								<span className="itemValue">{readUser?.kilo}</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Total Kilo: </span>
+								<span className="itemValue">{readUser?.total_kilo}</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Type of plastic: </span>
+								<span className="itemValue">{readUser?.plastic}</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Total Contributions: </span>
+								<span className="itemValue">
+									{readUser?.total_contributions}
+								</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Time: </span>
+								<span className="itemValue">{readUser?.time}</span>
+							</div>
+							<div className="detailItem">
+								<span className="itemKey">Date: </span>
+								<span className="itemValue">{readUser?.date}</span>
 							</div>
 						</div>
 					</div>
@@ -116,4 +161,4 @@ const ViewUser = ({ params }) => {
 	);
 };
 
-export default ViewUser;
+export default ViewC;

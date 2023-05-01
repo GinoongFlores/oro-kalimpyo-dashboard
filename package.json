@@ -20,7 +20,9 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
+    "react-phone-number-input": "^3.2.20",
     "react-router-dom": "^6.8.1",
+    "react-select": "^5.7.2",
     "react-toastify": "^9.1.1",
     "sass": "^1.58.0"
   },
