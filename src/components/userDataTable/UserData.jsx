@@ -102,7 +102,7 @@ const UserData = () => {
 								})}
 								columns={userColumns.concat(actionColumn)}
 								pageSize={9}
-								rowsPerPageOptions={[5]}
+								rowsPerPageOptions={[9]}
 								components={{ Toolbar: GridToolbar }}
 							/>
 						)}
