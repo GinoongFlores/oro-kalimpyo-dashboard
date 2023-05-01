@@ -41,13 +41,13 @@ const AddUser = () => {
 	const [userTypeSelect, setUserTypeSelect] = useState(null);
 	const {
 		name,
-		number,
+		// number,
 		email,
 		password,
 		confirm_password,
 		address,
-		barangay,
-		user_type,
+		// barangay,
+		// user_type,
 	} = state;
 	const [numberValue, setNumberValue] = useState();
 	const formatNumber = formatPhoneNumber(numberValue);
@@ -188,7 +188,7 @@ const AddUser = () => {
 							<PhoneInput
 								name="number"
 								className="PhoneInput"
-								placeholder="Enter number"
+								placeholder="Enter a Philippine number"
 								defaultCountry="PH"
 								value={numberValue}
 								onChange={handleNumberChange}
