@@ -11,8 +11,7 @@ import { useEffect, useState } from "react";
 
 const ViewUser = ({ params }) => {
 	// const [readUser, setReadUser] = useState([]);
-	const { id, name, email, number, gender, user_type, barangay, address } =
-		params.row;
+	const { id, name, email, number, user_type, barangay, address } = params.row;
 
 	// The values object holds the values of the params.row object to be used in the useState hook
 	const values = {
@@ -20,7 +19,6 @@ const ViewUser = ({ params }) => {
 		name: name,
 		email: email,
 		number: number,
-		gender: gender,
 		user_type: user_type,
 		barangay: barangay,
 		address: address,
@@ -88,10 +86,6 @@ const ViewUser = ({ params }) => {
 							<div className="detailItem">
 								<span className="itemKey">Number: </span>
 								<span className="itemValue">{readUser?.number}</span>
-							</div>
-							<div className="detailItem">
-								<span className="itemKey">Gender: </span>
-								<span className="itemValue">{readUser?.gender}</span>
 							</div>
 							<div className="detailItem">
 								<span className="itemKey">User Type: </span>
