@@ -76,7 +76,7 @@ export const CompletedTableSource = [
 		headerClassName: "headerTheme",
 		field: "total_contributions",
 		headerName: "Total Contributions",
-		width: 100,
+		width: 200,
 		renderCell: (props) => {
 			return (
 				<>
