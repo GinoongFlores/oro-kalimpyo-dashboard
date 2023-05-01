@@ -37,11 +37,20 @@ const initialState = {
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
 	const [barangaySelect, setBarangaySelect] = useState(null);
-	const { name, number, email, password, confirm_password, address } = state;
+	const {
+		name,
+		number,
+		email,
+		password,
+		confirm_password,
+		address,
+		barangay,
+		user_type,
+	} = state;
 	const [numberValue, setNumberValue] = useState();
 	const formatNumber = formatPhoneNumber(numberValue);
 
-	const testNumber = "+639123459852";
+	// const testNumber = "+639123459852";
 
 	const regexNumber =
 		/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g;
@@ -104,19 +113,6 @@ const AddUser = () => {
 			});
 	};
 
-	// console.log(state.number);
-
-	// if (regexNumber.test(formatNumber) === false) {
-	// 	console.log("invalid");
-	// } else if (
-	// 	(formatNumber.length >= 0 && formatNumber.length <= 12) ||
-	// 	formatNumber >= 13
-	// ) {
-	// 	console.log("invalid");
-	// } else {
-	// 	console.log("valid");
-	// }
-
 	const passwordValidation =
 		/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
@@ -134,9 +130,6 @@ const AddUser = () => {
 			!confirm_password
 		) {
 			return toast.error("Please fill in all fields");
-			// } else if (passwordValidation.test(!password)) {
-			// 	return toast.error("Please enter a valid number");
-			// }
 		} else if (regexNumber.test(formatNumber) === false) {
 			toast.error("Please enter a valid Philippine number!");
 		} else if (
@@ -182,7 +175,7 @@ const AddUser = () => {
 					<Modal.Title>Add New User</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form className="form" name="addUser" onSubmit={handleSubmitData}>
+					<Form className="form" onSubmit={handleSubmitData}>
 						<Form.Group className="mb-3 fields" controlId="formBasicEmail">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
@@ -195,15 +188,6 @@ const AddUser = () => {
 						</Form.Group>
 						<Form.Group className="mb-3 fields">
 							<Form.Label>Number</Form.Label>
-							{/* <Form.Control
-								type="number"
-								placeholder="Enter number"
-								name="number"
-								value={number}
-								pattern="((\+[0-9]{2})|0)[.\- ]?9[0-9]{2}[.\- ]?[0-9]{3}[.\- ]?[0-9]{4}"
-								min="0"
-								onChange={handleInputChange}
-							/> */}
 							<PhoneInput
 								name="number"
 								className="PhoneInput"
@@ -247,23 +231,13 @@ const AddUser = () => {
 						</Form.Group>
 
 						<Form.Group className="mb-3 fields">
-							<Form.Label>Barangay</Form.Label>
-							{/* <Form.Select
-								value={barangaySelect}
-								onChange={(e) => setBarangaySelect(e.target.value)}
-								isSearchable={true}
-							>
-								{BarangayLists.map((barangayList) => (
-									<option key={barangayList.value} value={barangayList.value}>
-										{barangayList.text.toUpperCase()}
-									</option>
-								))}
-							</Form.Select> */}
-							<Select
-								options={BarangayLists}
-								defaultValue={barangaySelect}
-								placeholder="Select a Barangay"
-								onChange={(e) => setBarangaySelect(e.value)}
+							<Form.Label>Type of House</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter Type of House"
+								name="user_type"
+								value={user_type}
+								onChange={handleInputChange}
 							/>
 						</Form.Group>
 
