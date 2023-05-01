@@ -39,17 +39,17 @@ export const TbcData = () => {
 	useEffect(() => {
 		const tbcRef = ref(db, "/Nazareth_TBC_Contributions/");
 		const readData = onValue(tbcRef, (snapshot) => {
-			// const data = snapshot.val();
-			// setTbcData(Object.values(data));
+			const data = snapshot.val();
+			setTbcData(Object.values(data));
 
-			snapshot.forEach((childSnapshot) => {
-				const childKey = childSnapshot.key;
-				const childData = childSnapshot.val();
+			// snapshot.forEach((childSnapshot) => {
+			// 	const childKey = childSnapshot.key;
+			// 	const childData = childSnapshot.val();
 
-				setTbcData(Object.values(childData));
+			// 	setTbcData(Object.values(childData));
 
-				console.log(childKey);
-			});
+			// 	console.log(childKey);
+			// });
 		});
 		return () => {
 			readData(); // return to prevent memory leak
