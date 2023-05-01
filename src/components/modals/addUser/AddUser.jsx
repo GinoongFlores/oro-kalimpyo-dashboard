@@ -21,7 +21,8 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
-import { BarangayLists } from "../../barangayLists/BarangayLists";
+import { BarangayLists } from "../../selectLists/BarangayLists";
+import { UserTypeLists } from "../../selectLists/UserTypeLists";
 
 const initialState = {
 	name: "",
@@ -37,6 +38,7 @@ const initialState = {
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
 	const [barangaySelect, setBarangaySelect] = useState(null);
+	const [userTypeSelect, setUserTypeSelect] = useState(null);
 	const {
 		name,
 		number,
@@ -73,16 +75,13 @@ const AddUser = () => {
 		// const objVal = { ...state, [e.target.name]: e.target.value };
 		// setState(objVal);
 	};
-	console.log(state);
+	// console.log(state);
 
 	const handleNumberChange = (value) => {
 		setNumberValue(value);
 
 		setState({ ...state, number: value });
 	};
-
-	// console.log(barangaySelect);
-	// console.log(state);
 
 	const addUser = () => {
 		createUserWithEmailAndPassword(auth, email, password)
@@ -96,7 +95,7 @@ const AddUser = () => {
 					name: name,
 					number: formatNumber,
 					password: password,
-					user_type: user_type,
+					user_type: userTypeSelect,
 					barangay: barangaySelect,
 					address: address,
 					id: user.uid,
@@ -125,7 +124,7 @@ const AddUser = () => {
 			!email ||
 			!barangaySelect ||
 			!address ||
-			!user_type ||
+			!userTypeSelect ||
 			!password ||
 			!confirm_password
 		) {
@@ -145,8 +144,6 @@ const AddUser = () => {
 			// toast.success("User added successfully");
 		}
 	};
-
-	// console.log(state);
 
 	return (
 		<>
@@ -231,13 +228,12 @@ const AddUser = () => {
 						</Form.Group>
 
 						<Form.Group className="mb-3 fields">
-							<Form.Label>Type of House</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Type of House"
-								name="user_type"
-								value={user_type}
-								onChange={handleInputChange}
+							<Form.Label>User Type</Form.Label>
+							<Select
+								options={UserTypeLists}
+								defaultValue={userTypeSelect}
+								placeholder="Select a User Type"
+								onChange={(e) => setUserTypeSelect(e.value)}
 							/>
 						</Form.Group>
 
