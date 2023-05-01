@@ -4,27 +4,43 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
+import Select from "react-select";
+import PhoneInput from "react-phone-number-input/input";
+import { formatPhoneNumber } from "react-phone-number-input";
 
 import { db } from "../../../firebase";
 import { ref, set, update } from "firebase/database";
+import { BarangayLists } from "../../selectLists/BarangayLists";
+import { UserTypeLists } from "../../selectLists/UserTypeLists";
 
 import "./editUser.scss";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importing Bootstrap CSS
 
 const EditUser = ({ params }) => {
-	const { id, number, address, barangay, gender, name, user_type } = params.row;
+	const { id, number, address, barangay, name, user_type } = params.row;
+	const [barangaySelect, setBarangaySelect] = useState(null);
+	const [userTypeSelect, setUserTypeSelect] = useState(null);
 
 	const initialValue = {
 		id: id,
 		number: number,
 		address: address,
 		barangay: barangay,
-		gender: gender,
 		name: name,
 		user_type: user_type,
 	};
 
+	const regexNumber =
+		/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g;
+
 	const [state, setState] = useState(initialValue); // handles the all the value of the input fields
+
+	const [numberValue, setNumberValue] = useState();
+	const formatNumber = formatPhoneNumber(numberValue);
+	const handleNumberChange = (value) => {
+		setNumberValue(value);
+
+		setState({ ...state, number: value });
+	};
 
 	const [openEdit, setOpenEdit] = useState(false);
 	const handleClickOpenEdit = () => {
@@ -44,12 +60,18 @@ const EditUser = ({ params }) => {
 		if (
 			!state.name ||
 			!state.number ||
-			!state.gender ||
-			!state.user_type ||
-			!state.barangay ||
+			!userTypeSelect ||
+			!barangaySelect ||
 			!state.address
 		) {
 			return toast.error("Please fill in all fields");
+		} else if (regexNumber.test(formatNumber) === false) {
+			toast.error("Please enter a valid Philippine number!");
+		} else if (
+			(formatNumber.length >= 0 && formatNumber.length <= 12) ||
+			formatNumber >= 13
+		) {
+			toast.error("Philippine number is too long!");
 		} else {
 			updateUser();
 		}
@@ -57,31 +79,27 @@ const EditUser = ({ params }) => {
 
 	function updateUser() {
 		// update user
-		const userRef = ref(db, `/Nazareth_Users/${id}`);
-		update(userRef, state);
-		toast.success("User updated successfully");
+		// const userRef = ref(db, `/Nazareth_Users/${id}`);
+		// update(userRef, state);
 
-		// { previous version
-		// 	set(ref(db, "Nazareth_Users/" + id), {
-		// 		id: id,
-		// 		address: state.address,
-		// 		barangay: state.barangay,
-		// 		email: state.email,
-		// 		gender: state.gender,
-		// 		name: state.name,
-		// 		number: state.number,
-		// 		password: state.password,
-		// 		user_type: state.user_type,
-		// 	})
-		// 		.then(() => {
-		// 			// Data saved successfully!
-		// 			// console.log("Data Added");
-		// 		})
-		// 		.catch((error) => {
-		// 			toast.error(error.message);
-		// 			// The write failed...
-		// 		});
-		// }
+		update(ref(db, `/Nazareth_Users/${id}`), {
+			id: id,
+			name: state.name,
+			address: state.address,
+			// email: state.email,
+			number: formatNumber,
+			barangay: barangaySelect,
+			user_type: userTypeSelect,
+		})
+			.then(() => {
+				// Data saved successfully!
+				// console.log("Data Added");
+				toast.success("User updated successfully");
+			})
+			.catch((error) => {
+				toast.error(error.message);
+				// The write failed...
+			});
 	}
 
 	return (
@@ -109,7 +127,7 @@ const EditUser = ({ params }) => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form className="form" onSubmit={handleSubmit}>
-						<Form.Group className="mb-3" controlId="formBasicEmail">
+						<Form.Group className="mb-3 fields" controlId="formBasicEmail">
 							<Form.Label>Name</Form.Label>
 							<Form.Control
 								type="text"
@@ -119,48 +137,38 @@ const EditUser = ({ params }) => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Number</Form.Label>
-							<Form.Control
-								type="number"
-								placeholder="Enter number"
-								name="number"
+							<PhoneInput
+								// name="number"
+								className="PhoneInput"
+								placeholder="Enter a Philippine number"
+								defaultCountry="PH"
 								value={state.number}
-								min="0"
-								onChange={handleInputChange}
+								onChange={handleNumberChange}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
-							<Form.Label>Gender</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Gender"
-								name="gender"
-								value={state.gender}
-								onChange={handleInputChange}
-							/>
-						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Type of House</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Type of House"
-								name="user_type"
-								value={state.user_type}
-								onChange={handleInputChange}
+							<Select
+								options={UserTypeLists}
+								defaultValue={userTypeSelect}
+								// defaultInputValue={state.user_type}
+								// value={state.user_type}
+								placeholder="Select a User Type"
+								onChange={(e) => setUserTypeSelect(e.value)}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Barangay</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Barangay"
-								name="barangay"
-								value={state.barangay}
-								onChange={handleInputChange}
+							<Select
+								options={BarangayLists}
+								defaultValue={barangaySelect}
+								placeholder="Select a Barangay"
+								onChange={(e) => setBarangaySelect(e.value)}
 							/>
 						</Form.Group>
-						<Form.Group className="mb-3">
+						<Form.Group className="mb-3 fields">
 							<Form.Label>Address</Form.Label>
 							<Form.Control
 								type="text"
