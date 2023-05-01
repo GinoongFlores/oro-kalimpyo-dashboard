@@ -42,14 +42,6 @@ export const userColumns = [
 	{
 		headerClassName: "headerTheme",
 
-		field: "gender",
-		headerName: "Gender",
-		width: 100,
-	},
-
-	{
-		headerClassName: "headerTheme",
-
 		field: "email",
 		headerName: "Email",
 		width: 200,

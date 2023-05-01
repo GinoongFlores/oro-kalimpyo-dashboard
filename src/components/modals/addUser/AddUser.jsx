@@ -7,11 +7,14 @@ import { toast } from "react-toastify";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Select from "react-select";
 
 // Firebase
 import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
+
+import { BarangayLists } from "../../barangayLists/BarangayLists";
 
 const initialState = {
 	name: "",
@@ -26,7 +29,7 @@ const initialState = {
 
 const AddUser = () => {
 	const [state, setState] = useState(initialState);
-	const [genderSelect, setGenderSelect] = useState("");
+	const [barangaySelect, setBarangaySelect] = useState(null);
 	const [error, setError] = useState("");
 
 	const {
@@ -67,12 +70,11 @@ const AddUser = () => {
 				set(ref(db, "/Nazareth_Users/" + user.uid), {
 					// set user data to the database with its uid from authentication object and the data from the form input fields
 					email: email,
-					gender: genderSelect,
 					name: name,
 					number: number,
 					password: password,
 					user_type: user_type,
-					barangay: barangay,
+					barangay: barangaySelect,
 					address: address,
 					id: user.uid,
 				});
@@ -95,12 +97,11 @@ const AddUser = () => {
 			!name ||
 			!number ||
 			!email ||
-			!barangay ||
+			!barangaySelect ||
 			!address ||
 			!user_type ||
 			!password ||
-			!confirm_password ||
-			!genderSelect
+			!confirm_password
 		) {
 			return toast.error("Please fill in all fields");
 		} else if (state.password != state.confirm_password) {
@@ -112,7 +113,6 @@ const AddUser = () => {
 		}
 	};
 
-	console.log(genderSelect);
 	// console.log(state);
 
 	return (
@@ -164,33 +164,6 @@ const AddUser = () => {
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
-						{/* <Form.Group className="mb-3 fields">
-							<Form.Label>Gender</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Gender"
-								name="gender"
-								value={gender}
-								onChange={handleInputChange}
-							/>
-						</Form.Group> */}
-						<Form.Group className="mb-3 fields">
-							<Form.Label>Gender</Form.Label>
-							<Form.Select
-								name="gender"
-								onChange={(e) => setGenderSelect(e.target.value)}
-								aria-label="gender"
-								value={genderSelect}
-							>
-								<option value="">Select Gender</option>
-								<option name="gender" value="Male">
-									Male
-								</option>
-								<option name="gender" value="Female">
-									Female
-								</option>
-							</Form.Select>
-						</Form.Group>
 
 						<Form.Group className="mb-3 fields">
 							<Form.Label>Email</Form.Label>
@@ -237,12 +210,11 @@ const AddUser = () => {
 
 						<Form.Group className="mb-3 fields">
 							<Form.Label>Barangay</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Barangay"
-								name="barangay"
-								value={barangay}
-								onChange={handleInputChange}
+							<Select
+								options={BarangayLists}
+								defaultValue={barangaySelect}
+								placeholder="Select a Barangay"
+								onChange={(e) => setBarangaySelect(e.value)}
 							/>
 						</Form.Group>
 						<Form.Group className="mb-3 fields">
