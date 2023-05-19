@@ -42,6 +42,12 @@ export const TbcData = () => {
 			const data = snapshot.val();
 			setTbcData(Object.values(data));
 
+			// if (snapshot.exists()) {
+			// 	setTbcData(Object.values(snapshot.val()));
+			// } else {
+			// 	console.log("No data available");
+			// }
+
 			// snapshot.forEach((childSnapshot) => {
 			// 	const childKey = childSnapshot.key;
 			// 	const childData = childSnapshot.val();
