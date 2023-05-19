@@ -22,6 +22,7 @@ import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
 // Modals
 import ViewTBC from "../modals/viewTBC/ViewTBC";
+import ViewC from "../modals/viewC/ViewC";
 
 const actionColumn = [
 	{
@@ -32,7 +33,9 @@ const actionColumn = [
 		renderCell: (params) => {
 			return (
 				<>
-					<div className="cellAction">{/* <ViewTBC params={params} /> */}</div>
+					<div className="cellAction">
+						<ViewC params={params} />
+					</div>
 				</>
 			);
 		},
@@ -44,28 +47,26 @@ const CompletedData = () => {
 
 	useEffect(() => {
 		const tbcRef = ref(db, "/C_Contributions/");
-		// const readData = onValue(tbcRef, (snapshot) => {
-		// 	const data = snapshot.val();
-		// 	setTbcData(Object.values(data));
-		// });
-
-		const readChildren = onValue(tbcRef, (snapshot) => {
-			snapshot.forEach((childSnapshot) => {
-				const childKey = childSnapshot.key;
-				const childData = childSnapshot.val();
-
-				setTbcData(Object.values(childData));
-
-				console.log(childKey, childData);
-			});
+		const readData = onValue(tbcRef, (snapshot) => {
+			const data = snapshot.val();
+			setTbcData(Object.values(data));
 		});
 
-		console.log(cData);
+		// const readChildren = onValue(tbcRef, (snapshot) => {
+		// 	snapshot.forEach((childSnapshot) => {
+		// 		const childKey = childSnapshot.key;
+		// 		const childData = childSnapshot.val();
+
+		// 		setTbcData(Object.values(childData));
+		// 	});
+		// });
+
+		// console.log(cData);
 
 		return () => {
 			// readData(); // return to prevent memory leak
-			readChildren();
-			// readData();
+			// readChildren();
+			readData();
 		};
 	}, []);
 

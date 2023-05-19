@@ -33,6 +33,15 @@ export const BarangayAdmin = [
 		field: "number",
 		headerName: "Number",
 		width: 120,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.number}</p>
+					</div>
+				</>
+			);
+		},
 	},
 
 	{

@@ -20,7 +20,7 @@ import { userColumns } from "../../dataColumns/UsersTableSource";
 
 // Modals and Pages
 // import EditUser from "../../components/modals/editUser/EditUser";
-// import ViewUser from "../../components/modals/viewUser/ViewUser";
+import ViewUser from "../../components/modals/viewUser/ViewUser";
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);
@@ -35,8 +35,8 @@ const UserData = () => {
 				return (
 					<>
 						<div className="cellAction">
-							{/* <ViewUser params={params} />
-							<EditUser params={params} /> */}
+							<ViewUser params={params} />
+							{/* <EditUser params={params} /> */}
 							<button
 								onClick={() => handleDelete(params.row.id)}
 								className="deleteButton"
