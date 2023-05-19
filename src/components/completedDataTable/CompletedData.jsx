@@ -46,29 +46,27 @@ const CompletedData = () => {
 	const [cData, setTbcData] = useState([]);
 
 	useEffect(() => {
-		const tbcRef = ref(db, "/Specific_C_Contributions/");
-		// const readData = onValue(tbcRef, (snapshot) => {
-		// 	const data = snapshot.val();
-		// 	setTbcData(Object.values(data));
-		// });
-
-		const readChildren = onValue(tbcRef, (snapshot) => {
-			snapshot.forEach((childSnapshot) => {
-				const childKey = childSnapshot.key;
-				const childData = childSnapshot.val();
-
-				setTbcData(Object.values(childData));
-
-				// console.log(childKey, childData);
-			});
+		const tbcRef = ref(db, "/C_Contributions/");
+		const readData = onValue(tbcRef, (snapshot) => {
+			const data = snapshot.val();
+			setTbcData(Object.values(data));
 		});
+
+		// const readChildren = onValue(tbcRef, (snapshot) => {
+		// 	snapshot.forEach((childSnapshot) => {
+		// 		const childKey = childSnapshot.key;
+		// 		const childData = childSnapshot.val();
+
+		// 		setTbcData(Object.values(childData));
+		// 	});
+		// });
 
 		// console.log(cData);
 
 		return () => {
 			// readData(); // return to prevent memory leak
-			readChildren();
-			// readData();
+			// readChildren();
+			readData();
 		};
 	}, []);
 
