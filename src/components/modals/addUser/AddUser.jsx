@@ -34,7 +34,7 @@ const initialState = {
 };
 
 const AddUser = () => {
-	const [state, setState] = useState(initialState);
+	const [state, setState] = useState(initialState)
 	const [barangaySelect, setBarangaySelect] = useState(null);
 	const { name, number, email, password, confirm_password, address } = state;
 	const [numberValue, setNumberValue] = useState();
@@ -45,7 +45,7 @@ const AddUser = () => {
 	const regexNumber =
 		/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/g;
 
-	// console.log(regexNumber.test(possibleNumber));
+	// console.log(regexNumber.test(possibleNumber))
 
 	// Modal
 	const [openAdd, setOpenAdd] = useState(false);
@@ -119,7 +119,7 @@ const AddUser = () => {
 		if (
 			!password ||
 			!confirm_password ||
-			!name ||
+			!name |
 			!formatNumber ||
 			!email ||
 			!barangaySelect ||
