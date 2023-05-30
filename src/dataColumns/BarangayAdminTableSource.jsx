@@ -32,7 +32,7 @@ export const BarangayAdmin = [
 		headerClassName: "headerTheme",
 		field: "number",
 		headerName: "Number",
-		width: 120,
+		width: 200,
 		renderCell: (props) => {
 			return (
 				<>
@@ -48,7 +48,7 @@ export const BarangayAdmin = [
 		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
-		width: 190,
+		width: 200,
 		renderCell: (props) => {
 			return (
 				<>
@@ -62,13 +62,6 @@ export const BarangayAdmin = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "password",
-		headerName: "Password",
-		width: 120,
-	},
-
-	{
-		headerClassName: "headerTheme",
 		field: "barangay",
 		headerName: "Barangay",
 		width: 150,
@@ -78,7 +71,7 @@ export const BarangayAdmin = [
 		headerClassName: "headerTheme",
 		field: "address",
 		headerName: "Address",
-		width: 190,
+		width: 250,
 
 		renderCell: (props) => {
 			return (
