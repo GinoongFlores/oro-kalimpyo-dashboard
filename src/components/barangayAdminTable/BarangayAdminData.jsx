@@ -15,7 +15,7 @@ import { ref, onValue, remove, set } from "firebase/database";
 import { BarangayAdmin } from "../../dataColumns/BarangayAdminTableSource";
 
 // Modals and Pages
-// import EditUser from "../../components/modals/editUser/EditUser";
+import EditUser from "../../components/modals/editUser/EditUser";
 // import ViewUser from "../../components/modals/viewUser/ViewUser";
 
 const BarangayAdminData = () => {
@@ -26,13 +26,12 @@ const BarangayAdminData = () => {
 			field: "action",
 			headerName: "Action",
 			headerClassName: "headerTheme",
-			width: 200,
+			width: 150,
 			renderCell: (params) => {
 				return (
 					<>
 						<div className="cellAction">
-							{/* <ViewUser params={params} />
-							<EditUser params={params} /> */}
+							<EditUser params={params} />
 							<button
 								onClick={() => handleDelete(params.row.id)}
 								className="deleteButton"
