@@ -87,7 +87,7 @@ const Login = () => {
 						onChange={handleInputChange}
 					/>
 				</Form.Group>
-				<Form.Group className="mb-3">
+				<Form.Group className="mb-3 password">
 					<Form.Label>Password</Form.Label>
 					<Form.Control
 						type={showPassword ? "text" : "password"}
@@ -97,7 +97,6 @@ const Login = () => {
 						name="password"
 						onChange={handleInputChange}
 					/>
-
 					<i onClick={togglePasswordVisibility}>
 						{showPassword ? (
 							<VisibilityOffRoundedIcon className="icon" />

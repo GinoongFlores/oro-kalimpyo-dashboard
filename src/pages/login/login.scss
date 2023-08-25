@@ -17,11 +17,17 @@
 			margin-bottom: 2.5rem;
 		}
 
-		.icon {
+		.password {
 			position: relative;
+		}
+
+		.icon {
+			position: absolute;
 			cursor: pointer;
-			bottom: 30px;
-			left: 300px;
+			top: 40px;
+			bottom: 0px;
+			right: 18px;
+			// left: 300px;
 		}
 	}
 
