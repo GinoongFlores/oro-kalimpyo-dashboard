@@ -7,13 +7,6 @@ export const userColumns = [
 		width: 50,
 	},
 
-	// {
-
-	// 	field: "id",
-	// 	headerName: "ID",
-	// 	width: 100,
-	// },
-
 	{
 		headerClassName: "headerTheme",
 
@@ -42,9 +35,25 @@ export const userColumns = [
 	{
 		headerClassName: "headerTheme",
 
-		field: "gender",
-		headerName: "Gender",
-		width: 100,
+		field: "household_type",
+		headerName: "Household Type",
+		width: 120,
+	},
+
+	{
+		headerClassName: "headerTheme",
+
+		field: "establishment_type",
+		headerName: "Establishment Type",
+		width: 180,
+	},
+
+	{
+		headerClassName: "headerTheme",
+
+		field: "user_type",
+		headerName: "User Type",
+		width: 120,
 	},
 
 	{
@@ -67,34 +76,32 @@ export const userColumns = [
 	{
 		headerClassName: "headerTheme",
 
-		field: "user_type",
-		headerName: "Type of HouseHold",
+		field: "location",
+		headerName: "Location",
 		width: 200,
 	},
 
 	{
 		headerClassName: "headerTheme",
 
-		field: "barangay",
-		headerName: "Barangay",
-		width: 150,
+		field: "biodegradable",
+		headerName: "Biodegradable",
+		width: 120,
 	},
 
 	{
 		headerClassName: "headerTheme",
 
-		field: "address",
-		headerName: "Address",
-		width: 230,
+		field: "recyclable",
+		headerName: "Recyclable",
+		width: 120,
+	},
 
-		renderCell: (props) => {
-			return (
-				<>
-					<div className={`cellWidth ${props.row.address}`}>
-						<p>{props.row.address}</p>
-					</div>
-				</>
-			);
-		},
+	{
+		headerClassName: "headerTheme",
+
+		field: "residual",
+		headerName: "Residual",
+		width: 120,
 	},
 ];

@@ -1,43 +1,30 @@
 export const TbcTableSource = [
 	{
 		headerClassName: "headerTheme",
+
 		field: "list",
 		headerName: "#",
 		width: 50,
 	},
 
+	// {
+
+	// 	field: "id",
+	// 	headerName: "ID",
+	// 	width: 100,
+	// },
+
 	{
 		headerClassName: "headerTheme",
+
 		field: "name",
 		headerName: "Name",
 		width: 150,
-	},
-
-	{
-		headerClassName: "headerTheme",
-		field: "number",
-		headerName: "Number",
-		width: 150,
-	},
-
-	{
-		headerClassName: "headerTheme",
-		field: "type",
-		headerName: "Type of HouseHold",
-		width: 200,
-	},
-
-	{
-		headerClassName: "headerTheme",
-		field: "address",
-		headerName: "Address",
-		width: 190,
-
 		renderCell: (props) => {
 			return (
 				<>
-					<div className={`cellWidth ${props.row.address}`}>
-						<p>{props.row.address}</p>
+					<div className="cellWidth">
+						<p>{props.row.name}</p>
 					</div>
 				</>
 			);
@@ -46,36 +33,68 @@ export const TbcTableSource = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "barangay",
-		headerName: "Barangay",
+
+		field: "number",
+		headerName: "Number",
 		width: 150,
 	},
 
 	{
 		headerClassName: "headerTheme",
-		field: "brand",
-		headerName: "Brand Collected",
-		width: 150,
+
+		field: "collector_type",
+		headerName: "Collector Type",
+		width: 200,
 	},
 
 	{
 		headerClassName: "headerTheme",
-		field: "kilo",
-		headerName: "Kilo",
-		width: 100,
+
+		field: "email",
+		headerName: "Email",
+		width: 200,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className={`cellWidth ${props.row.email}`}>
+						<p>{props.row.email}</p>
+					</div>
+				</>
+			);
+		},
 	},
 
 	{
 		headerClassName: "headerTheme",
-		field: "plastic",
-		headerName: "Type of Plastics",
-		width: 150,
+
+		field: "contact_person",
+		headerName: "Contact Person",
+		width: 200,
 	},
 
 	{
 		headerClassName: "headerTheme",
-		field: "date",
-		headerName: "Date",
+
+		field: "user_type",
+		headerName: "User Type",
 		width: 150,
 	},
+
+	// {
+	// 	headerClassName: "headerTheme",
+
+	// 	field: "address",
+	// 	headerName: "Address",
+	// 	width: 230,
+
+	// 	renderCell: (props) => {
+	// 		return (
+	// 			<>
+	// 				<div className={`cellWidth ${props.row.address}`}>
+	// 					<p>{props.row.address}</p>
+	// 				</div>
+	// 			</>
+	// 		);
+	// 	},
+	// },
 ];
