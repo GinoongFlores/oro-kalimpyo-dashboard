@@ -1,26 +1,26 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: import.meta.env.VITE_REACT_APP_FIREBASE_KEY,
-	authDomain: import.meta.env.VITE_REACT_APP_FIREBASE_AUTH_DOMAIN,
-	databaseURL: "https://orokalimpyo-default-rtdb.firebaseio.com",
-	projectId: "orokalimpyo",
-	storageBucket: "orokalimpyo.appspot.com",
-	messagingSenderId: "772158884703",
-	appId: "1:772158884703:web:9a4cb8d12bffbd769c04ea",
-	measurementId: "G-8T329G2ZVR",
+	apiKey: "AIzaSyD8i4nwHYWBTj5-APkLJn7ZmTuSSNygOY0",
+	authDomain: "orokalimpyo-ok.firebaseapp.com",
+	databaseURL: "https://orokalimpyo-ok-default-rtdb.firebaseio.com",
+	projectId: "orokalimpyo-ok",
+	storageBucket: "orokalimpyo-ok.appspot.com",
+	messagingSenderId: "267363004626",
+	appId: "1:267363004626:web:f1f0d6209044a20d87fd0b",
+	measurementId: "G-ZD3ML2CFH8",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app);
+export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 // const analytics = getAnalytics(app);
