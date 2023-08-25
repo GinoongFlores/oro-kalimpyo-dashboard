@@ -48,39 +48,38 @@ const BarangayAdminData = () => {
 	const handleDelete = (id) => {
 		// console.log(id);
 		// delete also the user for the authentication
-		if (window.confirm("Are you sure you want to delete this admin?")) {
-			const userRef = ref(db, `/BarangayAdmin/${id}`);
-			// console.log(`/Nazareth_Users/${id}`);
-			// console.log(userRef);
-			remove(userRef)
-				.then(() => {
-					setUserData(userData.filter((user) => user.id !== id));
-					toast.success("Admin deleted successfully");
-				})
-				.catch((error) => {
-					toast.error(error.message);
-				});
-
-			// const user = auth.currentUser;
-			// if (user) {
-			// 	user.delete().then((result) => {
-			// 		console.log(result);
-			// 	});
-			// }
-		}
+		// if (window.confirm("Are you sure you want to delete this admin?")) {
+		// 	const userRef = ref(db, `/BarangayAdmin/${id}`);
+		// 	// console.log(`/Nazareth_Users/${id}`);
+		// 	// console.log(userRef);
+		// 	remove(userRef)
+		// 		.then(() => {
+		// 			setUserData(userData.filter((user) => user.id !== id));
+		// 			toast.success("Admin deleted successfully");
+		// 		})
+		// 		.catch((error) => {
+		// 			toast.error(error.message);
+		// 		});
+		// 	// const user = auth.currentUser;
+		// 	// if (user) {
+		// 	// 	user.delete().then((result) => {
+		// 	// 		console.log(result);
+		// 	// 	});
+		// 	// }
+		// }
 	};
 
 	// Read data from firebase database
-	const getData = () => {
-		const usersRef = ref(db, "/BarangayAdmin/");
-		const readData = onValue(usersRef, (snapshot) => {
-			const data = snapshot.val();
-			setUserData(Object.values(data));
-		});
-	};
-	useEffect(() => {
-		getData();
-	}, []);
+	// const getData = () => {
+	// 	const usersRef = ref(db, "/BarangayAdmin/");
+	// 	const readData = onValue(usersRef, (snapshot) => {
+	// 		const data = snapshot.val();
+	// 		setUserData(Object.values(data));
+	// 	});
+	// };
+	// useEffect(() => {
+	// 	getData();
+	// }, []);
 
 	return (
 		<>
