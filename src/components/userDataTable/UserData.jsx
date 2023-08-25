@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 
 // Firebase
 import { db } from "../../firebase";
-import { ref, onValue, remove, set } from "firebase/database";
 
 // Firebase auth
 import { auth } from "../../firebase";
@@ -21,6 +20,15 @@ import { userColumns } from "../../dataColumns/UsersTableSource";
 // Modals and Pages
 // import EditUser from "../../components/modals/editUser/EditUser";
 import ViewUser from "../../components/modals/viewUser/ViewUser";
+import {
+	collection,
+	doc,
+	onSnapshot,
+	query,
+	getDocs,
+	where,
+	getDoc,
+} from "firebase/firestore";
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);
@@ -35,14 +43,14 @@ const UserData = () => {
 				return (
 					<>
 						<div className="cellAction">
-							<ViewUser params={params} />
+							{/* <ViewUser params={params} /> */}
 							{/* <EditUser params={params} /> */}
-							<button
+							{/* <button
 								onClick={() => handleDelete(params.row.id)}
 								className="deleteButton"
 							>
 								Delete
-							</button>
+							</button> */}
 						</div>
 					</>
 				);
@@ -50,47 +58,66 @@ const UserData = () => {
 		},
 	];
 
-	const handleDelete = (id) => {
-		// console.log(id);
-		// delete also the user for the authentication
-		if (window.confirm("Are you sure you want to delete this user?")) {
-			const userRef = ref(db, `/Users/${id}`);
-			// console.log(`/Nazareth_Users/${id}`);
-			// console.log(userRef);
-			remove(userRef)
-				.then(() => {
-					setUserData(userData.filter((user) => user.id !== id));
-					toast.success("User deleted successfully");
-				})
-				.catch((error) => {
-					toast.error(error.message);
-				});
+	// const handleDelete = (id) => {
+	// 	// console.log(id);
+	// 	// delete also the user for the authentication
+	// 	if (window.confirm("Are you sure you want to delete this user?")) {
+	// 		const userRef = ref(db, `/Waste Collector/${id}`);
+	// 		// console.log(`/Nazareth_Users/${id}`);
+	// 		// console.log(userRef);
+	// 		remove(userRef)
+	// 			.then(() => {
+	// 				setUserData(userData.filter((user) => user.id !== id));
+	// 				toast.success("User deleted successfully");
+	// 			})
+	// 			.catch((error) => {
+	// 				toast.error(error.message);
+	// 			});
 
-			// const user = auth.currentUser;
-			// if (user) {
-			// 	user.delete().then((result) => {
-			// 		console.log(result);
-			// 	});
-			// }
-		}
-	};
+	// 		// const user = auth.currentUser;
+	// 		// if (user) {
+	// 		// 	user.delete().then((result) => {
+	// 		// 		console.log(result);
+	// 		// 	});
+	// 		// }
+	// 	}
+	// };
 
 	// Read data from firebase database
-	const getData = () => {
-		const usersRef = ref(db, "/Users/");
-		const readData = onValue(usersRef, (snapshot) => {
-			const data = snapshot.val();
-			setUserData(Object.values(data));
+	const q = query(collection(db, "Waste Generator"));
+	let unsubscribe;
+	const getData = async () => {
+		// const userContributionsRef = collection(db, "User Contribution");
+		// const querySnapshot = await getDocs(userContributionsRef);
+		// const data = [];
+		// querySnapshot.forEach(async (doc) => {
+		// 	const contributionsRef = collection(doc.ref, "Contributions");
+		// 	const querySnapshot2 = await getDocs(contributionsRef);
+		// 	querySnapshot2.forEach((doc2) => {
+		// 		data.push({ ...doc2.data(), id: doc2.id });
+		// 		console.log("data: ", doc2.data());
+		// 	});
+		// 	setUserData(data);
+		// });
+		unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				data.push({ ...doc.data(), id: doc.id });
+			});
+			setUserData(data);
 		});
 	};
 	useEffect(() => {
 		getData();
+		return () => {
+			unsubscribe();
+		};
 	}, []);
 
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Barangay Users</div>
+				<div className="dataTableTitle">Waste Generators</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						{userData && (
@@ -98,6 +125,7 @@ const UserData = () => {
 								rows={userData.map((user, index) => {
 									return {
 										...user,
+										// id: index + 1,
 										list: index + 1,
 									};
 								})}

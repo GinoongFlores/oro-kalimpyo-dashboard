@@ -7,14 +7,7 @@ import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../firebase";
-import {
-	ref,
-	onValue,
-	onChildAdded,
-	onChildChanged,
-	child,
-	getDatabase,
-} from "firebase/database";
+import { onSnapshot, doc, setDoc, collection, query } from "firebase/firestore";
 
 // Table Columns
 import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
@@ -44,36 +37,30 @@ const actionColumn = [
 
 const CompletedData = () => {
 	const [cData, setTbcData] = useState([]);
+	const q = query(collection(db, "Waste Consolidator"));
+	let unsubscribe;
+
+	const getData = () => {
+		unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				data.push({ ...doc.data(), id: doc.id });
+			});
+			setTbcData(data);
+		});
+	};
 
 	useEffect(() => {
-		const tbcRef = ref(db, "/C_Contributions/");
-		const readData = onValue(tbcRef, (snapshot) => {
-			const data = snapshot.val();
-			setTbcData(Object.values(data));
-		});
-
-		// const readChildren = onValue(tbcRef, (snapshot) => {
-		// 	snapshot.forEach((childSnapshot) => {
-		// 		const childKey = childSnapshot.key;
-		// 		const childData = childSnapshot.val();
-
-		// 		setTbcData(Object.values(childData));
-		// 	});
-		// });
-
-		// console.log(cData);
-
+		getData();
 		return () => {
-			// readData(); // return to prevent memory leak
-			// readChildren();
-			readData();
+			unsubscribe();
 		};
 	}, []);
 
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Completed Contributions</div>
+				<div className="dataTableTitle">Waste Consolidator</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
@@ -84,7 +71,7 @@ const CompletedData = () => {
 										list: index + 1,
 									};
 								})}
-								columns={CompletedTableSource.concat(actionColumn)}
+								columns={CompletedTableSource}
 								pageSize={9}
 								rowsPerPageOptions={[9]}
 								// getRowId={(row) => rows.id}

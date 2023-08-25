@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../firebase";
-import { ref, onValue } from "firebase/database";
+import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
 
 // Table Columns
 import { TbcTableSource } from "../../dataColumns/TbcTableSource";
@@ -35,15 +35,18 @@ const actionColumn = [
 
 export const TbcData = () => {
 	const [tbcData, setTbcData] = useState([]);
-
+	const q = query(collection(db, "Waste Collector"));
+	let unsubscribe;
 	useEffect(() => {
-		const tbcRef = ref(db, "/TBC_Contributions/");
-		const readData = onValue(tbcRef, (snapshot) => {
-			const data = snapshot.val();
-			setTbcData(Object.values(data));
+		unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				data.push({ ...doc.data(), id: doc.id });
+			});
+			setTbcData(data);
 		});
 		return () => {
-			readData(); // return to prevent memory leak
+			unsubscribe(); // return to prevent memory leak
 		};
 	}, []);
 
@@ -52,7 +55,7 @@ export const TbcData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Pending Contributions</div>
+				<div className="dataTableTitle">Waste Collector</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
@@ -63,10 +66,10 @@ export const TbcData = () => {
 										list: index + 1,
 									};
 								})}
-								columns={TbcTableSource.concat(actionColumn)}
+								columns={TbcTableSource}
 								pageSize={9}
 								rowsPerPageOptions={[9]}
-								// getRowId={(row) => rows.id}
+								getRowId={(row) => row.id}
 								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
 							/>
