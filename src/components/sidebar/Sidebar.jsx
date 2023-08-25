@@ -39,21 +39,21 @@ const Sidebar = () => {
 					<Link to="/users" className="sidebarLink">
 						<li>
 							<PeopleRoundedIcon className="icon" />
-							<span>Barangay Users</span>
+							<span>Users</span>
 						</li>
 					</Link>
 
 					<Link to="/tbc" className="sidebarLink">
 						<li>
 							<AutoDeleteRoundedIcon className="icon" />
-							<span>Uncollected</span>
+							<span>Collectors</span>
 						</li>
 					</Link>
 
 					<Link to="/completed" className="sidebarLink">
 						<li>
 							<PublishedWithChangesRoundedIcon className="icon" />
-							<span>Completed</span>
+							<span>Consolidators</span>
 						</li>
 					</Link>
 
