@@ -21,7 +21,7 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
-import { BarangayLists } from "../../barangayLists/BarangayLists";
+import { BarangayLists } from "../../../dataColumns/BarangayLists";
 
 const initialState = {
 	name: "",
@@ -34,7 +34,7 @@ const initialState = {
 };
 
 const AddUser = () => {
-	const [state, setState] = useState(initialState)
+	const [state, setState] = useState(initialState);
 	const [barangaySelect, setBarangaySelect] = useState(null);
 	const { name, number, email, password, confirm_password, address } = state;
 	const [numberValue, setNumberValue] = useState();
@@ -119,8 +119,7 @@ const AddUser = () => {
 		if (
 			!password ||
 			!confirm_password ||
-			!name |
-			!formatNumber ||
+			!name | !formatNumber ||
 			!email ||
 			!barangaySelect ||
 			!address

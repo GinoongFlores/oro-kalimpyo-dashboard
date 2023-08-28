@@ -1,4 +1,4 @@
-import "./tbcData.scss";
+import "./consolidator.scss";
 
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -6,14 +6,12 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Firebase
-import { db } from "../../firebase";
-import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { onSnapshot, doc, setDoc, collection, query } from "firebase/firestore";
 
 // Table Columns
-import { TbcTableSource } from "../../dataColumns/TbcTableSource";
-
-// Modals
-import ViewTBC from "../modals/viewTBC/ViewTBC";
+import { CompletedTableSource } from "../../../dataColumns/CompletedTableSource";
+// import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
 const actionColumn = [
 	{
@@ -25,7 +23,7 @@ const actionColumn = [
 			return (
 				<>
 					<div className="cellAction">
-						<ViewTBC params={params} />
+						<ViewC params={params} />
 					</div>
 				</>
 			);
@@ -33,11 +31,12 @@ const actionColumn = [
 	},
 ];
 
-export const TbcData = () => {
-	const [tbcData, setTbcData] = useState([]);
-	const q = query(collection(db, "Waste Collector"));
+const Consolidator = () => {
+	const [cData, setTbcData] = useState([]);
+	const q = query(collection(db, "Waste Consolidator"));
 	let unsubscribe;
-	useEffect(() => {
+
+	const getData = () => {
 		unsubscribe = onSnapshot(q, (querySnapshot) => {
 			const data = [];
 			querySnapshot.forEach((doc) => {
@@ -45,31 +44,33 @@ export const TbcData = () => {
 			});
 			setTbcData(data);
 		});
+	};
+
+	useEffect(() => {
+		getData();
 		return () => {
-			unsubscribe(); // return to prevent memory leak
+			unsubscribe();
 		};
 	}, []);
-
-	// console.log(tbcData);
 
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Waste Collector</div>
+				<div className="dataTableTitle">Waste Consolidator</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
-								rows={tbcData.map((user, index) => {
+								rows={cData.map((user, index) => {
 									return {
 										...user,
 										list: index + 1,
 									};
 								})}
-								columns={TbcTableSource}
+								columns={CompletedTableSource}
 								pageSize={9}
 								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
+								// getRowId={(row) => rows.id}
 								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
 							/>
@@ -80,3 +81,5 @@ export const TbcData = () => {
 		</>
 	);
 };
+
+export default Consolidator;

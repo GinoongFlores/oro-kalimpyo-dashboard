@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .cellWidth {
 	white-space: normal;
 	word-wrap: break-word;
@@ -5,10 +9,10 @@
 
 .cellWidth p {
 	margin-bottom: 0px;
-	// color: blue;
+	/* color: blue; */
 }
 
-// header theme for the every table
+/* header theme for the every table */
 .headerTheme {
 	background-color: #0a9351;
 	color: white;

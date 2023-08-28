@@ -8,18 +8,19 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 // Firebase
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 
 // Firebase auth
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 // Table Columns
-import { userColumns } from "../../dataColumns/UsersTableSource";
+import { userColumns } from "../../../dataColumns/UsersTableSource";
 
 // Modals and Pages
 // import EditUser from "../../components/modals/editUser/EditUser";
-import ViewUser from "../../components/modals/viewUser/ViewUser";
+// import ViewUser from "../modals/viewUser/ViewUser";
+
 import {
 	collection,
 	doc,

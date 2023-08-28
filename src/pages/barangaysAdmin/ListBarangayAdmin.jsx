@@ -1,16 +1,16 @@
 import "./listBarangayAdmin.scss";
 
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import BarangayAdminData from "../../components/barangayAdminTable/BarangayAdminData";
+import NavbarLink from "../../components/navbar/NavbarLink";
+// import Sidebar from "../../components/sidebar/Sidebar";
+import BarangayAdminData from "../../components/tables/barangayAdminTable/BarangayAdminData";
 import AddUser from "../../components/modals/addUser/AddUser";
 
 const ListBarangayAdmin = () => {
 	return (
 		<div className="listBarangayAdmin">
-			<Sidebar />
+			{/* <Sidebar /> */}
 			<div className="listContainer">
-				<Navbar />
+				<NavbarLink />
 				<AddUser />
 				<BarangayAdminData />
 			</div>

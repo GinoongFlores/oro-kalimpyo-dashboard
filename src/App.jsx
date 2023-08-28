@@ -1,4 +1,4 @@
-import "./style/overall.scss";
+import "./index.css";
 
 // Packages
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -11,10 +11,10 @@ import { useAuth } from "./context/UserAuthContext";
 
 // Pages
 import Home from "./pages/home/Home";
-import ListUser from "./pages/listUsers/ListUser";
-import ListTBC from "./pages/listTBC/ListTBC";
-import ListCompleted from "./pages/listCompleted/ListCompleted";
-import ListBarangayAdmin from "./pages/listBarangayAdmin/ListBarangayAdmin";
+import ListUser from "./pages/users/ListUser";
+import ListCollector from "./pages/collector/ListCollector";
+import ListConsolidator from "./pages/consolidator/ListConsolidator";
+import ListBarangayAdmin from "./pages/barangaysAdmin/ListBarangayAdmin";
 import AddUser from "./components/modals/addUser/AddUser";
 import Login from "./pages/login/Login";
 
@@ -57,18 +57,18 @@ function App() {
 						}
 					/>
 					<Route
-						path="tbc"
+						path="collectors"
 						element={
 							<RequireAuth>
-								<ListTBC />
+								<ListCollector />
 							</RequireAuth>
 						}
 					/>
 					<Route
-						path="completed"
+						path="consolidators"
 						element={
 							<RequireAuth>
-								<ListCompleted />
+								<ListConsolidator />
 							</RequireAuth>
 						}
 					/>

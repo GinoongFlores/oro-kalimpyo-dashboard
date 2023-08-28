@@ -43,14 +43,14 @@ const Sidebar = () => {
 						</li>
 					</Link>
 
-					<Link to="/tbc" className="sidebarLink">
+					<Link to="/collectors" className="sidebarLink">
 						<li>
 							<AutoDeleteRoundedIcon className="icon" />
 							<span>Collectors</span>
 						</li>
 					</Link>
 
-					<Link to="/completed" className="sidebarLink">
+					<Link to="/consolidators" className="sidebarLink">
 						<li>
 							<PublishedWithChangesRoundedIcon className="icon" />
 							<span>Consolidators</span>

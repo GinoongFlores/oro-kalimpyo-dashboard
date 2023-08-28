@@ -1,4 +1,4 @@
-import "./completedData.scss";
+import "./collector.scss";
 
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -6,16 +6,14 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Firebase
-import { db } from "../../firebase";
-import { onSnapshot, doc, setDoc, collection, query } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
 
 // Table Columns
-import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
-// import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
+import { TbcTableSource } from "../../../dataColumns/TbcTableSource";
 
 // Modals
-import ViewTBC from "../modals/viewTBC/ViewTBC";
-import ViewC from "../modals/viewC/ViewC";
+// import ViewTBC from "../modals/viewTBC/ViewTBC";
 
 const actionColumn = [
 	{
@@ -27,7 +25,7 @@ const actionColumn = [
 			return (
 				<>
 					<div className="cellAction">
-						<ViewC params={params} />
+						<ViewTBC params={params} />
 					</div>
 				</>
 			);
@@ -35,12 +33,11 @@ const actionColumn = [
 	},
 ];
 
-const CompletedData = () => {
-	const [cData, setTbcData] = useState([]);
-	const q = query(collection(db, "Waste Consolidator"));
+const Collector = () => {
+	const [tbcData, setTbcData] = useState([]);
+	const q = query(collection(db, "Waste Collector"));
 	let unsubscribe;
-
-	const getData = () => {
+	useEffect(() => {
 		unsubscribe = onSnapshot(q, (querySnapshot) => {
 			const data = [];
 			querySnapshot.forEach((doc) => {
@@ -48,33 +45,31 @@ const CompletedData = () => {
 			});
 			setTbcData(data);
 		});
-	};
-
-	useEffect(() => {
-		getData();
 		return () => {
-			unsubscribe();
+			unsubscribe(); // return to prevent memory leak
 		};
 	}, []);
+
+	// console.log(tbcData);
 
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Waste Consolidator</div>
+				<div className="dataTableTitle">Waste Collector</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
-								rows={cData.map((user, index) => {
+								rows={tbcData.map((user, index) => {
 									return {
 										...user,
 										list: index + 1,
 									};
 								})}
-								columns={CompletedTableSource}
+								columns={TbcTableSource}
 								pageSize={9}
 								rowsPerPageOptions={[9]}
-								// getRowId={(row) => rows.id}
+								getRowId={(row) => row.id}
 								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
 							/>
@@ -86,4 +81,4 @@ const CompletedData = () => {
 	);
 };
 
-export default CompletedData;
+export default Collector;

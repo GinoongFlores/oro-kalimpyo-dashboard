@@ -8,14 +8,13 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 // Firebase
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import { ref, onValue, remove, set } from "firebase/database";
 
 // Table Columns
-import { BarangayAdmin } from "../../dataColumns/BarangayAdminTableSource";
+import { BarangayAdmin } from "../../../dataColumns/BarangayAdminTableSource";
 
 // Modals and Pages
-import EditUser from "../../components/modals/editUser/EditUser";
 // import ViewUser from "../../components/modals/viewUser/ViewUser";
 
 const BarangayAdminData = () => {
