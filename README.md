@@ -1,5 +1,5 @@
 # CRUD Database in REACT JS
-# Hey Jaycon
+
 ## This hotfix branch is for code refactoring
 
 ## Tasks
