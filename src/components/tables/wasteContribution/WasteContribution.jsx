@@ -10,52 +10,34 @@ import HomeBody from "../../../pages/home/HomeBody";
 
 // Table Columns
 import { contributionColumn } from "./ContributionColumn";
+import useFetch from "../../../hooks/useFetch";
 
 const WasteContribution = () => {
-	const [userData, setUserData] = useState([]);
+	const { data } = useFetch("Waste Contribution");
 
-	// Read data from firebase database
-	const q = query(collection(db, "Waste Contribution"));
-	let unsubscribe;
-	const getData = async () => {
-		unsubscribe = onSnapshot(q, (querySnapshot) => {
-			const data = [];
-			querySnapshot.forEach((doc) => {
-				data.push({ ...doc.data(), id: doc.id });
-			});
-			setUserData(data);
-		});
-	};
-	useEffect(() => {
-		getData();
-		return () => {
-			unsubscribe();
-		};
-	}, []);
-
+	// console.log(data)
 	return (
 		<>
 			<div className="dataTable">
 				<div className="text-xl py-6">Waste Contributions</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
-						{userData && (
-							<DataGrid
-								rows={userData.map((user, index) => {
-									return {
-										...user,
-										// id: index + 1,
-										list: index + 1,
-									};
-								})}
-								columns={contributionColumn}
-								pageSize={9}
-								density="comfortable"
-								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
-								components={{ Toolbar: GridToolbar }}
-							/>
-						)}
+						<DataGrid
+							rows={data?.map((user, index) => {
+								return {
+									...user,
+									// id: index + 1,
+									list: index + 1,
+								};
+							})}
+							columns={contributionColumn}
+							pageSize={9}
+							density="comfortable"
+							rowsPerPageOptions={[9]}
+							getRowId={(row) => row.id}
+							components={{ Toolbar: GridToolbar }}
+						/>
+
 					</div>
 				</div>
 			</div>

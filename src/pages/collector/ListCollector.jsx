@@ -1,6 +1,7 @@
 import NavbarLink from "../../components/navbar/NavbarLink";
 // import Sidebar from "../../components/sidebar/Sidebar";
 import Collector from "../../components/tables/collector/Collector";
+import UnCollectedWaste from "../../components/tables/uncollectedWaste/UnCollectedWaste";
 
 const ListCollector = () => {
 	return (
@@ -9,6 +10,7 @@ const ListCollector = () => {
 			<NavbarLink />
 			<div className="p-12 pt-0">
 				<Collector />
+				<UnCollectedWaste />
 			</div>
 		</div>
 	);
