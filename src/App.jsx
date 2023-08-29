@@ -6,8 +6,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// UserAuth
-import { useAuth } from "./context/UserAuthContext";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+const theme = createTheme({
+	typography: {
+		fontFamily: "Poppins",
+	},
+});
 
 // Pages
 import Home from "./pages/home/Home";
@@ -35,61 +40,63 @@ function App() {
 				draggablePercent={60}
 				autoClose={3000}
 			/>
-			<Routes>
-				<Route path="/">
-					<Route path="login" element={<Login />} />
-					<Route
-						index
-						// path="home"
-						element={
-							<RequireAuth>
-								<Home />
-							</RequireAuth>
-						}
-					/>
-					{/* <Route path="home" element={<Home />} /> */}
-					<Route
-						path="users"
-						element={
-							<RequireAuth>
-								<ListUser />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path="collectors"
-						element={
-							<RequireAuth>
-								<ListCollector />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path="consolidators"
-						element={
-							<RequireAuth>
-								<ListConsolidator />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path="barangay-admin"
-						element={
-							<RequireAuth>
-								<ListBarangayAdmin />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path="add"
-						element={
-							<RequireAuth>
-								<AddUser />
-							</RequireAuth>
-						}
-					/>
-				</Route>
-			</Routes>
+			<ThemeProvider theme={theme}>
+				<Routes>
+					<Route path="/">
+						<Route path="login" element={<Login />} />
+						<Route
+							index
+							// path="home"
+							element={
+								<RequireAuth>
+									<Home />
+								</RequireAuth>
+							}
+						/>
+						{/* <Route path="home" element={<Home />} /> */}
+						<Route
+							path="users"
+							element={
+								<RequireAuth>
+									<ListUser />
+								</RequireAuth>
+							}
+						/>
+						<Route
+							path="collectors"
+							element={
+								<RequireAuth>
+									<ListCollector />
+								</RequireAuth>
+							}
+						/>
+						<Route
+							path="consolidators"
+							element={
+								<RequireAuth>
+									<ListConsolidator />
+								</RequireAuth>
+							}
+						/>
+						<Route
+							path="barangay-admin"
+							element={
+								<RequireAuth>
+									<ListBarangayAdmin />
+								</RequireAuth>
+							}
+						/>
+						<Route
+							path="add"
+							element={
+								<RequireAuth>
+									<AddUser />
+								</RequireAuth>
+							}
+						/>
+					</Route>
+				</Routes>
+			</ThemeProvider>
 		</div>
 	);
 }
