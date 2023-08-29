@@ -1,51 +1,20 @@
-import "./userData.scss";
-
-// Packages
 import React from "react";
+// Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 // Firebase
 import { db } from "../../../firebase";
 
-// Firebase auth
-import { auth } from "../../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-
 // Table Columns
-import { userColumn } from "./UserColumn";
+import { contributionColumn } from "./ContributionColumn";
 
-// Modals and Pages
-// import EditUser from "../../components/modals/editUser/EditUser";
-// import ViewUser from "../modals/viewUser/ViewUser";
-
-import { collection, onSnapshot, query } from "firebase/firestore";
-
-const UserData = () => {
+const WasteContribution = () => {
 	const [userData, setUserData] = useState([]);
 
-	const actionColumn = [
-		{
-			field: "action",
-			headerName: "Action",
-			headerClassName: "headerTheme",
-			width: 200,
-			renderCell: (params) => {
-				return (
-					<>
-						<div className="cellAction">
-							{/* <ViewUser params={params} /> */}
-						</div>
-					</>
-				);
-			},
-		},
-	];
-
 	// Read data from firebase database
-	const q = query(collection(db, "Waste Generator"));
+	const q = query(collection(db, "Waste Contribution"));
 	let unsubscribe;
 	const getData = async () => {
 		unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -66,7 +35,7 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-4">Waste Generators</div>
+				<div className="text-xl py-6">Waste Contributions</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						{userData && (
@@ -78,7 +47,7 @@ const UserData = () => {
 										list: index + 1,
 									};
 								})}
-								columns={userColumn}
+								columns={contributionColumn}
 								pageSize={9}
 								density="comfortable"
 								rowsPerPageOptions={[9]}
@@ -93,4 +62,4 @@ const UserData = () => {
 	);
 };
 
-export default UserData;
+export default WasteContribution;

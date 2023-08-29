@@ -21,7 +21,7 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, push, set, child, onValue } from "firebase/database";
 
-import { BarangayLists } from "../../../dataColumns/BarangayLists";
+// import { BarangayLists } from "../../../dataColumns/BarangayLists";
 
 const initialState = {
 	name: "",

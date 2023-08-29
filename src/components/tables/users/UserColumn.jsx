@@ -1,10 +1,10 @@
-export const userColumns = [
+export const userColumn = [
 	{
 		headerClassName: "headerTheme",
 
 		field: "list",
 		headerName: "#",
-		width: 50,
+		width: 60,
 	},
 
 	{
@@ -12,7 +12,7 @@ export const userColumns = [
 
 		field: "name",
 		headerName: "Name",
-		width: 150,
+		width: 200,
 		renderCell: (props) => {
 			return (
 				<>
@@ -37,7 +37,7 @@ export const userColumns = [
 
 		field: "household_type",
 		headerName: "Household Type",
-		width: 120,
+		width: 180,
 	},
 
 	{
@@ -53,7 +53,7 @@ export const userColumns = [
 
 		field: "user_type",
 		headerName: "User Type",
-		width: 120,
+		width: 180,
 	},
 
 	{
@@ -65,7 +65,7 @@ export const userColumns = [
 		renderCell: (props) => {
 			return (
 				<>
-					<div className={`cellWidth ${props.row.email}`}>
+					<div className={`cellWidth`}>
 						<p>{props.row.email}</p>
 					</div>
 				</>
@@ -78,7 +78,7 @@ export const userColumns = [
 
 		field: "location",
 		headerName: "Location",
-		width: 200,
+		width: 250,
 	},
 
 	{
@@ -86,7 +86,7 @@ export const userColumns = [
 
 		field: "biodegradable",
 		headerName: "Biodegradable",
-		width: 120,
+		width: 150,
 	},
 
 	{
@@ -94,7 +94,7 @@ export const userColumns = [
 
 		field: "recyclable",
 		headerName: "Recyclable",
-		width: 120,
+		width: 150,
 	},
 
 	{
@@ -102,6 +102,6 @@ export const userColumns = [
 
 		field: "residual",
 		headerName: "Residual",
-		width: 120,
+		width: 150,
 	},
 ];

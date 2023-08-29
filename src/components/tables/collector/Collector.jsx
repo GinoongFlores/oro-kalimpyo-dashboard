@@ -1,8 +1,5 @@
-import "./collector.scss";
-
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Firebase
@@ -10,7 +7,7 @@ import { db } from "../../../firebase";
 import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
 
 // Table Columns
-import { TbcTableSource } from "../../../dataColumns/TbcTableSource";
+import { CollectorColumn } from "./CollectorColumn";
 
 // Modals
 // import ViewTBC from "../modals/viewTBC/ViewTBC";
@@ -34,7 +31,7 @@ const actionColumn = [
 ];
 
 const Collector = () => {
-	const [tbcData, setTbcData] = useState([]);
+	const [collectorsData, setCollectorsData] = useState([]);
 	const q = query(collection(db, "Waste Collector"));
 	let unsubscribe;
 	useEffect(() => {
@@ -43,34 +40,32 @@ const Collector = () => {
 			querySnapshot.forEach((doc) => {
 				data.push({ ...doc.data(), id: doc.id });
 			});
-			setTbcData(data);
+			setCollectorsData(data);
 		});
 		return () => {
 			unsubscribe(); // return to prevent memory leak
 		};
 	}, []);
 
-	// console.log(tbcData);
-
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Waste Collector</div>
+				<div className="text-xl py-4">Waste Collector</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
-								rows={tbcData.map((user, index) => {
+								rows={collectorsData.map((user, index) => {
 									return {
 										...user,
 										list: index + 1,
 									};
 								})}
-								columns={TbcTableSource}
+								columns={CollectorColumn}
 								pageSize={9}
+								density="comfortable"
 								rowsPerPageOptions={[9]}
 								getRowId={(row) => row.id}
-								// experimentalFeatures={{ newEditingApi: true }}
 								components={{ Toolbar: GridToolbar }}
 							/>
 						</div>

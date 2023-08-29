@@ -1,8 +1,5 @@
-import "./consolidator.scss";
-
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Firebase
@@ -10,7 +7,7 @@ import { db } from "../../../firebase";
 import { onSnapshot, doc, setDoc, collection, query } from "firebase/firestore";
 
 // Table Columns
-import { CompletedTableSource } from "../../../dataColumns/CompletedTableSource";
+import { ConsolidatorColumn } from "./ConsolidatorColumn";
 // import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
 const actionColumn = [
@@ -32,7 +29,7 @@ const actionColumn = [
 ];
 
 const Consolidator = () => {
-	const [cData, setTbcData] = useState([]);
+	const [consolidatorData, setConsolidatorData] = useState([]);
 	const q = query(collection(db, "Waste Consolidator"));
 	let unsubscribe;
 
@@ -42,7 +39,7 @@ const Consolidator = () => {
 			querySnapshot.forEach((doc) => {
 				data.push({ ...doc.data(), id: doc.id });
 			});
-			setTbcData(data);
+			setConsolidatorData(data);
 		});
 	};
 
@@ -56,22 +53,21 @@ const Consolidator = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="dataTableTitle">Waste Consolidator</div>
-				<div style={{ height: 600, width: "100%" }}>
+				<div className="text-xl py-4">Waste Consolidator</div>
+				<div style={{ height: 600 }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
-								rows={cData.map((user, index) => {
+								rows={consolidatorData.map((user, index) => {
 									return {
 										...user,
 										list: index + 1,
 									};
 								})}
-								columns={CompletedTableSource}
+								columns={ConsolidatorColumn}
 								pageSize={9}
 								rowsPerPageOptions={[9]}
-								// getRowId={(row) => rows.id}
-								// experimentalFeatures={{ newEditingApi: true }}
+								getRowId={(row) => row.id}
 								components={{ Toolbar: GridToolbar }}
 							/>
 						</div>

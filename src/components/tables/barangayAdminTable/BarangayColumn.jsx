@@ -1,4 +1,4 @@
-export const BarangayAdmin = [
+export const BarangayColumn = [
 	{
 		headerClassName: "headerTheme",
 		field: "list",

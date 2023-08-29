@@ -1,5 +1,3 @@
-import "./listBarangayAdmin.scss";
-
 import NavbarLink from "../../components/navbar/NavbarLink";
 // import Sidebar from "../../components/sidebar/Sidebar";
 import BarangayAdminData from "../../components/tables/barangayAdminTable/BarangayAdminData";
