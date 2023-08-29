@@ -1,11 +1,7 @@
-import "./userData.scss";
-
 // Packages
 import React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 
 // Firebase
 import { db } from "../../../firebase";
@@ -16,10 +12,6 @@ import { onAuthStateChanged } from "firebase/auth";
 
 // Table Columns
 import { userColumn } from "./UserColumn";
-
-// Modals and Pages
-// import EditUser from "../../components/modals/editUser/EditUser";
-// import ViewUser from "../modals/viewUser/ViewUser";
 
 import { collection, onSnapshot, query } from "firebase/firestore";
 
@@ -66,7 +58,7 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-4">Waste Generators</div>
+				<div className="text-xl py-4 mt-2">Waste Generators</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						{userData && (
@@ -76,6 +68,8 @@ const UserData = () => {
 										...user,
 										// id: index + 1,
 										list: index + 1,
+										establishment_type:
+											user.establishment_type || "Non-Establishment",
 									};
 								})}
 								columns={userColumn}

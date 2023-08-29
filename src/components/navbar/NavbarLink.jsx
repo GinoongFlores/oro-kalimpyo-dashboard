@@ -2,6 +2,7 @@
 // import Nav from "react-bootstrap/Nav";
 // import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
+
 import * as React from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
@@ -18,7 +19,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-// Icons
+
+import { useAuth } from "../../context/UserAuthContext";
 
 const drawerWidth = 240;
 const navItems = [
@@ -45,6 +47,7 @@ const navItems = [
 ];
 
 const NavbarLink = (props) => {
+	const { logout } = useAuth();
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const handleDrawerToggle = () => {
@@ -138,6 +141,9 @@ const NavbarLink = (props) => {
 									</Button>
 								</Link>
 							))}
+							<Button sx={{ color: "#fff" }} onClick={() => logout()}>
+								Logout
+							</Button>
 						</Box>
 					</Toolbar>
 				</AppBar>

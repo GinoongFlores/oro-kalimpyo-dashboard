@@ -6,7 +6,6 @@ import { collection, getCountFromServer } from "firebase/firestore";
 // Components
 // import Sidebar from "../../components/sidebar/Sidebar";
 import Cards from "./Cards";
-import WasteContribution from "../../components/tables/wasteContribution/WasteContribution";
 
 const HomeBody = () => {
 	const [userNum, setUserNum] = useState(0);

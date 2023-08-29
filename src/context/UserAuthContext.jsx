@@ -10,41 +10,54 @@ export const useAuth = () => {
 };
 
 export const UserAuthContext = ({ children }) => {
+	// console.log(auth.currentUser);
+	// console.log(auth.setPersistence);
 	const navigate = useNavigate();
-	const UserLogin = (email, password) => {
-		if (email === "testclenroadmin@gmail.com") {
-			signInWithEmailAndPassword(auth, email, password)
-				.then((userCredential) => {
-					// Signed in
-					const user = userCredential.user;
-					localStorage.setItem("user", JSON.stringify(user));
-					navigate("/");
-					if (location.reload()) {
-						localStorage.removeItem("user");
-					}
-					// ...
-				})
-				.catch((error) => {
-					toast.error(error.message);
-				});
+	const [user, setUser] = useState(null);
+
+	useEffect(() => {
+		const storedUser = JSON.parse(localStorage.getItem("user")); // get user from local storage
+		if (storedUser) {
+			setUser(storedUser);
 		} else {
-			toast.error("Not an Admin");
+			navigate("/login");
+		}
+	}, [navigate]);
+
+	const UserLogin = async (email, password) => {
+		try {
+			if (email === "testclenroadmin@gmail.com") {
+				await signInWithEmailAndPassword(auth, email, password)
+					.then((userCredential) => {
+						// Signed in
+						const userCred = userCredential.user;
+						localStorage.setItem("user", JSON.stringify(userCred));
+						setUser(userCred);
+						navigate("/", { replace: true });
+						// ...
+					})
+					.catch((error) => {
+						toast.error(error.message);
+					});
+			}
+		} catch (error) {
+			toast.error(error.message);
 		}
 	};
 
-	const logout = () => {
-		signOut(auth)
-			.then(() => {
-				localStorage.removeItem("user");
-				navigate("/login");
-			})
-			.catch((error) => {
-				// An error happened.
-				toast.error(error.message);
-			});
+	const logout = async () => {
+		try {
+			await signOut(auth);
+			localStorage.removeItem("user");
+			setUser(null);
+			navigate("/login", { replace: true });
+		} catch (error) {
+			toast.error(error.message);
+		}
 	};
 
 	const value = {
+		user, // set user
 		UserLogin,
 		logout,
 	};

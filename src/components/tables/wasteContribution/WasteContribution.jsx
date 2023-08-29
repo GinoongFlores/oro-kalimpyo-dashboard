@@ -1,4 +1,3 @@
-import React from "react";
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
@@ -6,6 +5,8 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 
 // Firebase
 import { db } from "../../../firebase";
+
+import HomeBody from "../../../pages/home/HomeBody";
 
 // Table Columns
 import { contributionColumn } from "./ContributionColumn";
