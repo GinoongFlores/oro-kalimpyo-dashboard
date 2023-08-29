@@ -41,21 +41,6 @@ export const TbcData = () => {
 		const readData = onValue(tbcRef, (snapshot) => {
 			const data = snapshot.val();
 			setTbcData(Object.values(data));
-
-			// if (snapshot.exists()) {
-			// 	setTbcData(Object.values(snapshot.val()));
-			// } else {
-			// 	console.log("No data available");
-			// }
-
-			// snapshot.forEach((childSnapshot) => {
-			// 	const childKey = childSnapshot.key;
-			// 	const childData = childSnapshot.val();
-
-			// 	setTbcData(Object.values(childData));
-
-			// 	console.log(childKey);
-			// });
 		});
 		return () => {
 			readData(); // return to prevent memory leak
