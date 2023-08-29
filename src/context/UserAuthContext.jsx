@@ -1,68 +1,109 @@
 import { useContext, createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const userContext = createContext();
 export const useAuth = () => {
-	return useContext(userContext);
+  return useContext(userContext);
 };
 
 export const UserAuthContext = ({ children }) => {
-	// console.log(auth.currentUser);
-	// console.log(auth.setPersistence);
-	const navigate = useNavigate();
-	const [user, setUser] = useState(null);
+  // console.log(auth.currentUser);
+  // console.log(auth.setPersistence);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-	useEffect(() => {
-		const storedUser = JSON.parse(localStorage.getItem("user")); // get user from local storage
-		if (storedUser) {
-			setUser(storedUser);
-		} else {
-			navigate("/login");
-		}
-	}, [navigate]);
+  const [currentUser, setCurrentUser] = useState([]);
 
-	const UserLogin = async (email, password) => {
-		try {
-			if (email === "testclenroadmin@gmail.com") {
-				await signInWithEmailAndPassword(auth, email, password)
-					.then((userCredential) => {
-						// Signed in
-						const userCred = userCredential.user;
-						localStorage.setItem("user", JSON.stringify(userCred));
-						setUser(userCred);
-						navigate("/", { replace: true });
-						// ...
-					})
-					.catch((error) => {
-						toast.error(error.message);
-					});
-			}
-		} catch (error) {
-			toast.error(error.message);
-		}
-	};
+  useEffect(() => {
+    if (
+      (location.pathname === "/login" && currentUser) ||
+      (location.pathname === "/signup" && currentUser)
+    ) {
+      navigate("/");
+    }
+  }, [location, navigate]);
 
-	const logout = async () => {
-		try {
-			await signOut(auth);
-			localStorage.removeItem("user");
-			setUser(null);
-			navigate("/login", { replace: true });
-		} catch (error) {
-			toast.error(error.message);
-		}
-	};
+  useEffect(() => {
+    const unsubscribe = () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/auth.user
+          const uid = user.uid;
+          setCurrentUser(user);
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          setCurrentUser(null);
+        }
+      });
+    };
+    return unsubscribe();
+  }, []);
 
-	const value = {
-		user, // set user
-		UserLogin,
-		logout,
-	};
+  const UserLogin = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
 
-	return <userContext.Provider value={value}>{children}</userContext.Provider>;
+          navigate("/");
+          // ...
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const UserSignup = async (email, password) => {
+    try {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          navigate("/");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          console.log(errorMessage);
+          // ..
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const value = {
+    currentUser,
+    UserSignup,
+    UserLogin,
+    logout,
+  };
+
+  return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };
 
 export default UserAuthContext;
