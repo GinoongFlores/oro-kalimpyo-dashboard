@@ -23,6 +23,7 @@ import ListBarangayAdmin from "./pages/barangaysAdmin/ListBarangayAdmin";
 import AddUser from "./components/modals/addUser/AddUser";
 import Login from "./pages/login/Login";
 import { useAuth } from "./context/UserAuthContext";
+import SignUp from "./pages/signup/SignUp";
 
 function App() {
 	const { currentUser } = useAuth();
@@ -43,7 +44,7 @@ function App() {
 				<Routes>
 					<Route path="/">
 						<Route path="login" element={<Login />} />
-						{/* <Route path="signup" element={<SignUp />} /> */}
+						<Route path="signup" element={<SignUp />} />
 						<Route
 							index
 							// path="home"
