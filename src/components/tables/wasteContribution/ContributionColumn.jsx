@@ -3,28 +3,32 @@ export const contributionColumn = [
 		headerClassName: "headerTheme",
 		field: "list",
 		headerName: "#",
-		width: 60,
+		minWidth: 60,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "barangay",
 		headerName: "Barangay",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "collector_name",
 		headerName: "Collector Name",
-		width: 200,
+		minWidth: 200,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "collector_type",
 		headerName: "Collector Type",
-		width: 180,
+		minWidth: 180,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -40,28 +44,32 @@ export const contributionColumn = [
 		headerClassName: "headerTheme",
 		field: "date",
 		headerName: "Date",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "household_type",
 		headerName: "Household Type",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "kilo",
 		headerName: "Kilo",
-		width: 100,
+		minWidth: 100,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "name",
 		headerName: "Name",
-		width: 200,
+		minWidth: 200,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -77,14 +85,16 @@ export const contributionColumn = [
 		headerClassName: "headerTheme",
 		field: "user_type",
 		headerName: "User Type",
-		width: 180,
+		minWidth: 180,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "waste_type",
 		headerName: "Waste Type",
-		width: 120,
+		minWidth: 120,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -100,7 +110,8 @@ export const contributionColumn = [
 		headerClassName: "headerTheme",
 		field: "status",
 		headerName: "Status",
-		width: 180,
+		minWidth: 180,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -114,8 +125,32 @@ export const contributionColumn = [
 
 	{
 		headerClassName: "headerTheme",
+		field: "contribution_proof_url",
+		headerName: "Contribution Proof URL",
+		minWidth: 180,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className={`cellWidth`}>
+						<a href={`${props.row.contribution_proof_url}`} target="_blank">
+							<img
+								src={`${props.row.contribution_proof_url}`}
+								width={80}
+								height={80}
+							/>
+						</a>
+					</div>
+				</>
+			);
+		},
+	},
+
+	{
+		headerClassName: "headerTheme",
 		field: "time",
 		headerName: "Time",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 ];

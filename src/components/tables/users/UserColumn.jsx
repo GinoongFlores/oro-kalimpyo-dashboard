@@ -4,7 +4,8 @@ export const userColumn = [
 
 		field: "list",
 		headerName: "#",
-		width: 60,
+		minWidth: 60,
+		flex: 1,
 	},
 
 	{
@@ -12,7 +13,8 @@ export const userColumn = [
 
 		field: "name",
 		headerName: "Name",
-		width: 200,
+		minWidth: 200,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -29,7 +31,8 @@ export const userColumn = [
 
 		field: "number",
 		headerName: "Number",
-		width: 120,
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{
@@ -37,7 +40,8 @@ export const userColumn = [
 
 		field: "household_type",
 		headerName: "Household Type",
-		width: 180,
+		minWidth: 180,
+		flex: 1,
 	},
 
 	{
@@ -45,7 +49,8 @@ export const userColumn = [
 
 		field: "establishment_type",
 		headerName: "Establishment Type",
-		width: 180,
+		minWidth: 180,
+		flex: 1,
 	},
 
 	{
@@ -53,7 +58,8 @@ export const userColumn = [
 
 		field: "user_type",
 		headerName: "User Type",
-		width: 180,
+		minWidth: 180,
+		flex: 1,
 	},
 
 	{
@@ -61,7 +67,8 @@ export const userColumn = [
 
 		field: "email",
 		headerName: "Email",
-		width: 200,
+		minWidth: 200,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -78,7 +85,17 @@ export const userColumn = [
 
 		field: "location",
 		headerName: "Location",
-		width: 250,
+		minWidth: 250,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className={`cellWidth`}>
+						<p>{props.row.location}</p>
+					</div>
+				</>
+			);
+		},
 	},
 
 	{
@@ -86,7 +103,8 @@ export const userColumn = [
 
 		field: "biodegradable",
 		headerName: "Biodegradable",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{
@@ -94,7 +112,8 @@ export const userColumn = [
 
 		field: "recyclable",
 		headerName: "Recyclable",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{
@@ -102,6 +121,7 @@ export const userColumn = [
 
 		field: "residual",
 		headerName: "Residual",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 	},
 ];
