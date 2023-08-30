@@ -22,7 +22,6 @@ import ListConsolidator from "./pages/consolidator/ListConsolidator";
 import ListBarangayAdmin from "./pages/barangaysAdmin/ListBarangayAdmin";
 import AddUser from "./components/modals/addUser/AddUser";
 import Login from "./pages/login/Login";
-import SignUp from "./pages/signup/SignUp";
 import { useAuth } from "./context/UserAuthContext";
 
 function App() {
@@ -44,7 +43,7 @@ function App() {
 				<Routes>
 					<Route path="/">
 						<Route path="login" element={<Login />} />
-						<Route path="signup" element={<SignUp />} />
+						{/* <Route path="signup" element={<SignUp />} /> */}
 						<Route
 							index
 							// path="home"
