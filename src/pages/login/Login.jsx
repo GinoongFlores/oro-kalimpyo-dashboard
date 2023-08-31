@@ -80,7 +80,7 @@ const Login = () => {
 					<Form.Label>Email</Form.Label>
 					<Form.Control
 						type="email"
-						placeholder="Barangay's Admin Email"
+						placeholder="CLENRO authorized email"
 						aria-describedby="admin email"
 						value={email}
 						name="email"
@@ -109,7 +109,7 @@ const Login = () => {
 				<Button variant="success" size="md" type="submit">
 					Login
 				</Button>
-				<Link to="/signup">Register here</Link>
+				{/* <Link to="/signup">Register here</Link> */}
 			</Form>
 		</div>
 	);
