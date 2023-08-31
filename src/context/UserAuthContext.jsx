@@ -51,19 +51,23 @@ export const UserAuthContext = ({ children }) => {
 	}, []);
 
 	const UserLogin = async (email, password) => {
-		try {
-			await signInWithEmailAndPassword(auth, email, password)
-				.then((userCredential) => {
-					// Signed in
+		if (email === "testclenroadmin@gmail.com") {
+			try {
+				await signInWithEmailAndPassword(auth, email, password)
+					.then((userCredential) => {
+						// Signed in
 
-					navigate("/");
-					// ...
-				})
-				.catch((error) => {
-					toast.error(error.message);
-				});
-		} catch (error) {
-			toast.error(error.message);
+						navigate("/");
+						// ...
+					})
+					.catch((error) => {
+						toast.error(error.message);
+					});
+			} catch (error) {
+				toast.error(error.message);
+			}
+		} else {
+			toast.error("You are not authorized to access this page");
 		}
 	};
 
