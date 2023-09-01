@@ -19,7 +19,7 @@ const WasteContribution = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-6">Waste Contributions</div>
+				{/* <div className="text-xl py-2">Waste Contributions</div> */}
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<DataGrid
@@ -37,7 +37,6 @@ const WasteContribution = () => {
 							getRowId={(row) => row.id}
 							components={{ Toolbar: GridToolbar }}
 						/>
-
 					</div>
 				</div>
 			</div>

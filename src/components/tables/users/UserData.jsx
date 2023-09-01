@@ -66,7 +66,7 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-4 mt-2">Waste Generators</div>
+				{/* <div className="text-xl py-4 mt-2">Waste Generators</div> */}
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						{userData && (

@@ -52,7 +52,6 @@ const UnCollectedWaste = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-6">Uncollected Waste</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<DataGrid
