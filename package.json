@@ -1,14 +1,19 @@
 {
-	"name": "crud-dashboard",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
+	"name": "oro-kalimpyo-dashboard",
+	"version": "1.0.0",
+	"main": "postcss.config.js",
 	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "vite",
 		"build": "vite build",
-		"preview": "vite preview",
-		"postinstall": "patch-package"
+		"preview": "vite preview"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/GinoongFlores/oro-kalimpyo-dashboard.git"
+	},
+	"author": "sl-devs",
+	"license": "ISC",
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
 		"@emotion/styled": "^11.10.5",
@@ -16,26 +21,27 @@
 		"@mui/material": "^5.11.8",
 		"@mui/x-data-grid": "^5.17.23",
 		"@mui/x-data-grid-generator": "^5.17.23",
-		"bootstrap": "^5.2.3",
+		"bootstrap": "^5.3.1",
 		"firebase": "^9.17.1",
+		"formik": "^2.4.3",
 		"patch-package": "^6.5.1",
-		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
-		"react-bootstrap": "^2.7.2",
+		"react-bootstrap": "^2.8.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.43.9",
 		"react-phone-number-input": "^3.2.23",
 		"react-router-dom": "^6.8.1",
 		"react-select": "^5.7.3",
 		"react-toastify": "^9.1.1",
-		"sass": "^1.58.0"
+		"sass": "^1.58.0",
+		"yup": "^1.2.0"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.27",
 		"@types/react-dom": "^18.0.10",
 		"@vitejs/plugin-react": "^3.1.0",
 		"autoprefixer": "^10.4.15",
-		"postcss": "^8.4.28",
+		"postcss": "^8.4.29",
 		"tailwindcss": "^3.3.3",
 		"vite": "^4.1.0"
 	}
