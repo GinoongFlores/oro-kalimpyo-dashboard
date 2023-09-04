@@ -1,4 +1,4 @@
-import "./login.scss";
+// import "./login.scss";
 
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,10 +62,10 @@ const Login = () => {
 	};
 
 	return (
-		<div className="formWrapper">
-			<div className="formHeader">
+		<div className="h-screen flex flex-col md:flex md:flex-row justify-evenly items-center">
+			<div className="flex flex-col items-center mb-9">
 				<img src={Logo} className="logo-orokalimpyo" alt="oro kalimpyo logo" />
-				<div className="logoRow">
+				<div className="flex gap-2 items-center justify-center">
 					<div className="logo-cdo">
 						<img src={LogoCdo} alt="cagayan de oro logo" />
 					</div>
@@ -74,43 +74,45 @@ const Login = () => {
 					</div>
 				</div>
 			</div>
-			<Form className="loginForm" onSubmit={handleLogin}>
-				<h2 className="titleForm">Welcome CLENRO Admin</h2>
-				<Form.Group className="mb-3" controlId="formLogin">
-					<Form.Label>Email</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="CLENRO authorized email"
-						aria-describedby="admin email"
-						value={email}
-						name="email"
-						onChange={handleInputChange}
-					/>
-				</Form.Group>
-				<Form.Group className="mb-3 password">
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type={showPassword ? "text" : "password"}
-						placeholder="Enter Password"
-						aria-describedby="admin password"
-						value={password}
-						name="password"
-						onChange={handleInputChange}
-					/>
-					<i onClick={togglePasswordVisibility}>
-						{showPassword ? (
-							<VisibilityOffRoundedIcon className="icon" />
-						) : (
-							<VisibilityRoundedIcon className="icon" />
-						)}
-					</i>
-				</Form.Group>
-				{error && <p className="error">{error}</p>}
-				<Button variant="success" size="md" type="submit">
-					Login
-				</Button>
-				{/* <Link to="/signup">Register here</Link> */}
-			</Form>
+
+			<div className="block max-w-lg rounded-lg bg-white p-9 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+				<Form className="flex flex-col items-center" onSubmit={handleLogin}>
+					<h2 className="mb-3">Welcome CLENRO Admin</h2>
+					<Form.Group className="mb-3 w-full" controlId="formLogin">
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="CLENRO authorized email"
+							aria-describedby="admin email"
+							value={email}
+							name="email"
+							onChange={handleInputChange}
+						/>
+					</Form.Group>
+					<Form.Group className="mb-3 w-full relative">
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type={showPassword ? "text" : "password"}
+							placeholder="Enter Password"
+							aria-describedby="admin password"
+							value={password}
+							name="password"
+							onChange={handleInputChange}
+						/>
+						<i onClick={togglePasswordVisibility}>
+							{showPassword ? (
+								<VisibilityOffRoundedIcon className="absolute cursor-pointer top-[40px] bottom-0 right-[18px]" />
+							) : (
+								<VisibilityRoundedIcon className="absolute cursor-pointer top-[40px] bottom-0 right-[18px]" />
+							)}
+						</i>
+					</Form.Group>
+					{error && <p className="error">{error}</p>}
+					<Button variant="success" size="md" type="submit">
+						Login
+					</Button>
+				</Form>
+			</div>
 		</div>
 	);
 };

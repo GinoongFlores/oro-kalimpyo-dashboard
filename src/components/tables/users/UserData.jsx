@@ -13,14 +13,7 @@ import { onAuthStateChanged } from "firebase/auth";
 // Table Columns
 import { userColumn } from "./UserColumn";
 
-import {
-	collection,
-	onSnapshot,
-	query,
-	doc,
-	getDocs,
-	getDoc,
-} from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);

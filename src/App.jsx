@@ -20,10 +20,10 @@ import ListUser from "./pages/users/ListUser";
 import ListCollector from "./pages/collector/ListCollector";
 import ListConsolidator from "./pages/consolidator/ListConsolidator";
 import ListBarangayAdmin from "./pages/barangaysAdmin/ListBarangayAdmin";
-import AddUser from "./components/modals/addUser/AddUser";
+import ListClenroAdmin from "./pages/ClenroAdmin/ListClenroAdmin";
 import Login from "./pages/login/Login";
 import { useAuth } from "./context/UserAuthContext";
-import SignUp from "./pages/signup/SignUp";
+// import SignUp from "./pages/signup/SignUp";
 
 function App() {
 	const { currentUser } = useAuth();
@@ -44,7 +44,7 @@ function App() {
 				<Routes>
 					<Route path="/">
 						<Route path="login" element={<Login />} />
-						<Route path="signup" element={<SignUp />} />
+						{/* <Route path="signup" element={<SignUp />} /> */}
 						<Route
 							index
 							// path="home"
@@ -88,13 +88,21 @@ function App() {
 							}
 						/>
 						<Route
+							path="clenro-admin"
+							element={
+								<RequireAuth>
+									<ListClenroAdmin />
+								</RequireAuth>
+							}
+						/>
+						{/* <Route
 							path="add"
 							element={
 								<RequireAuth>
 									<AddUser />
 								</RequireAuth>
 							}
-						/>
+						/> */}
 					</Route>
 				</Routes>
 			</ThemeProvider>

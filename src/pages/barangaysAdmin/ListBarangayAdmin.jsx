@@ -1,7 +1,6 @@
 import NavbarLink from "../../components/navbar/NavbarLink";
 // import Sidebar from "../../components/sidebar/Sidebar";
 import BarangayAdminData from "../../components/tables/barangayAdminTable/BarangayAdminData";
-import AddUser from "../../components/modals/addUser/AddUser";
 
 const ListBarangayAdmin = () => {
 	return (
@@ -9,7 +8,7 @@ const ListBarangayAdmin = () => {
 			{/* <Sidebar /> */}
 			<div className="listContainer">
 				<NavbarLink />
-				<AddUser />
+				{/* <AddUser /> */}
 				<BarangayAdminData />
 			</div>
 		</div>
