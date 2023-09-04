@@ -35,7 +35,6 @@ const WasteSegregated = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-6">Waste Segregated</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div className="flex-1">

@@ -1,3 +1,4 @@
+import React from "react";
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
@@ -7,30 +8,9 @@ import { db } from "../../../firebase";
 import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
 
 // Table Columns
-import { CollectorColumn } from "./CollectorColumn";
+import { CollectorColumn } from "../collector/CollectorColumn";
 
-// Modals
-// import ViewTBC from "../modals/viewTBC/ViewTBC";
-
-const actionColumn = [
-	{
-		field: "action",
-		headerName: "Action",
-		headerClassName: "headerTheme",
-		width: 150,
-		renderCell: (params) => {
-			return (
-				<>
-					<div className="cellAction">
-						<ViewTBC params={params} />
-					</div>
-				</>
-			);
-		},
-	},
-];
-
-const Collector = () => {
+const ClenroAdmin = () => {
 	const [collectorsData, setCollectorsData] = useState([]);
 	const q = query(collection(db, "Waste Collector"));
 	let unsubscribe;
@@ -46,7 +26,6 @@ const Collector = () => {
 			unsubscribe(); // return to prevent memory leak
 		};
 	}, []);
-
 	return (
 		<>
 			<div className="dataTable">
@@ -75,4 +54,4 @@ const Collector = () => {
 	);
 };
 
-export default Collector;
+export default ClenroAdmin;

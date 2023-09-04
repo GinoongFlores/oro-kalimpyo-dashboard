@@ -1,4 +1,4 @@
-export const contributionColumn = [
+export const UncollectedColumn = [
 	{
 		headerClassName: "headerTheme",
 		field: "list",

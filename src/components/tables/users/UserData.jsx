@@ -13,14 +13,7 @@ import { onAuthStateChanged } from "firebase/auth";
 // Table Columns
 import { userColumn } from "./UserColumn";
 
-import {
-	collection,
-	onSnapshot,
-	query,
-	doc,
-	getDocs,
-	getDoc,
-} from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);
@@ -66,7 +59,7 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-4 mt-2">Waste Generators</div>
+				{/* <div className="text-xl py-4 mt-2">Waste Generators</div> */}
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						{userData && (

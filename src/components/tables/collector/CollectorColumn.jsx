@@ -3,13 +3,15 @@ export const CollectorColumn = [
 		headerClassName: "headerTheme",
 		field: "list",
 		headerName: "#",
-		width: 60,
+		minWidth: 60,
+		flex: 1,
 	},
 	{
 		headerClassName: "headerTheme",
 		field: "name",
 		headerName: "Name",
-		width: 350,
+		minWidth: 350,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -25,21 +27,24 @@ export const CollectorColumn = [
 		headerClassName: "headerTheme",
 		field: "number",
 		headerName: "Number",
-		width: 250,
+		minWidth: 250,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "collector_type",
 		headerName: "Collector Type",
-		width: 250,
+		minWidth: 250,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
-		width: 300,
+		minWidth: 300,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -55,13 +60,15 @@ export const CollectorColumn = [
 		headerClassName: "headerTheme",
 		field: "contact_person",
 		headerName: "Contact Person",
-		width: 350,
+		minWidth: 350,
+		flex: 1,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "user_type",
 		headerName: "User Type",
-		width: 250,
+		minWidth: 250,
+		flex: 1,
 	},
 ];

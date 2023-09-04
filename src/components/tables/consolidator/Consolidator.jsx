@@ -53,7 +53,6 @@ const Consolidator = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-4 mt-2">Waste Consolidator</div>
 				<div style={{ height: 600 }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>

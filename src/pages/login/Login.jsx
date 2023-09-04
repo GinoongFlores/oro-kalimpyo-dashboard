@@ -1,4 +1,4 @@
-import "./login.scss";
+// import "./login.scss";
 
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,105 +15,106 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 
 const initialState = {
-  email: "",
-  password: "",
+	email: "",
+	password: "",
 };
 
 const Login = () => {
-  const { UserLogin } = useAuth();
-  const navigate = useNavigate();
-  const [error, setError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState(initialState);
-  const { email, password } = user;
+	const { UserLogin } = useAuth();
+	const navigate = useNavigate();
+	const [error, setError] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	const [user, setUser] = useState(initialState);
+	const { email, password } = user;
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+	const handleLogin = async (e) => {
+		e.preventDefault();
 
-    if (!email || !password) {
-      setError("");
-      toast.error("Please fill in all fields");
-    }
-    try {
-      await UserLogin(email, password);
-    } catch (error) {
-      if (error.code == "auth/user-not-found") {
-        setError("");
-        // toast.error("User not found");
-        return setError("User Not Found");
-      } else if (error.code == "auth/wrong-password") {
-        setError("");
-        // toast.error("Wrong password");
-        return setError("Wrong Password");
-      } else {
-        setError("");
-        return setError(`${error.message}`);
-      }
-    }
-  };
+		if (!email || !password) {
+			setError("");
+			toast.error("Please fill in all fields");
+		}
+		try {
+			await UserLogin(email, password);
+		} catch (error) {
+			if (error.code == "auth/user-not-found") {
+				setError("");
+				// toast.error("User not found");
+				return setError("User Not Found");
+			} else if (error.code == "auth/wrong-password") {
+				setError("");
+				// toast.error("Wrong password");
+				return setError("Wrong Password");
+			} else {
+				setError("");
+				return setError(`${error.message}`);
+			}
+		}
+	};
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setUser({ ...user, [name]: value });
+	};
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+	const togglePasswordVisibility = () => {
+		setShowPassword(!showPassword);
+	};
 
-  return (
-    <div className="formWrapper">
-      <div className="formHeader">
-        <img src={Logo} className="logo-orokalimpyo" alt="oro kalimpyo logo" />
-        <div className="logoRow">
-          <div className="logo-cdo">
-            <img src={LogoCdo} alt="cagayan de oro logo" />
-          </div>
-          <div className="logo-sldevs">
-            <img src={SlDevs} alt="sl devs logo" />
-          </div>
-        </div>
-      </div>
-      <Form className="loginForm" onSubmit={handleLogin}>
-        <h2 className="titleForm">Welcome CLENRO Admin</h2>
-        <Form.Group className="mb-3" controlId="formLogin">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Barangay's Admin Email"
-            aria-describedby="admin email"
-            value={email}
-            name="email"
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3 password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter Password"
-            aria-describedby="admin password"
-            value={password}
-            name="password"
-            onChange={handleInputChange}
-          />
-          <i onClick={togglePasswordVisibility}>
-            {showPassword ? (
-              <VisibilityOffRoundedIcon className="icon" />
-            ) : (
-              <VisibilityRoundedIcon className="icon" />
-            )}
-          </i>
-        </Form.Group>
+	return (
+		<div className="h-screen flex flex-col md:flex md:flex-row justify-evenly items-center">
+			<div className="flex flex-col items-center mb-9">
+				<img src={Logo} className="logo-orokalimpyo" alt="oro kalimpyo logo" />
+				<div className="flex gap-2 items-center justify-center">
+					<div className="logo-cdo">
+						<img src={LogoCdo} alt="cagayan de oro logo" />
+					</div>
+					<div className="logo-sldevs">
+						<img src={SlDevs} alt="sl devs logo" />
+					</div>
+				</div>
+			</div>
 
-        {error && <p className="error">{error}</p>}
-        <Button variant="success" size="md" type="submit">
-          Login
-        </Button>
-        <Link to="/signup">Register here</Link>
-      </Form>
-    </div>
-  );
+			<div className="block max-w-lg rounded-lg bg-white p-9 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+				<Form className="flex flex-col items-center" onSubmit={handleLogin}>
+					<h2 className="mb-3">Welcome CLENRO Admin</h2>
+					<Form.Group className="mb-3 w-full" controlId="formLogin">
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="CLENRO authorized email"
+							aria-describedby="admin email"
+							value={email}
+							name="email"
+							onChange={handleInputChange}
+						/>
+					</Form.Group>
+					<Form.Group className="mb-3 w-full relative">
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type={showPassword ? "text" : "password"}
+							placeholder="Enter Password"
+							aria-describedby="admin password"
+							value={password}
+							name="password"
+							onChange={handleInputChange}
+						/>
+						<i onClick={togglePasswordVisibility}>
+							{showPassword ? (
+								<VisibilityOffRoundedIcon className="absolute cursor-pointer top-[40px] bottom-0 right-[18px]" />
+							) : (
+								<VisibilityRoundedIcon className="absolute cursor-pointer top-[40px] bottom-0 right-[18px]" />
+							)}
+						</i>
+					</Form.Group>
+					{error && <p className="error">{error}</p>}
+					<Button variant="success" size="md" type="submit">
+						Login
+					</Button>
+				</Form>
+			</div>
+		</div>
+	);
 };
 
 export default Login;
