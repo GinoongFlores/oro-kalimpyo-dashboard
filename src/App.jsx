@@ -14,7 +14,6 @@ const theme = createTheme({
 	},
 });
 
-// Pages testclenroadmin@gmail.com
 import Home from "./pages/home/Home";
 import ListUser from "./pages/users/ListUser";
 import ListCollector from "./pages/collector/ListCollector";
@@ -27,7 +26,7 @@ import { useAuth } from "./context/UserAuthContext";
 
 function App() {
 	const { currentUser } = useAuth();
-	// console.log(user);
+
 	const RequireAuth = ({ children }) => {
 		return currentUser ? children : <Navigate to="/login" />;
 	};
