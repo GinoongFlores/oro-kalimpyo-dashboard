@@ -3,20 +3,16 @@ export const BarangayColumn = [
 		headerClassName: "headerTheme",
 		field: "list",
 		headerName: "#",
-		width: 50,
+		minWidth: 50,
+		flex: 1,
 	},
-
-	// {
-	// 	field: "id",
-	// 	headerName: "ID",
-	// 	width: 100,
-	// },
 
 	{
 		headerClassName: "headerTheme",
 		field: "name",
 		headerName: "Name",
-		width: 150,
+		minWidth: 150,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -32,7 +28,8 @@ export const BarangayColumn = [
 		headerClassName: "headerTheme",
 		field: "number",
 		headerName: "Number",
-		width: 200,
+		flex: 1,
+		minWidth: 200,
 		renderCell: (props) => {
 			return (
 				<>
@@ -48,7 +45,8 @@ export const BarangayColumn = [
 		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
-		width: 200,
+		minWidth: 200,
+		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
@@ -64,14 +62,16 @@ export const BarangayColumn = [
 		headerClassName: "headerTheme",
 		field: "barangay",
 		headerName: "Barangay",
-		width: 150,
+		flex: 1,
+		minWidth: 150,
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "address",
 		headerName: "Address",
-		width: 250,
+		flex: 1,
+		minWidth: 250,
 
 		renderCell: (props) => {
 			return (
