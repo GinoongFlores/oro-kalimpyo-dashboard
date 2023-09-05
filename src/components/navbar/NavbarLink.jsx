@@ -42,9 +42,6 @@ const NavbarLink = () => {
 			isExit: true,
 		},
 	];
-	// useEffect(() => {
-	// 	initTE({ Collapse, Dropdown, Ripple });
-	// });
 
 	return (
 		<>
@@ -94,7 +91,7 @@ const NavbarLink = () => {
 												onClick={link.isExit ? () => logout() : null}
 												className={({ isActive }) => {
 													return (
-														"flex items-center whitespace-nowrap rounded px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal " +
+														"flex items-center whitespace-nowrap rounded mb-1 px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal " +
 														(!isActive
 															? "hover:bg-green-600 text-dark navLinks"
 															: "bg-green-600 text-white")
