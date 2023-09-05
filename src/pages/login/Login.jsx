@@ -30,7 +30,7 @@ const Login = () => {
 	const handleLogin = async (e) => {
 		e.preventDefault();
 
-		if (!email || !password) {
+		if (email.length === 0 || password.length === 0) {
 			setError("");
 			toast.error("Please fill in all fields");
 		}
@@ -77,7 +77,7 @@ const Login = () => {
 
 			<div className="block max-w-lg rounded-lg bg-white p-9 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
 				<Form className="flex flex-col items-center" onSubmit={handleLogin}>
-					<h2 className="mb-3">Welcome CLENRO Admin</h2>
+					<h2 className="mb-3">Welcome Admin</h2>
 					<Form.Group className="mb-3 w-full" controlId="formLogin">
 						<Form.Label>Email</Form.Label>
 						<Form.Control
