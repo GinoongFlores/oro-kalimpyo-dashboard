@@ -9,7 +9,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
 
-const Register = (props) => {
+const AddClenroAdmin = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
@@ -29,21 +29,21 @@ const Register = (props) => {
 			.string()
 			.required("No password provided")
 			.oneOf([yup.ref("password"), null], "Password must match"),
-		address: yup.string().required("No Address Provided"),
 	});
+
 	return (
 		<>
 			<Formik
 				validationSchema={schema}
-				onSubmit={console.log}
+				onSubmit={(values) => {
+					console.log(values);
+				}}
 				initialValues={{
 					firstName: "",
 					lastName: "",
 					email: "",
 					password: "",
 					confirmPassword: "",
-					address: "",
-					barangay: "",
 				}}
 			>
 				{({ handleSubmit, handleChange, values, touched, errors }) => (
@@ -165,52 +165,6 @@ const Register = (props) => {
 									{errors.confirmPassword}
 								</Form.Control.Feedback>
 							</Form.Group>
-
-							{props.needAddress && props.needBarangay && (
-								<>
-									<Form.Group
-										className="mb-3"
-										as={Col}
-										md="6"
-										controlId="validationFormikAddress"
-									>
-										<Form.Label>Address</Form.Label>
-										<Form.Control
-											type="text"
-											placeholder="enter address"
-											name="confirmPassword"
-											value={values.address}
-											onChange={handleChange}
-											isValid={touched.address && !errors.address}
-											isInvalid={!!errors.address}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{errors.address}
-										</Form.Control.Feedback>
-									</Form.Group>
-
-									<Form.Group
-										className="mb-3"
-										as={Col}
-										md="6"
-										controlId="validationFormikAddress"
-									>
-										<Form.Label>Address</Form.Label>
-										<Form.Control
-											type="text"
-											placeholder="enter address"
-											name="confirmPassword"
-											value={values.address}
-											onChange={handleChange}
-											isValid={touched.address && !errors.address}
-											isInvalid={!!errors.address}
-										/>
-										<Form.Control.Feedback type="invalid">
-											{errors.address}
-										</Form.Control.Feedback>
-									</Form.Group>
-								</>
-							)}
 						</Row>
 						<div className="mb-3 flex justify-center">
 							<Button md="4" type="submit" variant="success">
@@ -224,4 +178,4 @@ const Register = (props) => {
 	);
 };
 
-export default Register;
+export default AddClenroAdmin;

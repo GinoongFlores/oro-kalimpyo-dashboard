@@ -10,9 +10,8 @@ import { db } from "../../../firebase";
 import { BarangayColumn } from "./BarangayColumn";
 
 // Modals and Pages
-// import ViewUser from "../../components/modals/viewUser/ViewUser";
 
-const BarangayAdminData = () => {
+const BarangayAdmin = () => {
 	const [userData, setUserData] = useState([]);
 
 	const actionColumn = [
@@ -25,13 +24,13 @@ const BarangayAdminData = () => {
 				return (
 					<>
 						<div className="cellAction">
-							<EditUser params={params} />
+							{/* <EditUser params={params} />
 							<button
 								onClick={() => handleDelete(params.row.id)}
 								className="deleteButton"
 							>
 								Delete
-							</button>
+							</button> */}
 						</div>
 					</>
 				);
@@ -58,16 +57,17 @@ const BarangayAdminData = () => {
 					<div style={{ height: 600, width: "100%" }}>
 						{userData && (
 							<DataGrid
-								className="dataGrid"
 								rows={userData.map((user, index) => {
 									return {
 										...user,
 										list: index + 1,
 									};
 								})}
-								columns={BarangayColumn.concat(actionColumn)}
+								columns={BarangayColumn}
 								pageSize={9}
+								density="comfortable"
 								rowsPerPageOptions={[9]}
+								getRowId={(row) => row.id}
 								components={{ Toolbar: GridToolbar }}
 							/>
 						)}
@@ -78,4 +78,4 @@ const BarangayAdminData = () => {
 	);
 };
 
-export default BarangayAdminData;
+export default BarangayAdmin;

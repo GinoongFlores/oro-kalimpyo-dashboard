@@ -1,15 +1,18 @@
 import NavbarLink from "../../components/navbar/NavbarLink";
-// import Sidebar from "../../components/sidebar/Sidebar";
-import BarangayAdminData from "../../components/tables/barangayAdminTable/BarangayAdminData";
+import BarangayAdmin from "../../components/tables/barangayAdminTable/BarangayAdmin";
+import AddModal from "../../components/modals/AddModal";
+import AddBarangayAdmin from "../../components/forms/AddBarangayAdmin";
 
 const ListBarangayAdmin = () => {
 	return (
-		<div className="listBarangayAdmin">
-			{/* <Sidebar /> */}
-			<div className="listContainer">
-				<NavbarLink />
-				{/* <AddUser /> */}
-				<BarangayAdminData />
+		<div className="flex flex-col w-full">
+			<NavbarLink />
+			<div className="p-12">
+				<div className="flex flex-col justify-around items-center mb-4">
+					<h2 className="text-2xl ">Barangay Admins</h2>
+					<AddModal adminType="Barangay" specifyForm={<AddBarangayAdmin />} />
+				</div>
+				<BarangayAdmin />
 			</div>
 		</div>
 	);
