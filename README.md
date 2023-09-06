@@ -8,6 +8,7 @@ Then, `git add -A` to add all changes.
 3. Push the changes to the remote (to our GitHub repo) by `git push`
 <hr/>
 
+
 4. Go to the repo link. Make sure you're on the `jaycon-branch` and click the `open pull request` 
    ![open pull request](https://i.imgur.com/8oxmRsv.png))
 <hr/>
