@@ -101,6 +101,14 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
+		field: "date_create",
+		headerName: "Date Created",
+		minWidth: 250,
+		flex: 1,
+	},
+
+	{
+		headerClassName: "headerTheme",
 		field: "biodegradable",
 		headerName: "Biodegradable",
 		minWidth: 150,
