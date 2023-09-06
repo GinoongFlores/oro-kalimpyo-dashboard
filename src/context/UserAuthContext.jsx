@@ -67,7 +67,7 @@ export const UserAuthContext = ({ children }) => {
 				toast.error(error.message);
 			}
 		} else {
-			toast.error("You are not authorized to access this page");
+			toast.error("Unauthorized");
 		}
 	};
 
