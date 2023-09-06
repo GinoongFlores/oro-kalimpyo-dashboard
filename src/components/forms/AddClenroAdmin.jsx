@@ -31,6 +31,11 @@ const AddClenroAdmin = () => {
 			.oneOf([yup.ref("password"), null], "Password must match"),
 	});
 
+	/* 
+			TODO:
+			 * Add Data to firebase 
+	*/
+
 	return (
 		<>
 			<Formik

@@ -59,7 +59,6 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				{/* <div className="text-xl py-4 mt-2">Waste Generators</div> */}
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						{userData && (
@@ -67,7 +66,6 @@ const UserData = () => {
 								rows={userData.map((user, index) => {
 									return {
 										...user,
-										// id: index + 1,
 										list: index + 1,
 										establishment_type:
 											user.establishment_type || "Non-Establishment",

@@ -8,7 +8,7 @@ import { db } from "../../../firebase";
 import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
 
 // Table Columns
-import { CollectorColumn } from "../collector/CollectorColumn";
+import { ClenroColumn } from "./ClenroColumn";
 
 const ClenroAdmin = () => {
 	const [collectorsData, setCollectorsData] = useState([]);
@@ -39,7 +39,7 @@ const ClenroAdmin = () => {
 										list: index + 1,
 									};
 								})}
-								columns={CollectorColumn}
+								columns={ClenroColumn}
 								pageSize={9}
 								density="comfortable"
 								rowsPerPageOptions={[9]}

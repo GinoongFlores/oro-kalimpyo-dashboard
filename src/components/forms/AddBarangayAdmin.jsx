@@ -40,6 +40,11 @@ const AddBarangayAdmin = () => {
 			.matches(philippineNumberRegex, "Invalid Number"),
 	});
 
+	/* 
+	 TODO: 
+	 * Add Data to firebase 
+	*/
+
 	return (
 		<>
 			<Formik
@@ -238,11 +243,23 @@ const AddBarangayAdmin = () => {
 									type="tel"
 									placeholder="0912345673"
 									name="philippineNumber"
+									autoComplete="number"
 									value={values.philippineNumber}
 									onChange={handleChange}
 									isValid={touched.philippineNumber && !errors.philippineNumber}
 									isInvalid={!!errors.philippineNumber}
-									autoComplete="tel"
+									onKeyDown={(event) => {
+										if (
+											isNaN(Number(event.key)) &&
+											event.key !== "Backspace" &&
+											!(
+												event.ctrlKey &&
+												(event.key === "c" || event.key === "v")
+											)
+										) {
+											event.preventDefault();
+										}
+									}}
 								/>
 								<Form.Control.Feedback type="invalid">
 									{errors.philippineNumber}

@@ -1,7 +1,6 @@
 export const userColumn = [
 	{
 		headerClassName: "headerTheme",
-
 		field: "list",
 		headerName: "#",
 		minWidth: 60,
@@ -10,7 +9,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "name",
 		headerName: "Name",
 		minWidth: 200,
@@ -28,7 +26,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "number",
 		headerName: "Number",
 		minWidth: 150,
@@ -37,7 +34,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "household_type",
 		headerName: "Household Type",
 		minWidth: 180,
@@ -46,7 +42,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "establishment_type",
 		headerName: "Establishment Type",
 		minWidth: 180,
@@ -55,7 +50,23 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
+		field: "location",
+		headerName: "Location",
+		minWidth: 200,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className={`cellWidth`}>
+						<p>{props.row.location}</p>
+					</div>
+				</>
+			);
+		},
+	},
 
+	{
+		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
 		minWidth: 200,
@@ -73,16 +84,15 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
-		field: "location",
-		headerName: "Location",
-		minWidth: 250,
+		field: "barangay",
+		headerName: "Barangay",
+		minWidth: 180,
 		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
 					<div className={`cellWidth`}>
-						<p>{props.row.location}</p>
+						<p>{props.row.barangay}</p>
 					</div>
 				</>
 			);
@@ -91,7 +101,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "biodegradable",
 		headerName: "Biodegradable",
 		minWidth: 150,
@@ -100,7 +109,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "recyclable",
 		headerName: "Recyclable",
 		minWidth: 150,
@@ -109,7 +117,6 @@ export const userColumn = [
 
 	{
 		headerClassName: "headerTheme",
-
 		field: "residual",
 		headerName: "Residual",
 		minWidth: 150,
