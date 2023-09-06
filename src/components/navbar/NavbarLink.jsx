@@ -34,7 +34,7 @@ const NavbarLink = () => {
 		},
 		{
 			name: "Barangay Admin",
-			path: "/barangay-admin",
+			path: "/add-barangay-admin",
 		},
 		{
 			name: "Exit",
@@ -51,7 +51,7 @@ const NavbarLink = () => {
 				className="bg-[#FBFBFB] py-4 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4"
 			>
 				<Container>
-					<Navbar.Brand href="#home">Welcome Admin</Navbar.Brand>
+					<Navbar.Brand href="#home">Welcome CLENRO Admin</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ml-auto">
