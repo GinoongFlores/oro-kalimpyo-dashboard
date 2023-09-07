@@ -1,6 +1,6 @@
 import NavbarLink from "../../components/navbar/NavbarLink";
 import BarangayAdmin from "../../components/tables/barangayAdminTable/BarangayAdmin";
-import AddModal from "../../components/modals/AddModal";
+import ShowModal from "../../components/modals/ShowModal";
 import AddBarangayAdmin from "../../components/forms/AddBarangayAdmin";
 
 const ListBarangayAdmin = () => {
@@ -10,7 +10,7 @@ const ListBarangayAdmin = () => {
 			<div className="p-12">
 				<div className="flex flex-col justify-around items-center mb-4">
 					<h2 className="text-2xl ">Barangay Admins</h2>
-					<AddModal adminType="Barangay" specifyForm={<AddBarangayAdmin />} />
+					<ShowModal adminType="Barangay" specifyForm={<AddBarangayAdmin />} />
 				</div>
 				<BarangayAdmin />
 			</div>
