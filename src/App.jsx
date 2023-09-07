@@ -6,8 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
 	typography: {
 		fontFamily: "Poppins",
@@ -20,7 +19,7 @@ import ListUser from "./pages/users/ListUser";
 import ListCollector from "./pages/collector/ListCollector";
 import ListConsolidator from "./pages/consolidator/ListConsolidator";
 import ListBarangayAdmin from "./pages/barangaysAdmin/ListBarangayAdmin";
-import ListClenroAdmin from "./pages/ClenroAdmin/ListClenroAdmin";
+import ListAdmins from "./pages/Admins/ListAdmins";
 import Login from "./pages/login/Login";
 import { useAuth } from "./context/UserAuthContext";
 // import SignUp from "./pages/signup/SignUp";
@@ -81,18 +80,10 @@ function App() {
 						}
 					/>
 					<Route
-						path="add-barangay-admin"
+						path="admins"
 						element={
 							<RequireAuth>
-								<ListBarangayAdmin />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path="clenro-admin"
-						element={
-							<RequireAuth>
-								<ListClenroAdmin />
+								<ListAdmins />
 							</RequireAuth>
 						}
 					/>
