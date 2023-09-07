@@ -11,7 +11,7 @@ import { auth } from "../../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 // Table Columns
-import { UncollectedColumn } from "./UnCollectedColumn"
+import { UncollectedColumn } from "./UnCollectedColumn";
 
 import {
 	collection,
@@ -52,10 +52,9 @@ const UnCollectedWaste = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div className="text-xl py-6">Inappropriate Waste</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
-						]							<DataGrid
+						<DataGrid
 							rows={data?.map((user, index) => {
 								return {
 									...user,
@@ -70,7 +69,6 @@ const UnCollectedWaste = () => {
 							getRowId={(row) => row.id}
 							components={{ Toolbar: GridToolbar }}
 						/>
-
 					</div>
 				</div>
 			</div>

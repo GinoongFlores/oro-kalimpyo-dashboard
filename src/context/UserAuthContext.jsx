@@ -1,109 +1,106 @@
 import { useContext, createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
+import { db } from "../firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
+	onAuthStateChanged,
+	signInWithEmailAndPassword,
+	signOut,
 } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const userContext = createContext();
 export const useAuth = () => {
-  return useContext(userContext);
+	return useContext(userContext);
 };
 
 export const UserAuthContext = ({ children }) => {
-  // console.log(auth.currentUser);
-  // console.log(auth.setPersistence);
-  const navigate = useNavigate();
-  const location = useLocation();
+	// console.log(auth.currentUser);
+	// console.log(auth.setPersistence);
+	const navigate = useNavigate();
+	const location = useLocation();
 
-  const [currentUser, setCurrentUser] = useState([]);
+	const [currentUser, setCurrentUser] = useState([]);
 
-  useEffect(() => {
-    if (
-      (location.pathname === "/login" && currentUser) ||
-      (location.pathname === "/signup" && currentUser)
-    ) {
-      navigate("/");
-    }
-  }, [location, navigate]);
+	useEffect(() => {
+		if (
+			(location.pathname === "/login" && currentUser) ||
+			(location.pathname === "/signup" && currentUser)
+		) {
+			navigate("/");
+		}
+	}, [location, navigate]);
 
-  useEffect(() => {
-    const unsubscribe = () => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          const uid = user.uid;
-          setCurrentUser(user);
-          // ...
-        } else {
-          // User is signed out
-          // ...
-          setCurrentUser(null);
-        }
-      });
-    };
-    return unsubscribe();
-  }, []);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const uid = user.uid;
+				setCurrentUser(user);
+				// ...
+			} else {
+				setCurrentUser(null);
+			}
+		});
+		return unsubscribe; // Return the unsubscribe function directly
+	}, []);
 
-  const UserLogin = async (email, password) => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
+	const checkAuthorization = async (email) => {
+		const q = query(
+			collection(db, "Admins"),
+			where("role", "==", "ClenroAdmin")
+		);
+		const querySnapshot = await getDocs(q);
+		const emails = [];
+		querySnapshot.forEach((doc) => {
+			emails.push(doc.data().email);
+		});
+		return emails.includes(email);
+	};
 
-          navigate("/");
-          // ...
-        })
-        .catch((error) => {
-          toast.error(error.message);
-        });
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+	const signInUser = async (email, password) => {
+		try {
+			const userCredential = await signInWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			return userCredential;
+		} catch (error) {
+			throw error;
+		}
+	};
 
-  const UserSignup = async (email, password) => {
-    try {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          navigate("/");
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
+	const UserLogin = async (email, password) => {
+		const isAuthorized = await checkAuthorization(email);
+		if (isAuthorized) {
+			try {
+				const userCredential = await signInUser(email, password);
+				navigate("/");
+			} catch (error) {
+				toast.error(error.message);
+			}
+		} else {
+			toast.error("You are not authorized to access this page");
+		}
+	};
 
-          console.log(errorMessage);
-          // ..
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/login");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+	const logout = async () => {
+		try {
+			await signOut(auth);
+			navigate("/login");
+		} catch (error) {
+			toast.error(error.message);
+		}
+	};
 
-  const value = {
-    currentUser,
-    UserSignup,
-    UserLogin,
-    logout,
-  };
+	const value = {
+		currentUser,
+		UserLogin,
+		logout,
+	};
 
-  return <userContext.Provider value={value}>{children}</userContext.Provider>;
+	return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };
 
 export default UserAuthContext;

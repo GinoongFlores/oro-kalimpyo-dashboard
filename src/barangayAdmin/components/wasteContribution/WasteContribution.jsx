@@ -6,8 +6,6 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 // Firebase
 import { db } from "../../../firebase";
 
-import HomeBody from "../../../pages/home/HomeBody";
-
 // Table Columns
 import { contributionColumn } from "./ContributionColumn";
 import useFetch from "../../../hooks/useFetch";
@@ -15,7 +13,6 @@ import useFetch from "../../../hooks/useFetch";
 const WasteContribution = () => {
 	const { data } = useFetch("Waste Contribution");
 
-	// console.log(data)
 	return (
 		<>
 			<div className="dataTable">

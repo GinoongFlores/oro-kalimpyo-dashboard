@@ -1,38 +1,30 @@
+import React from "react";
 // Packages
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../../firebase";
-import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	onSnapshot,
+	query,
+	getDoc,
+	where,
+} from "firebase/firestore";
 
 // Table Columns
-import { CollectorColumn } from "./CollectorColumn";
+import { ClenroColumn } from "./ClenroColumn";
 
-// Modals
-// import ViewTBC from "../modals/viewTBC/ViewTBC";
+// Add Modal
+import ShowModal from "../../modals/ShowModal";
+import AddClenroAdmin from "../../forms/AddClenroAdmin";
+import ResetPassword from "../../forms/ResetPassword";
 
-const actionColumn = [
-	{
-		field: "action",
-		headerName: "Action",
-		headerClassName: "headerTheme",
-		width: 150,
-		renderCell: (params) => {
-			return (
-				<>
-					<div className="cellAction">
-						<ViewTBC params={params} />
-					</div>
-				</>
-			);
-		},
-	},
-];
-
-const Collector = () => {
-	const [collectorsData, setCollectorsData] = useState([]);
-	const q = query(collection(db, "Waste Collector"));
+const ClenroAdmin = () => {
+	const [clenroAdmin, setClenroAdmin] = useState([]);
+	const q = query(collection(db, "Admins"), where("role", "==", "ClenroAdmin"));
 	let unsubscribe;
 	useEffect(() => {
 		unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -40,27 +32,36 @@ const Collector = () => {
 			querySnapshot.forEach((doc) => {
 				data.push({ ...doc.data(), id: doc.id });
 			});
-			setCollectorsData(data);
+			setClenroAdmin(data);
 		});
 		return () => {
-			unsubscribe(); // return to prevent memory leak
+			unsubscribe();
 		};
 	}, []);
-
 	return (
 		<>
 			<div className="dataTable">
+				<div className="mb-4 flex justify-around items-center gap-2">
+					<ShowModal
+						modalTitle="Register a CLENRO Admin"
+						specifyForm={<AddClenroAdmin />}
+					/>
+					<ShowModal
+						modalTitle="Reset an Email"
+						specifyForm={<ResetPassword />}
+					/>
+				</div>
 				<div style={{ height: 600, width: "100%" }}>
 					<div style={{ display: "flex", height: "100%" }}>
 						<div style={{ flexGrow: 1 }}>
 							<DataGrid
-								rows={collectorsData.map((user, index) => {
+								rows={clenroAdmin.map((user, index) => {
 									return {
 										...user,
 										list: index + 1,
 									};
 								})}
-								columns={CollectorColumn}
+								columns={ClenroColumn}
 								pageSize={9}
 								density="comfortable"
 								rowsPerPageOptions={[9]}
@@ -75,4 +76,4 @@ const Collector = () => {
 	);
 };
 
-export default Collector;
+export default ClenroAdmin;
