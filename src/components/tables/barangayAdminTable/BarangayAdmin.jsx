@@ -5,14 +5,43 @@ import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../../firebase";
+import {
+	collection,
+	doc,
+	onSnapshot,
+	query,
+	getDoc,
+	where,
+} from "firebase/firestore";
 
 // Table Columns
 import { BarangayColumn } from "./BarangayColumn";
 
 // Modals and Pages
+import ShowModal from "../../modals/ShowModal";
+import AddBarangayAdmin from "../../forms/AddBarangayAdmin";
 
 const BarangayAdmin = () => {
-	const [userData, setUserData] = useState([]);
+	const [barangayAdmin, setBarangayAdmin] = useState([]);
+
+	const q = query(
+		collection(db, "Admins"),
+		where("role", "==", "BarangayAdmin")
+	);
+
+	let unsubscribe;
+	useEffect(() => {
+		unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				data.push({ ...doc.data(), id: doc.id });
+			});
+			setBarangayAdmin(data);
+		});
+		return () => {
+			unsubscribe();
+		};
+	}, []);
 
 	const actionColumn = [
 		{
@@ -38,39 +67,31 @@ const BarangayAdmin = () => {
 		},
 	];
 
-	// Read data from firebase database
-	// const getData = () => {
-	// 	const usersRef = ref(db, "/BarangayAdmin/");
-	// 	const readData = onValue(usersRef, (snapshot) => {
-	// 		const data = snapshot.val();
-	// 		setUserData(Object.values(data));
-	// 	});
-	// };
-	// useEffect(() => {
-	// 	getData();
-	// }, []);
-
 	return (
 		<>
 			<div className="dataTable">
+				<div className="mb-4 flex justify-center">
+					<ShowModal
+						modalTitle="Register a Barangay Admin"
+						specifyForm={<AddBarangayAdmin />}
+					/>
+				</div>
 				<div style={{ display: "flex", height: "100%" }}>
 					<div style={{ height: 600, width: "100%" }}>
-						{userData && (
-							<DataGrid
-								rows={userData.map((user, index) => {
-									return {
-										...user,
-										list: index + 1,
-									};
-								})}
-								columns={BarangayColumn}
-								pageSize={9}
-								density="comfortable"
-								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
-								components={{ Toolbar: GridToolbar }}
-							/>
-						)}
+						<DataGrid
+							rows={barangayAdmin.map((user, index) => {
+								return {
+									...user,
+									list: index + 1,
+								};
+							})}
+							columns={BarangayColumn}
+							pageSize={9}
+							density="comfortable"
+							rowsPerPageOptions={[9]}
+							getRowId={(row) => row.id}
+							components={{ Toolbar: GridToolbar }}
+						/>
 					</div>
 				</div>
 			</div>
