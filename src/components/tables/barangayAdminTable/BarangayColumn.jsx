@@ -9,15 +9,15 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "name",
-		headerName: "Name",
+		field: "firstName",
+		headerName: "firstName",
 		minWidth: 150,
 		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
 					<div className="cellWidth">
-						<p>{props.row.name}</p>
+						<p>{props.row.firstName}</p>
 					</div>
 				</>
 			);
@@ -26,15 +26,32 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "number",
-		headerName: "Number",
+		field: "lastName",
+		headerName: "lastName",
+		minWidth: 150,
 		flex: 1,
-		minWidth: 200,
 		renderCell: (props) => {
 			return (
 				<>
 					<div className="cellWidth">
-						<p>{props.row.number}</p>
+						<p>{props.row.lastName}</p>
+					</div>
+				</>
+			);
+		},
+	},
+
+	{
+		headerClassName: "headerTheme",
+		field: "philippineNumber",
+		headerName: "Number",
+		flex: 1,
+		minWidth: 100,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.philippineNumber}</p>
 					</div>
 				</>
 			);
