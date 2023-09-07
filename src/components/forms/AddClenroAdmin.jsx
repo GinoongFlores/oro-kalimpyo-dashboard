@@ -8,6 +8,9 @@ import * as yup from "yup";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
+import { auth, db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const AddClenroAdmin = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -36,12 +39,41 @@ const AddClenroAdmin = () => {
 			 * Add Data to firebase 
 	*/
 
+	const addClenroAdmin = async (id, firstName, lastName, email, password) => {
+		const docRef = doc(db, "Admins", id);
+		const docData = {
+			firstName,
+			lastName,
+			email,
+			password,
+			id,
+			role: "ClenroAdmin",
+		};
+		await setDoc(docRef, docData);
+	};
+
 	return (
 		<>
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					console.log(values);
+					createUserWithEmailAndPassword(auth, values.email, values.password)
+						.then((userCredential) => {
+							const user = userCredential.user;
+							console.log("added user");
+							addClenroAdmin(
+								user?.uid,
+								values.firstName,
+								values.lastName,
+								values.email,
+								values.password
+							);
+						})
+						.catch((error) => {
+							const errorCode = error.code;
+							const errorMessage = error.message;
+							console.log(errorCode, errorMessage);
+						});
 				}}
 				initialValues={{
 					firstName: "",
