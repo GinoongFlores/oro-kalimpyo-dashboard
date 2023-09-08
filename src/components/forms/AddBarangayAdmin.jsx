@@ -69,8 +69,9 @@ const AddBarangayAdmin = () => {
 			philippineNumber,
 			id,
 			role: "BarangayAdmin",
+			createdAt: new Date().toLocaleString(),
 		};
-		await setDoc(docRef, docData);
+		await setDoc(docRef, docData, { merge: true });
 	};
 
 	return (

@@ -48,8 +48,9 @@ const AddClenroAdmin = () => {
 			password,
 			id,
 			role: "ClenroAdmin",
+			createdAt: new Date().toLocaleString(),
 		};
-		await setDoc(docRef, docData);
+		await setDoc(docRef, docData, { merge: true });
 	};
 
 	return (
