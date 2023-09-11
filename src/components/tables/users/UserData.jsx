@@ -1,17 +1,15 @@
 // Packages
 import React from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../../firebase";
 
-// Firebase auth
-import { auth } from "../../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-
 // Table Columns
 import { userColumn } from "./UserColumn";
+
+// DataTable
+import DataTable from "../../DataTable/DataTable";
 
 import { collection, onSnapshot, query } from "firebase/firestore";
 
@@ -59,28 +57,7 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ height: 600, width: "100%" }}>
-					<div style={{ display: "flex", height: "100%" }}>
-						{userData && (
-							<DataGrid
-								rows={userData.map((user, index) => {
-									return {
-										...user,
-										list: index + 1,
-										establishment_type:
-											user.establishment_type || "Non-Establishment",
-									};
-								})}
-								columns={userColumn}
-								pageSize={9}
-								density="comfortable"
-								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
-								components={{ Toolbar: GridToolbar }}
-							/>
-						)}
-					</div>
-				</div>
+				<DataTable rowData={userData} columnData={userColumn} />
 			</div>
 		</>
 	);

@@ -1,44 +1,51 @@
 // Packages
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 // Firebase
 import { db } from "../../../firebase";
-
-import HomeBody from "../../../pages/home/HomeBody";
 
 // Table Columns
 import { contributionColumn } from "./ContributionColumn";
 import useFetch from "../../../hooks/useFetch";
 
+// DataTable
+import DataTable from "../../DataTable/DataTable";
+
 const WasteContribution = () => {
+	// Read overall waste contribution
 	const { data } = useFetch("Waste Contribution");
 
-	// console.log(data)
+	// Read Uncollected Waste
+	const [unCollectedData, setUnCollectedData] = useState([]);
+	const ref = collection(db, "Waste Contribution");
+	const q = query(ref, where("waste_type", "==", "Unsegregated"));
+	let unsubscribe;
+	const getData = async () => {
+		unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				data.push({ ...doc.data(), id: doc.id });
+			});
+			setUnCollectedData(data);
+		});
+	};
+	useEffect(() => {
+		getData();
+		return () => {
+			unsubscribe();
+		};
+	}, []);
+
+	// console.log(data);
 	return (
 		<>
 			<div className="dataTable">
-				{/* <div className="text-xl py-2">Waste Contributions</div> */}
-				<div style={{ height: 600, width: "100%" }}>
-					<div style={{ display: "flex", height: "100%" }}>
-						<DataGrid
-							rows={data?.map((user, index) => {
-								return {
-									...user,
-									// id: index + 1,
-									list: index + 1,
-								};
-							})}
-							columns={contributionColumn}
-							pageSize={9}
-							density="comfortable"
-							rowsPerPageOptions={[9]}
-							getRowId={(row) => row.id}
-							components={{ Toolbar: GridToolbar }}
-						/>
-					</div>
-				</div>
+				<DataTable rowData={data} columnData={contributionColumn} />
+			</div>
+			<div className="dataTable pt-4">
+				<h3 className="font-extralight">Uncollected Waste</h3>
+				<DataTable rowData={unCollectedData} columnData={contributionColumn} />
 			</div>
 		</>
 	);
