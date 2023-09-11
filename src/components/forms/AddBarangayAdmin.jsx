@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import * as formik from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
@@ -43,11 +44,6 @@ const AddBarangayAdmin = () => {
 			.matches(philippineNumberRegex, "Invalid Number"),
 	});
 
-	/* 
-	 TODO: 
-	 * Add Data to firebase 
-	*/
-
 	const addBarangayAdmin = async (
 		id,
 		firstName,
@@ -82,7 +78,6 @@ const AddBarangayAdmin = () => {
 					createUserWithEmailAndPassword(auth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
-							console.log("added barangay admin");
 							addBarangayAdmin(
 								user?.uid,
 								values.firstName,
@@ -93,11 +88,12 @@ const AddBarangayAdmin = () => {
 								values.barangay,
 								values.philippineNumber
 							);
+							toast.success("Successfully added a barangay admin");
 						})
 						.catch((error) => {
 							const errorCode = error.code;
 							const errorMessage = error.message;
-							console.log(errorCode, errorMessage);
+							toast.error(errorCode, errorMessage);
 						});
 				}}
 				initialValues={{
