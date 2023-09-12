@@ -29,7 +29,6 @@ import ResetPassword from "../../forms/ResetPassword";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Stack from "react-bootstrap/Stack";
 
 const ClenroAdmin = () => {
 	const actionColumn = [
@@ -100,7 +99,7 @@ const ClenroAdmin = () => {
 							specifyForm={<AddClenroAdmin />}
 						/>
 						<ShowModal
-							modalTitle="Reset an Email"
+							modalTitle="Reset a Password"
 							specifyForm={<ResetPassword />}
 						/>
 					</Row>
