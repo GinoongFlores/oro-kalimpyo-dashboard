@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
@@ -12,7 +12,7 @@ const ShowModal = (props) => {
 
 	return (
 		<>
-			<Button variant="success" onClick={handleShow}>
+			<Button onClick={handleShow} variant="success">
 				{props.modalTitle}
 			</Button>
 
