@@ -12,17 +12,21 @@ import Cards from "../Cards";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 
+import DbSortedCards from "./DbSortedCards";
+
 const DbCards = ({
 	showGenerator,
 	showCollector,
 	showConsolidator,
 	showWasteContribution,
+	showWasteSegregated,
 	needLink,
 }) => {
 	const [userNum, setUserNum] = useState(0);
 	const [consolidatorNum, setConsolidatorNum] = useState(0);
 	const [collectorNum, setCollectorNum] = useState(0);
 	const [wasteContributionNum, setWasteContributionNum] = useState(0);
+	const [wasteSegregatedNum, setWasteSegregatedNum] = useState(0);
 
 	const getData = () => {
 		const collections = [
@@ -30,6 +34,7 @@ const DbCards = ({
 			"Waste Collector",
 			"Waste Consolidator",
 			"Waste Contribution",
+			"Segregated Waste",
 		];
 		const counts = {};
 		const unsubscribes = []; // unsubscribe function
@@ -41,6 +46,7 @@ const DbCards = ({
 				setCollectorNum(counts["Waste Collector"]);
 				setConsolidatorNum(counts["Waste Consolidator"]);
 				setWasteContributionNum(counts["Waste Contribution"]);
+				setWasteSegregatedNum(counts["Segregated Waste"]);
 			});
 			unsubscribes.push(unsubscribe);
 		}
@@ -93,6 +99,13 @@ const DbCards = ({
 			value: wasteContributionNum,
 			show: showWasteContribution,
 		},
+
+		{
+			title: "Waste Segregated",
+			description: "Overall Waste Segregated",
+			value: wasteSegregatedNum,
+			show: showWasteSegregated,
+		},
 	];
 
 	const cardItems = cardData
@@ -101,15 +114,7 @@ const DbCards = ({
 			return <Cards key={index} item={item} needLink={needLink} />;
 		});
 
-	return (
-		<>
-			<Container>
-				<Row className={"justify-content-sm-evenly align-content-sm-center"}>
-					{cardItems}
-				</Row>
-			</Container>
-		</>
-	);
+	return <>{cardItems}</>;
 };
 
 export default DbCards;
