@@ -3,6 +3,7 @@ import NavbarLink from "../../components/navbar/NavbarLink";
 import Collector from "../../components/tables/collector/Collector";
 import TabsComponent from "../../components/tabs/TabsComponent";
 import WasteContribution from "../../components/tables/wasteContribution/WasteContribution";
+import Overview from "./Overview";
 
 const ListCollector = () => {
 	return (
@@ -11,8 +12,10 @@ const ListCollector = () => {
 			<TabsComponent
 				childrenOneLabel="Collector"
 				childrenTwoLabel="Waste Contributions"
+				childrenThreeLabel="Overview"
 				childrenOne={<Collector />}
 				childrenTwo={<WasteContribution />}
+				childrenThree={<Overview />}
 			/>
 		</>
 	);

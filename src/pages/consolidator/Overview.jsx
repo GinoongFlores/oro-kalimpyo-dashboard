@@ -6,15 +6,17 @@ import Row from "react-bootstrap/Row";
 
 // Cards
 import DbCards from "../../components/cards/db/DbCards";
-import DbSortedCards from "../../components/cards/db/DbSortedCards";
 
 const Overview = () => {
 	return (
 		<>
 			<Container fluid>
 				<Row className={"justify-content-sm-evenly align-content-sm-center"}>
-					<DbCards showGenerator={true} showWasteContribution={true} />
-					<DbSortedCards showNoContribution={true} />
+					<DbCards
+						showConsolidator={true}
+						showWasteSegregated={true}
+						needLink={false}
+					/>
 				</Row>
 			</Container>
 		</>
