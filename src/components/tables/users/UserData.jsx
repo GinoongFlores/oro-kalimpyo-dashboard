@@ -10,8 +10,15 @@ import { userColumn } from "./UserColumn";
 
 // DataTable
 import DataTable from "../../DataTable/DataTable";
+import Button from "react-bootstrap/Button";
 
-import { collection, onSnapshot, query } from "firebase/firestore";
+import {
+	collection,
+	onSnapshot,
+	query,
+	updateDoc,
+	getDocs,
+} from "firebase/firestore";
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);
@@ -33,6 +40,21 @@ const UserData = () => {
 			},
 		},
 	];
+
+	const handleResetContribution = async () => {
+		const WasteGeneratorRef = collection(db, "Waste Generator");
+		const querySnapshot = await getDocs(WasteGeneratorRef);
+		const confirmation = window.confirm(
+			"Are you sure you want to reset all the daily contribution?"
+		);
+		if (confirmation) {
+			querySnapshot.forEach(async (doc) => {
+				await updateDoc(doc.ref, {
+					contributed_today: "No",
+				});
+			});
+		}
+	};
 
 	// Read data from firebase database
 	const q = query(collection(db, "Waste Generator"));
@@ -57,6 +79,11 @@ const UserData = () => {
 	return (
 		<>
 			<div className="dataTable">
+				<div className="mb-3 flex justify-center">
+					<Button onClick={handleResetContribution} variant="success">
+						Reset Daily Contribution
+					</Button>
+				</div>
 				<DataTable rowData={userData} columnData={userColumn} />
 			</div>
 		</>
