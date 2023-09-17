@@ -1,10 +1,9 @@
 import React from "react";
-
-import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useState } from "react";
 
-const AddModal = (props) => {
+const ViewTableModal = (props) => {
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
@@ -12,9 +11,9 @@ const AddModal = (props) => {
 
 	return (
 		<>
-			<Button variant="success" onClick={handleShow}>
-				Add A {props.adminType} Admin
-			</Button>
+			<button onClick={handleShow} className="viewButton">
+				View
+			</button>
 
 			<Modal
 				show={show}
@@ -27,11 +26,11 @@ const AddModal = (props) => {
 				centered
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Add A {props.adminType} Admin</Modal.Title>
+					<Modal.Title>{props.modalTitle}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>{props.specifyForm}</Modal.Body>
 				<Modal.Footer>
-					<Button variant="primary" onClick={handleClose}>
+					<Button variant="secondary" onClick={handleClose}>
 						Close
 					</Button>
 				</Modal.Footer>
@@ -40,4 +39,4 @@ const AddModal = (props) => {
 	);
 };
 
-export default AddModal;
+export default ViewTableModal;

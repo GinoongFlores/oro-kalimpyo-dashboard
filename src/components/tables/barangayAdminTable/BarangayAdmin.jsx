@@ -1,36 +1,48 @@
 // Packages
 import React from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 
 // Firebase
 import { db } from "../../../firebase";
+import {
+	collection,
+	doc,
+	onSnapshot,
+	query,
+	getDoc,
+	where,
+} from "firebase/firestore";
 
 // Table Columns
 import { BarangayColumn } from "./BarangayColumn";
 
 // Modals and Pages
+import ShowModal from "../../modals/ShowModal";
+import AddBarangayAdmin from "../../forms/AddBarangayAdmin";
+
+import DataTable from "../../DataTable/DataTable";
 
 const BarangayAdmin = () => {
-	const [userData, setUserData] = useState([]);
-
 	const actionColumn = [
 		{
 			field: "action",
 			headerName: "Action",
 			headerClassName: "headerTheme",
-			width: 150,
+			minWidth: 200,
+			flex: 1,
 			renderCell: (params) => {
 				return (
 					<>
 						<div className="cellAction">
-							{/* <EditUser params={params} />
 							<button
-								onClick={() => handleDelete(params.row.id)}
+								onClick={() => {
+									handleDelete(params.row.id);
+								}}
 								className="deleteButton"
 							>
 								Delete
-							</button> */}
+							</button>
 						</div>
 					</>
 				);
@@ -38,41 +50,57 @@ const BarangayAdmin = () => {
 		},
 	];
 
-	// Read data from firebase database
-	// const getData = () => {
-	// 	const usersRef = ref(db, "/BarangayAdmin/");
-	// 	const readData = onValue(usersRef, (snapshot) => {
-	// 		const data = snapshot.val();
-	// 		setUserData(Object.values(data));
-	// 	});
-	// };
-	// useEffect(() => {
-	// 	getData();
-	// }, []);
+	const handleDelete = async (id) => {
+		const confirmation = window.confirm(
+			"Are you sure you want to delete this admin?"
+		);
+
+		if (confirmation) {
+			await deleteDoc(doc(db, "Admins", id))
+				.then(() => {
+					toast.success("Successfully deleted a barangay admin");
+				})
+				.catch((error) => {
+					toast.error(error.code, error.message);
+				});
+		}
+	};
+
+	const [barangayAdmin, setBarangayAdmin] = useState([]);
+	const q = query(
+		collection(db, "Admins"),
+		where("role", "==", "BarangayAdmin")
+	);
+
+	let unsubscribe;
+	useEffect(() => {
+		unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const data = [];
+			querySnapshot.forEach((doc) => {
+				data.push({ ...doc.data(), id: doc.id });
+			});
+			setBarangayAdmin(data);
+		});
+		return () => {
+			unsubscribe();
+		};
+	}, []);
 
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ display: "flex", height: "100%" }}>
-					<div style={{ height: 600, width: "100%" }}>
-						{userData && (
-							<DataGrid
-								rows={userData.map((user, index) => {
-									return {
-										...user,
-										list: index + 1,
-									};
-								})}
-								columns={BarangayColumn}
-								pageSize={9}
-								density="comfortable"
-								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
-								components={{ Toolbar: GridToolbar }}
-							/>
-						)}
-					</div>
+				<div className="mb-4 flex justify-center">
+					<ShowModal
+						modalTitle="Register a Barangay Admin"
+						specifyForm={<AddBarangayAdmin />}
+					/>
 				</div>
+				<DataTable
+					rowData={barangayAdmin}
+					columnData={BarangayColumn}
+					hasOwnAction={true}
+					isOwnAction={actionColumn}
+				/>
 			</div>
 		</>
 	);

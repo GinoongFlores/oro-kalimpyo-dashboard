@@ -29,12 +29,8 @@ const NavbarLink = () => {
 	];
 	const dropDownLinks = [
 		{
-			name: "CLENRO Admin",
-			path: "/clenro-admin",
-		},
-		{
-			name: "Barangay Admin",
-			path: "/add-barangay-admin",
+			name: "Admins",
+			path: "/admins",
 		},
 		{
 			name: "Exit",
@@ -58,7 +54,7 @@ const NavbarLink = () => {
 							{Links.map((link) => {
 								return (
 									<li
-										className="my-2 pl-2 lg:my-0 lg:px-1 uppercase"
+										className="my-2 pl-2 uppercase"
 										data-te-nav-item-ref
 										key={link.name}
 									>
@@ -68,8 +64,8 @@ const NavbarLink = () => {
 												return (
 													"px-3 py-2 rounded-md font-medium navLinks " +
 													(!isActive
-														? " hover:bg-green-600 text-gray-300 hover:text-white"
-														: "bg-green-600 text-white")
+														? " hover:bg-[#198754] text-gray-300 hover:text-white"
+														: "bg-[#198754]  text-white")
 												);
 											}}
 										>
@@ -93,8 +89,8 @@ const NavbarLink = () => {
 													return (
 														"flex items-center whitespace-nowrap rounded mb-1 px-6 pb-2 pt-2.5 text-md font-medium uppercase leading-normal " +
 														(!isActive
-															? "hover:bg-green-600 text-dark navLinks"
-															: "bg-green-600 text-white")
+															? "hover:bg-[#198754]  text-dark navLinks"
+															: "bg-[#198754]  text-white")
 													);
 												}}
 											>

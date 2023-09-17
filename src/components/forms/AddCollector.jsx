@@ -14,7 +14,7 @@ import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const AddBarangayAdmin = () => {
+const AddCollector = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
@@ -44,7 +44,7 @@ const AddBarangayAdmin = () => {
 			.matches(philippineNumberRegex, "Invalid Number"),
 	});
 
-	const addBarangayAdmin = async (
+	const addCollector = async (
 		id,
 		firstName,
 		lastName,
@@ -78,7 +78,7 @@ const AddBarangayAdmin = () => {
 					createUserWithEmailAndPassword(auth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
-							addBarangayAdmin(
+							addCollector(
 								user?.uid,
 								values.firstName,
 								values.lastName,
@@ -322,4 +322,4 @@ const AddBarangayAdmin = () => {
 	);
 };
 
-export default AddBarangayAdmin;
+export default AddCollector;

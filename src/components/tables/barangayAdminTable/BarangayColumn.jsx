@@ -9,15 +9,15 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "name",
-		headerName: "Name",
+		field: "createdAt",
+		headerName: "Date Created",
 		minWidth: 150,
 		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
 					<div className="cellWidth">
-						<p>{props.row.name}</p>
+						<p>{props.row.createdAt}</p>
 					</div>
 				</>
 			);
@@ -26,15 +26,15 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "number",
-		headerName: "Number",
+		field: "firstName",
+		headerName: "First Name",
+		minWidth: 150,
 		flex: 1,
-		minWidth: 200,
 		renderCell: (props) => {
 			return (
 				<>
 					<div className="cellWidth">
-						<p>{props.row.number}</p>
+						<p>{props.row.firstName}</p>
 					</div>
 				</>
 			);
@@ -43,15 +43,15 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "email",
-		headerName: "Email",
-		minWidth: 200,
+		field: "lastName",
+		headerName: "Last Name",
+		minWidth: 150,
 		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
-					<div className={`cellWidth ${props.row.email}`}>
-						<p>{props.row.email}</p>
+					<div className="cellWidth">
+						<p>{props.row.lastName}</p>
 					</div>
 				</>
 			);
@@ -62,22 +62,47 @@ export const BarangayColumn = [
 		headerClassName: "headerTheme",
 		field: "barangay",
 		headerName: "Barangay",
-		flex: 1,
 		minWidth: 150,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.barangay}</p>
+					</div>
+				</>
+			);
+		},
 	},
 
 	{
 		headerClassName: "headerTheme",
 		field: "address",
 		headerName: "Address",
+		minWidth: 150,
 		flex: 1,
-		minWidth: 250,
-
 		renderCell: (props) => {
 			return (
 				<>
-					<div className={`cellWidth ${props.row.address}`}>
+					<div className="cellWidth">
 						<p>{props.row.address}</p>
+					</div>
+				</>
+			);
+		},
+	},
+
+	{
+		headerClassName: "headerTheme",
+		field: "email",
+		headerName: "Email",
+		minWidth: 300,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.email}</p>
 					</div>
 				</>
 			);

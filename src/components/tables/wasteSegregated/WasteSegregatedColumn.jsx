@@ -38,6 +38,12 @@ export const WasteSegregatedColumn = [
 		headerName: "Plastic Name",
 		minWidth: 300,
 		flex: 1,
+		valueGetter: (params) => {
+			if (!params.value) {
+				return "N/A";
+			}
+			return params.value;
+		},
 	},
 
 	{
@@ -46,6 +52,12 @@ export const WasteSegregatedColumn = [
 		headerName: "Plastic Type",
 		minWidth: 300,
 		flex: 1,
+		valueGetter: (params) => {
+			if (!params.value) {
+				return "N/A";
+			}
+			return params.value;
+		},
 	},
 
 	{

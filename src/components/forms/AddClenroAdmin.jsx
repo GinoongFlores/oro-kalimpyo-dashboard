@@ -5,9 +5,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import * as formik from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
+import { auth, db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const AddClenroAdmin = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -31,17 +35,42 @@ const AddClenroAdmin = () => {
 			.oneOf([yup.ref("password"), null], "Password must match"),
 	});
 
-	/* 
-			TODO:
-			 * Add Data to firebase 
-	*/
+	const addClenroAdmin = async (id, firstName, lastName, email, password) => {
+		const docRef = doc(db, "Admins", id);
+		const docData = {
+			firstName,
+			lastName,
+			email,
+			password,
+			id,
+			role: "ClenroAdmin",
+			createdAt: new Date().toLocaleString(),
+		};
+		await setDoc(docRef, docData, { merge: true });
+	};
 
 	return (
 		<>
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					console.log(values);
+					createUserWithEmailAndPassword(auth, values.email, values.password)
+						.then((userCredential) => {
+							const user = userCredential.user;
+							toast.success("Successfully added a Clenro Admin");
+							addClenroAdmin(
+								user?.uid,
+								values.firstName,
+								values.lastName,
+								values.email,
+								values.password
+							);
+						})
+						.catch((error) => {
+							const errorCode = error.code;
+							const errorMessage = error.message;
+							toast.error(errorCode, errorMessage);
+						});
 				}}
 				initialValues={{
 					firstName: "",

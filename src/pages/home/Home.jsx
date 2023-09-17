@@ -1,16 +1,34 @@
 import React from "react";
 // Components
 import NavbarLink from "../../components/navbar/NavbarLink";
-import HomeBody from "./HomeBody";
+import DbCards from "../../components/cards/db/DbCards";
+import Container from "react-bootstrap/Container";
+
+import Row from "react-bootstrap/Row";
+
+import Statistics from "./Statistics";
 
 const Home = () => {
 	return (
-		<div className="flex flex-col">
+		<>
 			<NavbarLink />
-			<div className="container mx-auto py-12">
-				<HomeBody />
-			</div>
-		</div>
+			<Container fluid className="p-0">
+				<div className="py-12 pb-0">
+					<Container>
+						<Row>
+							<DbCards
+								showGenerator={true}
+								showConsolidator={true}
+								showCollector={true}
+								needLink={true}
+							/>
+						</Row>
+					</Container>
+				</div>
+				<div className="b-example-divider"></div>
+				<Statistics />
+			</Container>
+		</>
 	);
 };
 
