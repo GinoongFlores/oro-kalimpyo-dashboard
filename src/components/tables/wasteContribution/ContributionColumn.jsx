@@ -81,13 +81,13 @@ export const contributionColumn = [
 		},
 	},
 
-	{
-		headerClassName: "headerTheme",
-		field: "user_type",
-		headerName: "User Type",
-		minWidth: 180,
-		flex: 1,
-	},
+	// {
+	// 	headerClassName: "headerTheme",
+	// 	field: "user_type",
+	// 	headerName: "User Type",
+	// 	minWidth: 180,
+	// 	flex: 1,
+	// },
 
 	{
 		headerClassName: "headerTheme",

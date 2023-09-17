@@ -9,6 +9,23 @@ export const ClenroColumn = [
 
 	{
 		headerClassName: "headerTheme",
+		field: "createdAt",
+		headerName: "Date Created",
+		minWidth: 150,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.createdAt}</p>
+					</div>
+				</>
+			);
+		},
+	},
+
+	{
+		headerClassName: "headerTheme",
 		field: "firstName",
 		headerName: "First Name",
 		minWidth: 150,
@@ -45,7 +62,7 @@ export const ClenroColumn = [
 		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
-		minWidth: 150,
+		minWidth: 300,
 		flex: 1,
 		renderCell: (props) => {
 			return (

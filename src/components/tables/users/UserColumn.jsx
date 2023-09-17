@@ -46,6 +46,12 @@ export const userColumn = [
 		headerName: "Establishment Type",
 		minWidth: 180,
 		flex: 1,
+		valueGetter: (params) => {
+			if (!params.value) {
+				return "Non-Establishment";
+			}
+			return params.value;
+		},
 	},
 
 	{
@@ -97,6 +103,14 @@ export const userColumn = [
 				</>
 			);
 		},
+	},
+
+	{
+		headerClassName: "headerTheme",
+		field: "contributed_today",
+		headerName: "Contributed Today",
+		minWidth: 150,
+		flex: 1,
 	},
 
 	{

@@ -1,6 +1,6 @@
 // Packages
 import React from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 
 // Firebase
@@ -21,9 +21,52 @@ import { BarangayColumn } from "./BarangayColumn";
 import ShowModal from "../../modals/ShowModal";
 import AddBarangayAdmin from "../../forms/AddBarangayAdmin";
 
-const BarangayAdmin = () => {
-	const [barangayAdmin, setBarangayAdmin] = useState([]);
+import DataTable from "../../DataTable/DataTable";
 
+const BarangayAdmin = () => {
+	const actionColumn = [
+		{
+			field: "action",
+			headerName: "Action",
+			headerClassName: "headerTheme",
+			minWidth: 200,
+			flex: 1,
+			renderCell: (params) => {
+				return (
+					<>
+						<div className="cellAction">
+							<button
+								onClick={() => {
+									handleDelete(params.row.id);
+								}}
+								className="deleteButton"
+							>
+								Delete
+							</button>
+						</div>
+					</>
+				);
+			},
+		},
+	];
+
+	const handleDelete = async (id) => {
+		const confirmation = window.confirm(
+			"Are you sure you want to delete this admin?"
+		);
+
+		if (confirmation) {
+			await deleteDoc(doc(db, "Admins", id))
+				.then(() => {
+					toast.success("Successfully deleted a barangay admin");
+				})
+				.catch((error) => {
+					toast.error(error.code, error.message);
+				});
+		}
+	};
+
+	const [barangayAdmin, setBarangayAdmin] = useState([]);
 	const q = query(
 		collection(db, "Admins"),
 		where("role", "==", "BarangayAdmin")
@@ -43,30 +86,6 @@ const BarangayAdmin = () => {
 		};
 	}, []);
 
-	const actionColumn = [
-		{
-			field: "action",
-			headerName: "Action",
-			headerClassName: "headerTheme",
-			width: 150,
-			renderCell: (params) => {
-				return (
-					<>
-						<div className="cellAction">
-							{/* <EditUser params={params} />
-							<button
-								onClick={() => handleDelete(params.row.id)}
-								className="deleteButton"
-							>
-								Delete
-							</button> */}
-						</div>
-					</>
-				);
-			},
-		},
-	];
-
 	return (
 		<>
 			<div className="dataTable">
@@ -76,24 +95,12 @@ const BarangayAdmin = () => {
 						specifyForm={<AddBarangayAdmin />}
 					/>
 				</div>
-				<div style={{ display: "flex", height: "100%" }}>
-					<div style={{ height: 600, width: "100%" }}>
-						<DataGrid
-							rows={barangayAdmin.map((user, index) => {
-								return {
-									...user,
-									list: index + 1,
-								};
-							})}
-							columns={BarangayColumn}
-							pageSize={9}
-							density="comfortable"
-							rowsPerPageOptions={[9]}
-							getRowId={(row) => row.id}
-							components={{ Toolbar: GridToolbar }}
-						/>
-					</div>
-				</div>
+				<DataTable
+					rowData={barangayAdmin}
+					columnData={BarangayColumn}
+					hasOwnAction={true}
+					isOwnAction={actionColumn}
+				/>
 			</div>
 		</>
 	);

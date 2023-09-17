@@ -7,17 +7,13 @@ import TabsComponent from "../../components/tabs/TabsComponent";
 const ListAdmins = () => {
 	return (
 		<>
-			<div className="flex flex-col w-full">
-				<NavbarLink />
-				<div className="p-0">
-					<TabsComponent
-						childrenOneLabel="Clenro Admin"
-						childrenTwoLabel="Barangay Admin"
-						childrenOne={<ClenroAdmin />}
-						childrenTwo={<BarangayAdmin />}
-					/>
-				</div>
-			</div>
+			<NavbarLink />
+			<TabsComponent
+				childrenOneLabel="Clenro Admin"
+				childrenTwoLabel="Barangay Admin"
+				childrenOne={<ClenroAdmin />}
+				childrenTwo={<BarangayAdmin />}
+			/>
 		</>
 	);
 };
