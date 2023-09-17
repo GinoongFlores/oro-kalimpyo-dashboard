@@ -280,7 +280,7 @@ const Statistics = () => {
 						</ResponsiveContainer>
 					</Col>
 				</Row>
-				<hr className="my-12 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50 " />
+				<hr className="my-12 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
 				{/* Bar Chart */}
 				<Row>
 					<Col md={12}>
