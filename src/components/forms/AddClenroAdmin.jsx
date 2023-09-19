@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
-import { auth, db } from "../../firebase";
+import { auth, db, secondAuth, secondaryApp } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -49,12 +49,13 @@ const AddClenroAdmin = () => {
 		await setDoc(docRef, docData, { merge: true });
 	};
 
+	console.log(secondaryApp)
 	return (
 		<>
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					createUserWithEmailAndPassword(auth, values.email, values.password)
+					createUserWithEmailAndPassword(secondAuth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
 							toast.success("Successfully added a Clenro Admin");
