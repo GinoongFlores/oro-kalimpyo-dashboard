@@ -11,8 +11,14 @@ import { CollectorColumn } from "./CollectorColumn";
 
 import DataTable from "../../DataTable/DataTable";
 
+// Layout
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 // Modals
-// import ViewTBC from "../modals/viewTBC/ViewTBC";
+import AddCollector from "../../forms/AddCollector";
+import ShowModal from "../../modals/ShowModal";
 
 const actionColumn = [
 	{
@@ -60,6 +66,13 @@ const Collector = () => {
 	return (
 		<>
 			<div className="dataTable">
+				<Container fluid>
+					<Row className="justify-content-md-around gap-4 mb-3" md={5}>
+
+						<ShowModal modalTitle="Add Collector" specifyForm={<AddCollector />} />
+					</Row>
+				</Container>
+
 				<DataTable rowData={collectorsData} columnData={CollectorColumn} />
 			</div>
 		</>
