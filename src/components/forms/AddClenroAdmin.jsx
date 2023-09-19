@@ -8,7 +8,7 @@ import * as yup from "yup";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
-import { auth, db } from "../../firebase";
+import { auth, db, secondAuth, secondaryApp } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -52,12 +52,13 @@ const AddClenroAdmin = () => {
 		await setDoc(docRef, docData);
 	};
 
+	console.log(secondaryApp)
 	return (
 		<>
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					createUserWithEmailAndPassword(auth, values.email, values.password)
+					createUserWithEmailAndPassword(secondAuth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
 							console.log("added user");
@@ -73,6 +74,7 @@ const AddClenroAdmin = () => {
 							const errorCode = error.code;
 							const errorMessage = error.message;
 							console.log(errorCode, errorMessage);
+
 						});
 				}}
 				initialValues={{
