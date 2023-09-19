@@ -1,10 +1,9 @@
 import React from "react";
-
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useState } from "react";
 
-const ShowModal = (props) => {
+const ViewTableModal = (props) => {
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
@@ -12,9 +11,9 @@ const ShowModal = (props) => {
 
 	return (
 		<>
-			<Button onClick={handleShow} variant="success">
-				{props.modalTitle}
-			</Button>
+			<button onClick={handleShow} className="viewButton">
+				View
+			</button>
 
 			<Modal
 				show={show}
@@ -40,4 +39,4 @@ const ShowModal = (props) => {
 	);
 };
 
-export default ShowModal;
+export default ViewTableModal;

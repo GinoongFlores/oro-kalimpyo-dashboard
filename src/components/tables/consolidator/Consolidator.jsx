@@ -10,23 +10,8 @@ import { onSnapshot, doc, setDoc, collection, query } from "firebase/firestore";
 import { ConsolidatorColumn } from "./ConsolidatorColumn";
 // import { CompletedTableSource } from "../../dataColumns/CompletedTableSource";
 
-const actionColumn = [
-	{
-		field: "action",
-		headerName: "Action",
-		headerClassName: "headerTheme",
-		width: 150,
-		renderCell: (params) => {
-			return (
-				<>
-					<div className="cellAction">
-						<ViewC params={params} />
-					</div>
-				</>
-			);
-		},
-	},
-];
+// DataTable
+import DataTable from "../../DataTable/DataTable";
 
 const Consolidator = () => {
 	const [consolidatorData, setConsolidatorData] = useState([]);
@@ -53,25 +38,7 @@ const Consolidator = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ height: 600 }}>
-					<div style={{ display: "flex", height: "100%" }}>
-						<div style={{ flexGrow: 1 }}>
-							<DataGrid
-								rows={consolidatorData.map((user, index) => {
-									return {
-										...user,
-										list: index + 1,
-									};
-								})}
-								columns={ConsolidatorColumn}
-								pageSize={9}
-								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
-								components={{ Toolbar: GridToolbar }}
-							/>
-						</div>
-					</div>
-				</div>
+				<DataTable rowData={consolidatorData} columnData={ConsolidatorColumn} />
 			</div>
 		</>
 	);

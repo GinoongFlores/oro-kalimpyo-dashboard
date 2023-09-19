@@ -3,9 +3,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import * as formik from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../firebase";
-import { useState } from "react";
 
 const ResetPassword = () => {
 	const { Formik } = formik;
@@ -18,13 +18,15 @@ const ResetPassword = () => {
 		<>
 			<Formik
 				validationSchema={schema}
-				onSubmit={async (values) => {
-					try {
-						sendPasswordResetEmail(auth, values.email);
-						console.log("email sent");
-					} catch (error) {
-						console.log(error);
-					}
+				onSubmit={(values) => {
+					sendPasswordResetEmail(auth, values.email)
+						.then(() => {
+							toast.success("Email sent successfully");
+						})
+						.catch((error) => {
+							setError(error);
+							toast.error(error.code, error.message);
+						});
 				}}
 				initialValues={{
 					email: "",

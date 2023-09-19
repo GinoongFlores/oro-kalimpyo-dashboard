@@ -10,11 +10,11 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
 import { BarangayLists } from "../../data/BarangayLists";
-import { auth, db, secondAuth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const AddBarangayAdmin = () => {
+const AddCollector = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
@@ -44,7 +44,7 @@ const AddBarangayAdmin = () => {
 			.matches(philippineNumberRegex, "Invalid Number"),
 	});
 
-	const addBarangayAdmin = async (
+	const addCollector = async (
 		id,
 		firstName,
 		lastName,
@@ -75,10 +75,10 @@ const AddBarangayAdmin = () => {
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					createUserWithEmailAndPassword(secondAuth, values.email, values.password)
+					createUserWithEmailAndPassword(auth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
-							addBarangayAdmin(
+							addCollector(
 								user?.uid,
 								values.firstName,
 								values.lastName,
@@ -322,4 +322,4 @@ const AddBarangayAdmin = () => {
 	);
 };
 
-export default AddBarangayAdmin;
+export default AddCollector;

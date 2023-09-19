@@ -9,8 +9,25 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
+		field: "createdAt",
+		headerName: "Date Created",
+		minWidth: 150,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.createdAt}</p>
+					</div>
+				</>
+			);
+		},
+	},
+
+	{
+		headerClassName: "headerTheme",
 		field: "firstName",
-		headerName: "firstName",
+		headerName: "First Name",
 		minWidth: 150,
 		flex: 1,
 		renderCell: (props) => {
@@ -27,7 +44,7 @@ export const BarangayColumn = [
 	{
 		headerClassName: "headerTheme",
 		field: "lastName",
-		headerName: "lastName",
+		headerName: "Last Name",
 		minWidth: 150,
 		flex: 1,
 		renderCell: (props) => {
@@ -43,15 +60,32 @@ export const BarangayColumn = [
 
 	{
 		headerClassName: "headerTheme",
-		field: "philippineNumber",
-		headerName: "Number",
+		field: "barangay",
+		headerName: "Barangay",
+		minWidth: 150,
 		flex: 1,
-		minWidth: 100,
 		renderCell: (props) => {
 			return (
 				<>
 					<div className="cellWidth">
-						<p>{props.row.philippineNumber}</p>
+						<p>{props.row.barangay}</p>
+					</div>
+				</>
+			);
+		},
+	},
+
+	{
+		headerClassName: "headerTheme",
+		field: "address",
+		headerName: "Address",
+		minWidth: 150,
+		flex: 1,
+		renderCell: (props) => {
+			return (
+				<>
+					<div className="cellWidth">
+						<p>{props.row.address}</p>
 					</div>
 				</>
 			);
@@ -62,39 +96,13 @@ export const BarangayColumn = [
 		headerClassName: "headerTheme",
 		field: "email",
 		headerName: "Email",
-		minWidth: 200,
+		minWidth: 300,
 		flex: 1,
 		renderCell: (props) => {
 			return (
 				<>
-					<div className={`cellWidth ${props.row.email}`}>
+					<div className="cellWidth">
 						<p>{props.row.email}</p>
-					</div>
-				</>
-			);
-		},
-	},
-
-	{
-		headerClassName: "headerTheme",
-		field: "barangay",
-		headerName: "Barangay",
-		flex: 1,
-		minWidth: 150,
-	},
-
-	{
-		headerClassName: "headerTheme",
-		field: "address",
-		headerName: "Address",
-		flex: 1,
-		minWidth: 250,
-
-		renderCell: (props) => {
-			return (
-				<>
-					<div className={`cellWidth ${props.row.address}`}>
-						<p>{props.row.address}</p>
 					</div>
 				</>
 			);

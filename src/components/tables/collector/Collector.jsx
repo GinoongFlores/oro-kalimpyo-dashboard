@@ -9,6 +9,8 @@ import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
 // Table Columns
 import { CollectorColumn } from "./CollectorColumn";
 
+import DataTable from "../../DataTable/DataTable";
+
 // Modals
 // import ViewTBC from "../modals/viewTBC/ViewTBC";
 
@@ -17,12 +19,20 @@ const actionColumn = [
 		field: "action",
 		headerName: "Action",
 		headerClassName: "headerTheme",
-		width: 150,
+		minWidth: 200,
+		flex: 1,
 		renderCell: (params) => {
 			return (
 				<>
 					<div className="cellAction">
-						<ViewTBC params={params} />
+						<button
+							onClick={() => {
+								handleDelete(params.row.id);
+							}}
+							className="deleteButton"
+						>
+							Delete
+						</button>
 					</div>
 				</>
 			);
@@ -50,26 +60,7 @@ const Collector = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ height: 600, width: "100%" }}>
-					<div style={{ display: "flex", height: "100%" }}>
-						<div style={{ flexGrow: 1 }}>
-							<DataGrid
-								rows={collectorsData.map((user, index) => {
-									return {
-										...user,
-										list: index + 1,
-									};
-								})}
-								columns={CollectorColumn}
-								pageSize={9}
-								density="comfortable"
-								rowsPerPageOptions={[9]}
-								getRowId={(row) => row.id}
-								components={{ Toolbar: GridToolbar }}
-							/>
-						</div>
-					</div>
-				</div>
+				<DataTable rowData={collectorsData} columnData={CollectorColumn} />
 			</div>
 		</>
 	);

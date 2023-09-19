@@ -1,14 +1,15 @@
 import React from "react";
-// Packages
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
 
 // Firebase
 import { db } from "../../../firebase";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 // Table Columns
 import { WasteSegregatedColumn } from "./WasteSegregatedColumn";
+
+// DataTable
+import DataTable from "../../DataTable/DataTable";
 
 const WasteSegregated = () => {
 	const [wasteData, setWasteData] = useState([]);
@@ -35,29 +36,7 @@ const WasteSegregated = () => {
 	return (
 		<>
 			<div className="dataTable">
-				<div style={{ height: 600, width: "100%" }}>
-					<div style={{ display: "flex", height: "100%" }}>
-						<div className="flex-1">
-							{wasteData && (
-								<DataGrid
-									rows={wasteData.map((user, index) => {
-										return {
-											...user,
-											// id: index + 1,
-											list: index + 1,
-										};
-									})}
-									columns={WasteSegregatedColumn}
-									pageSize={9}
-									density="comfortable"
-									rowsPerPageOptions={[9]}
-									getRowId={(row) => row.id}
-									components={{ Toolbar: GridToolbar }}
-								/>
-							)}
-						</div>
-					</div>
-				</div>
+				<DataTable rowData={wasteData} columnData={WasteSegregatedColumn} />
 			</div>
 		</>
 	);
