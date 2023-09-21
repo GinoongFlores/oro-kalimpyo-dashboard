@@ -9,22 +9,51 @@ import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
-import { BarangayLists } from "../../data/BarangayLists";
 import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+const collectorLists = [
+	{
+		value: "",
+		label: "Select a User Type",
+	},
+	{
+		value: "Barangay Collector",
+		label: "Barangay Collector",
+	},
+	{
+		value: "City Collector",
+		label: "City Collector",
+	},
+	{
+		value: "Private Collector",
+		label: "Private Collector",
+	},
+];
+
 const AddCollector = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const [showAccreditationNo, setShowAccreditationNo] = useState(false);
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
+	};
+
+	const handleUserTypeChange = (event) => {
+		const userType = event.target.value;
+		const selectedCollector = collectorLists.find(
+			(collector) => collector.value === userType
+		);
+		setShowAccreditationNo(selectedCollector.label === "Private Collector");
 	};
 
 	const { Formik } = formik;
 	const philippineNumberRegex = /^(\+)(\d){12}$|^\d{11}$/;
 	const schema = yup.object().shape({
-		firstName: yup.string().required("No First Name Provided"),
-		lastName: yup.string().required("No Last Name Provided"),
+		collectorFullName: yup.string().required("No Collector's Name Provided"),
+		contactPersonFullName: yup
+			.string()
+			.required("No Contact Person's Name Provided"),
 		email: yup.string().email().required("No Email Provided"),
 		password: yup
 			.string()
@@ -35,8 +64,11 @@ const AddCollector = () => {
 			.string()
 			.required("No password provided")
 			.oneOf([yup.ref("password"), null], "Password must match"),
-		address: yup.string().required("No Address Provided"),
-		barangay: yup.string().required("No Barangay Provided"),
+		user_type: yup.string().required("No User Type Provided"),
+		accreditationNo: yup
+			.number()
+			.typeError("Accreditation No. must be a number")
+			.required("No Accreditation No. Provided"),
 		philippineNumber: yup
 			.string()
 			.required("No Number Provided")
@@ -46,25 +78,24 @@ const AddCollector = () => {
 
 	const addCollector = async (
 		id,
-		firstName,
-		lastName,
+		collectorFullName,
 		email,
 		password,
-		address,
-		barangay,
+		contactPersonFullName,
+		user_type,
+		accreditationNo,
 		philippineNumber
 	) => {
-		const docRef = doc(db, "Admins", id);
+		const docRef = doc(db, "Collectors", id);
 		const docData = {
-			firstName,
-			lastName,
+			collectorFullName,
 			email,
 			password,
-			address,
-			barangay,
+			contactPersonFullName,
 			philippineNumber,
+			user_type,
+			accreditationNo,
 			id,
-			role: "BarangayAdmin",
 			createdAt: new Date().toLocaleString(),
 		};
 		await setDoc(docRef, docData, { merge: true });
@@ -80,15 +111,15 @@ const AddCollector = () => {
 							const user = userCredential.user;
 							addCollector(
 								user?.uid,
-								values.firstName,
-								values.lastName,
+								values.collectorFullName,
 								values.email,
 								values.password,
-								values.address,
-								values.barangay,
-								values.philippineNumber
+								values.contactPersonFullName,
+								values.philippineNumber,
+								values.user_type,
+								values.accreditationNo
 							);
-							toast.success("Successfully added a barangay admin");
+							toast.success("Successfully added a collector");
 						})
 						.catch((error) => {
 							const errorCode = error.code;
@@ -97,14 +128,13 @@ const AddCollector = () => {
 						});
 				}}
 				initialValues={{
-					firstName: "",
-					lastName: "",
+					collectorFullName: "",
 					email: "",
 					password: "",
-					confirmPassword: "",
-					address: "",
+					contactPersonFullName: "",
+					user_type: "",
+					accreditationNo: "",
 					philippineNumber: "",
-					barangay: "",
 				}}
 			>
 				{({ handleSubmit, handleChange, values, touched, errors }) => (
@@ -112,45 +142,25 @@ const AddCollector = () => {
 						<Row className="mb-3">
 							<Form.Group
 								as={Col}
-								md="6"
+								md="12"
 								className="mb-3"
 								controlId="validationFormik01"
 							>
-								<Form.Label>First Name</Form.Label>
+								<Form.Label>Collector's Name</Form.Label>
 								<Form.Control
 									type="text"
-									placeholder="Juan"
-									name="firstName"
-									value={values.firstName}
+									placeholder="MRF Coop"
+									name="collectorFullName"
+									value={values.collectorFullName}
 									onChange={handleChange}
-									isValid={touched.firstName && !errors.firstName}
-									isInvalid={!!errors.firstName}
-									autoComplete="name"
+									isValid={
+										touched.collectorFullName && !errors.collectorFullName
+									}
+									isInvalid={!!errors.collectorFullName}
+									autoComplete="collectorFullName"
 								/>
 								<Form.Control.Feedback type="invalid">
-									{errors.firstName}
-								</Form.Control.Feedback>
-							</Form.Group>
-
-							<Form.Group
-								className="mb-3"
-								as={Col}
-								md="6"
-								controlId="validationFormik02"
-							>
-								<Form.Label>Last Name</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Dela Cruz"
-									name="lastName"
-									value={values.lastName}
-									onChange={handleChange}
-									isValid={touched.lastName && !errors.lastName}
-									isInvalid={!!errors.lastName}
-									autoComplete="family-name"
-								/>
-								<Form.Control.Feedback type="invalid">
-									{errors.lastName}
+									{errors.collectorFullName}
 								</Form.Control.Feedback>
 							</Form.Group>
 
@@ -233,19 +243,22 @@ const AddCollector = () => {
 								md="12"
 								controlId="validationFormikAddress"
 							>
-								<Form.Label>Address</Form.Label>
+								<Form.Label>Contact Person's Full Name</Form.Label>
 								<Form.Control
 									type="text"
-									placeholder="Justo Ramonal, St."
-									name="address"
-									value={values.address}
+									placeholder="Dela Cruz, Juan"
+									name="contactPersonFullName"
+									value={values.contactPersonFullName}
 									onChange={handleChange}
-									isValid={touched.address && !errors.address}
-									isInvalid={!!errors.address}
-									autoComplete="address"
+									isValid={
+										touched.contactPersonFullName &&
+										!errors.contactPersonFullName
+									}
+									isInvalid={!!errors.contactPersonFullName}
+									autoComplete="contactPersonFullName"
 								/>
 								<Form.Control.Feedback type="invalid">
-									{errors.address}
+									{errors.contactPersonFullName}
 								</Form.Control.Feedback>
 							</Form.Group>
 
@@ -257,24 +270,51 @@ const AddCollector = () => {
 								controlId="validationFormikSelect"
 							>
 								<Form.Select
-									name="barangay"
-									value={values.barangay}
-									onChange={handleChange}
-									isValid={touched.barangay && !errors.barangay}
-									isInvalid={!!errors.barangay}
+									name="user_type"
+									value={values.user_type}
+									onChange={(e) => {
+										handleChange(e);
+										handleUserTypeChange(e);
+									}}
+									isValid={touched.user_type && !errors.user_type}
+									isInvalid={!!errors.user_type}
 								>
-									{BarangayLists.map((barangay, index) => {
+									{collectorLists.map((collector, index) => {
 										return (
-											<option key={index} value={barangay.value}>
-												{barangay.label}
+											<option key={index} value={collector.value}>
+												{collector.label}
 											</option>
 										);
 									})}
 								</Form.Select>
 								<Form.Control.Feedback type="invalid">
-									{errors.barangay}
+									{errors.user_type}
 								</Form.Control.Feedback>
 							</Form.Group>
+
+							{showAccreditationNo && (
+								<Form.Group
+									className="mb-3"
+									as={Col}
+									md="12"
+									controlId="validationFormikAddress"
+								>
+									<Form.Label>Accreditation No.</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="123456789"
+										name="accreditationNo"
+										value={values.accreditationNo}
+										onChange={handleChange}
+										isValid={touched.accreditationNo && !errors.accreditationNo}
+										isInvalid={!!errors.accreditationNo}
+										autoComplete="accreditationNo"
+									/>
+									<Form.Control.Feedback type="invalid">
+										{errors.accreditationNo}
+									</Form.Control.Feedback>
+								</Form.Group>
+							)}
 
 							<Form.Group
 								className="mb-3"
@@ -312,7 +352,7 @@ const AddCollector = () => {
 						</Row>
 						<div className="mb-3 flex justify-center">
 							<Button md="4" type="submit" variant="success">
-								Submit an Admin
+								Add a Collector
 							</Button>
 						</div>
 					</Form>
