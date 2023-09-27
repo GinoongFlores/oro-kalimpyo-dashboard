@@ -68,8 +68,10 @@ const Collector = () => {
 			<div className="dataTable">
 				<Container fluid>
 					<Row className="justify-content-md-around gap-4 mb-3" md={5}>
-
-						<ShowModal modalTitle="Add Collector" specifyForm={<AddCollector />} />
+						<ShowModal
+							modalTitle="Add Collector"
+							specifyForm={<AddCollector />}
+						/>
 					</Row>
 				</Container>
 
