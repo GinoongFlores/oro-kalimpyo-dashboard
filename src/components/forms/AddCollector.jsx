@@ -68,31 +68,13 @@ const AddCollector = () => {
 			.max(11, "Number is too long! - Should be 11 characters long.")
 			.matches(philippineNumberRegex, "Invalid Number"),
 		collector_type: yup.string().required("No User Type Provided"),
-		// .oneOf(["Barangay Collector", "City Collector", "Private Collector"]),
-		// accreditationNo: yup.mixed().when("collector_type", {
-		// 	then: yup.number().required("No Accreditation No. Provided"),
-		// 	// .typeError("Accreditation No. must be a number"),
-
-		// 	// otherwise: yup.string().default("N/A"),
-		// }),
-		// accreditationNo: yup
-		// 	.string()
-		// 	.typeError("Accreditation No. must be a number")
-		// 	.required("No Accreditation No. Provided")
-
-		accreditationNo: yup
-			.string()
-			.required("No Accreditation No. Provided")
-			.when("collector_type", (collector_type, schema) => {
-				if (collector_type === "Private Collector") {
-					return schema
-						.nullable()
-						.required("No Accreditation No. Provided")
-						.typeError("Accreditation No. must be a number");
-				} else {
-					return schema.nullable().default("N/A");
-				}
-			}),
+		accreditationNo: yup.mixed().when("collector_type", (collector_type) => {
+			if (collector_type === "Private Collector") {
+				return yup.number().required("No Accreditation No. Provided");
+			} else {
+				return yup.string().default("N/A");
+			}
+		}),
 	});
 
 	const addCollector = async (
