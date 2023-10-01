@@ -1,4 +1,3 @@
-import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
@@ -8,7 +7,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -35,6 +34,7 @@ const collectorLists = [
 const AddCollector = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showAccreditationNo, setShowAccreditationNo] = useState(false);
+
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
 	};
@@ -50,10 +50,8 @@ const AddCollector = () => {
 	const { Formik } = formik;
 	const philippineNumberRegex = /^(\+)(\d){12}$|^\d{11}$/;
 	const schema = yup.object().shape({
-		collectorFullName: yup.string().required("No Collector's Name Provided"),
-		contactPersonFullName: yup
-			.string()
-			.required("No Contact Person's Name Provided"),
+		name: yup.string().required("No Collector's Name Provided"),
+		contact_person: yup.string().required("No Contact Person's Name Provided"),
 		email: yup.string().email().required("No Email Provided"),
 		password: yup
 			.string()
@@ -64,39 +62,61 @@ const AddCollector = () => {
 			.string()
 			.required("No password provided")
 			.oneOf([yup.ref("password"), null], "Password must match"),
-		user_type: yup.string().required("No User Type Provided"),
-		accreditationNo: yup
-			.number()
-			.typeError("Accreditation No. must be a number")
-			.required("No Accreditation No. Provided"),
-		philippineNumber: yup
+		number: yup
 			.string()
 			.required("No Number Provided")
 			.max(11, "Number is too long! - Should be 11 characters long.")
 			.matches(philippineNumberRegex, "Invalid Number"),
+		collector_type: yup.string().required("No User Type Provided"),
+		// .oneOf(["Barangay Collector", "City Collector", "Private Collector"]),
+		// accreditationNo: yup.mixed().when("collector_type", {
+		// 	then: yup.number().required("No Accreditation No. Provided"),
+		// 	// .typeError("Accreditation No. must be a number"),
+
+		// 	// otherwise: yup.string().default("N/A"),
+		// }),
+		// accreditationNo: yup
+		// 	.string()
+		// 	.typeError("Accreditation No. must be a number")
+		// 	.required("No Accreditation No. Provided")
+
+		accreditationNo: yup
+			.string()
+			.required("No Accreditation No. Provided")
+			.when("collector_type", (collector_type, schema) => {
+				if (collector_type === "Private Collector") {
+					return schema
+						.nullable()
+						.required("No Accreditation No. Provided")
+						.typeError("Accreditation No. must be a number");
+				} else {
+					return schema.nullable().default("N/A");
+				}
+			}),
 	});
 
 	const addCollector = async (
 		id,
-		collectorFullName,
+		name,
 		email,
 		password,
-		contactPersonFullName,
-		user_type,
+		contact_person,
+		collector_type,
 		accreditationNo,
-		philippineNumber
+		number
 	) => {
-		const docRef = doc(db, "Collectors", id);
+		const docRef = doc(db, "Waste Collector", id);
+
 		const docData = {
-			collectorFullName,
+			id,
+			name,
 			email,
 			password,
-			contactPersonFullName,
-			philippineNumber,
-			user_type,
+			contact_person,
+			collector_type,
 			accreditationNo,
-			id,
-			createdAt: new Date().toLocaleString(),
+			number,
+			date_created: new Date().toLocaleString(),
 		};
 		await setDoc(docRef, docData, { merge: true });
 	};
@@ -106,18 +126,19 @@ const AddCollector = () => {
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
+					console.log(values);
 					createUserWithEmailAndPassword(auth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
 							addCollector(
 								user?.uid,
-								values.collectorFullName,
+								values.name,
 								values.email,
 								values.password,
-								values.contactPersonFullName,
-								values.philippineNumber,
-								values.user_type,
-								values.accreditationNo
+								values.contact_person,
+								values.collector_type,
+								values.accreditationNo,
+								values.number
 							);
 							toast.success("Successfully added a collector");
 						})
@@ -125,16 +146,18 @@ const AddCollector = () => {
 							const errorCode = error.code;
 							const errorMessage = error.message;
 							toast.error(errorCode, errorMessage);
+							console.log(errorCode, errorMessage);
 						});
 				}}
 				initialValues={{
-					collectorFullName: "",
+					name: "",
 					email: "",
 					password: "",
-					contactPersonFullName: "",
-					user_type: "",
+					confirmPassword: "",
+					contact_person: "",
+					collector_type: "",
 					accreditationNo: "",
-					philippineNumber: "",
+					number: "",
 				}}
 			>
 				{({ handleSubmit, handleChange, values, touched, errors }) => (
@@ -149,18 +172,16 @@ const AddCollector = () => {
 								<Form.Label>Collector's Name</Form.Label>
 								<Form.Control
 									type="text"
-									placeholder="MRF Coop"
-									name="collectorFullName"
-									value={values.collectorFullName}
+									placeholder="Full Name of Collector"
+									name="name"
+									value={values.name}
 									onChange={handleChange}
-									isValid={
-										touched.collectorFullName && !errors.collectorFullName
-									}
-									isInvalid={!!errors.collectorFullName}
-									autoComplete="collectorFullName"
+									isValid={touched.name && !errors.name}
+									isInvalid={!!errors.name}
+									autoComplete="name"
 								/>
 								<Form.Control.Feedback type="invalid">
-									{errors.collectorFullName}
+									{errors.name}
 								</Form.Control.Feedback>
 							</Form.Group>
 
@@ -247,18 +268,15 @@ const AddCollector = () => {
 								<Form.Control
 									type="text"
 									placeholder="Dela Cruz, Juan"
-									name="contactPersonFullName"
-									value={values.contactPersonFullName}
+									name="contact_person"
+									value={values.contact_person}
 									onChange={handleChange}
-									isValid={
-										touched.contactPersonFullName &&
-										!errors.contactPersonFullName
-									}
-									isInvalid={!!errors.contactPersonFullName}
-									autoComplete="contactPersonFullName"
+									isValid={touched.contact_person && !errors.contact_person}
+									isInvalid={!!errors.contact_person}
+									autoComplete="contact_person"
 								/>
 								<Form.Control.Feedback type="invalid">
-									{errors.contactPersonFullName}
+									{errors.contact_person}
 								</Form.Control.Feedback>
 							</Form.Group>
 
@@ -270,14 +288,14 @@ const AddCollector = () => {
 								controlId="validationFormikSelect"
 							>
 								<Form.Select
-									name="user_type"
-									value={values.user_type}
+									name="collector_type"
+									value={values.collector_type}
 									onChange={(e) => {
 										handleChange(e);
 										handleUserTypeChange(e);
 									}}
-									isValid={touched.user_type && !errors.user_type}
-									isInvalid={!!errors.user_type}
+									isValid={touched.collector_type && !errors.collector_type}
+									isInvalid={!!errors.collector_type}
 								>
 									{collectorLists.map((collector, index) => {
 										return (
@@ -288,7 +306,7 @@ const AddCollector = () => {
 									})}
 								</Form.Select>
 								<Form.Control.Feedback type="invalid">
-									{errors.user_type}
+									{errors.collector_type}
 								</Form.Control.Feedback>
 							</Form.Group>
 
@@ -326,12 +344,12 @@ const AddCollector = () => {
 								<Form.Control
 									type="tel"
 									placeholder="0912345673"
-									name="philippineNumber"
+									name="number"
 									autoComplete="number"
-									value={values.philippineNumber}
+									value={values.number}
 									onChange={handleChange}
-									isValid={touched.philippineNumber && !errors.philippineNumber}
-									isInvalid={!!errors.philippineNumber}
+									isValid={touched.number && !errors.number}
+									isInvalid={!!errors.number}
 									onKeyDown={(event) => {
 										if (
 											isNaN(Number(event.key)) &&
@@ -346,7 +364,7 @@ const AddCollector = () => {
 									}}
 								/>
 								<Form.Control.Feedback type="invalid">
-									{errors.philippineNumber}
+									{errors.number}
 								</Form.Control.Feedback>
 							</Form.Group>
 						</Row>
