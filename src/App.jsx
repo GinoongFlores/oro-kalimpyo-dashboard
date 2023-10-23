@@ -24,7 +24,9 @@ import Login from "./pages/login/Login";
 import { useAuth } from "./context/UserAuthContext";
 // import SignUp from "./pages/signup/SignUp";
 
-// Barangay Admin Pages
+// Barangay
+
+import { useAuthBarangay } from "./barangayAdmin/context/BarangayAuthContext";
 import BarangayLogin from "./barangayAdmin/pages/login/BarangayLogin";
 
 function App() {
