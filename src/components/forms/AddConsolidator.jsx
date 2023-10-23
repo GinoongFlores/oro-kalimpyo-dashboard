@@ -1,3 +1,4 @@
+import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
@@ -7,44 +8,34 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { auth, db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const collectorLists = [
+const consolidatorLists = [
 	{
 		value: "",
 		label: "Select a User Type",
 	},
 	{
-		value: "Barangay Collector",
-		label: "Barangay Collector",
+		value: "Barangay MRF",
+		label: "Barangay MRF",
 	},
 	{
-		value: "City Collector",
-		label: "City Collector",
+		value: "MRF Cooperative",
+		label: "MRF Cooperative",
 	},
 	{
-		value: "Private Collector",
-		label: "Private Collector",
+		value: "Junkshop",
+		label: "Junkshop",
 	},
 ];
 
-const AddCollector = () => {
+const AddConsolidator = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const [showAccreditationNo, setShowAccreditationNo] = useState(false);
-
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
-	};
-
-	const handleUserTypeChange = (event) => {
-		const userType = event.target.value;
-		const selectedCollector = collectorLists.find(
-			(collector) => collector.value === userType
-		);
-		setShowAccreditationNo(selectedCollector.label === "Private Collector");
 	};
 
 	const { Formik } = formik;
@@ -62,45 +53,36 @@ const AddCollector = () => {
 			.string()
 			.required("No password provided")
 			.oneOf([yup.ref("password"), null], "Password must match"),
+		consolidator_type: yup.string().required("No User Type Provided"),
 		number: yup
 			.string()
 			.required("No Number Provided")
 			.max(11, "Number is too long! - Should be 11 characters long.")
 			.matches(philippineNumberRegex, "Invalid Number"),
-		collector_type: yup.string().required("No User Type Provided"),
-		accreditationNo: yup.mixed().when("collector_type", (collector_type) => {
-			if (collector_type === "Private Collector") {
-				return yup.number().required("No Accreditation No. Provided");
-			} else {
-				return yup.string().default("N/A");
-			}
-		}),
 	});
 
-	const addCollector = async (
+	const addConsolidator = async (
 		id,
 		name,
 		email,
 		password,
 		contact_person,
-		collector_type,
-		accreditationNo,
+		consolidator_type,
 		number
 	) => {
-		const docRef = doc(db, "Waste Collector", id);
-
+		const docRef = doc(db, "Waste Consolidator", id);
 		const docData = {
-			id,
 			name,
 			email,
 			password,
 			contact_person,
-			collector_type,
-			accreditationNo,
 			number,
-			date_created: new Date().toLocaleString(),
+			consolidator_type,
+			id,
+			createdAt: new Date().toLocaleString(),
 		};
 		await setDoc(docRef, docData, { merge: true });
+		console.log(docRef, docData);
 	};
 
 	return (
@@ -108,37 +90,32 @@ const AddCollector = () => {
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					console.log(values);
 					createUserWithEmailAndPassword(auth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
-							addCollector(
+							addConsolidator(
 								user?.uid,
 								values.name,
 								values.email,
 								values.password,
 								values.contact_person,
-								values.collector_type,
-								values.accreditationNo,
+								values.consolidator_type,
 								values.number
 							);
-							toast.success("Successfully added a collector");
+							toast.success("Successfully added a Consolidator");
 						})
 						.catch((error) => {
 							const errorCode = error.code;
 							const errorMessage = error.message;
 							toast.error(errorCode, errorMessage);
-							console.log(errorCode, errorMessage);
 						});
 				}}
 				initialValues={{
 					name: "",
 					email: "",
 					password: "",
-					confirmPassword: "",
 					contact_person: "",
-					collector_type: "",
-					accreditationNo: "",
+					consolidator_type: "",
 					number: "",
 				}}
 			>
@@ -151,10 +128,10 @@ const AddCollector = () => {
 								className="mb-3"
 								controlId="validationFormik01"
 							>
-								<Form.Label>Collector's Name</Form.Label>
+								<Form.Label>Consolidator's Name</Form.Label>
 								<Form.Control
 									type="text"
-									placeholder="Full Name of Collector"
+									placeholder="Full Name of Consolidator"
 									name="name"
 									value={values.name}
 									onChange={handleChange}
@@ -270,51 +247,26 @@ const AddCollector = () => {
 								controlId="validationFormikSelect"
 							>
 								<Form.Select
-									name="collector_type"
-									value={values.collector_type}
-									onChange={(e) => {
-										handleChange(e);
-										handleUserTypeChange(e);
-									}}
-									isValid={touched.collector_type && !errors.collector_type}
-									isInvalid={!!errors.collector_type}
+									name="consolidator_type"
+									value={values.consolidator_type}
+									onChange={handleChange}
+									isValid={
+										touched.consolidator_type && !errors.consolidator_type
+									}
+									isInvalid={!!errors.consolidator_type}
 								>
-									{collectorLists.map((collector, index) => {
+									{consolidatorLists.map((consolidator, index) => {
 										return (
-											<option key={index} value={collector.value}>
-												{collector.label}
+											<option key={index} value={consolidator.value}>
+												{consolidator.label}
 											</option>
 										);
 									})}
 								</Form.Select>
 								<Form.Control.Feedback type="invalid">
-									{errors.collector_type}
+									{errors.consolidator_type}
 								</Form.Control.Feedback>
 							</Form.Group>
-
-							{showAccreditationNo && (
-								<Form.Group
-									className="mb-3"
-									as={Col}
-									md="12"
-									controlId="validationFormikAddress"
-								>
-									<Form.Label>Accreditation No.</Form.Label>
-									<Form.Control
-										type="text"
-										placeholder="123456789"
-										name="accreditationNo"
-										value={values.accreditationNo}
-										onChange={handleChange}
-										isValid={touched.accreditationNo && !errors.accreditationNo}
-										isInvalid={!!errors.accreditationNo}
-										autoComplete="accreditationNo"
-									/>
-									<Form.Control.Feedback type="invalid">
-										{errors.accreditationNo}
-									</Form.Control.Feedback>
-								</Form.Group>
-							)}
 
 							<Form.Group
 								className="mb-3"
@@ -352,7 +304,7 @@ const AddCollector = () => {
 						</Row>
 						<div className="mb-3 flex justify-center">
 							<Button md="4" type="submit" variant="success">
-								Add a Collector
+								Add a Consolidator
 							</Button>
 						</div>
 					</Form>
@@ -362,4 +314,4 @@ const AddCollector = () => {
 	);
 };
 
-export default AddCollector;
+export default AddConsolidator;

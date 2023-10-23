@@ -7,8 +7,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 import Statistics from "./Statistics";
+import { useAuth } from "../../context/UserAuthContext";
 
 const Home = () => {
+	const { currentUser } = useAuth();
 	return (
 		<>
 			<NavbarLink />

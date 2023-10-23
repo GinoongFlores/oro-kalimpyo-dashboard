@@ -10,7 +10,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
 import { BarangayLists } from "../../data/BarangayLists";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -75,7 +75,7 @@ const AddBarangayAdmin = () => {
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					createUserWithEmailAndPassword(auth, values.email, values.password)
+					createUserWithEmailAndPassword(values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
 							addBarangayAdmin(

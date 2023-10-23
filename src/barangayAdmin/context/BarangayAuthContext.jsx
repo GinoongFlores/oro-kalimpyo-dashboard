@@ -1,6 +1,6 @@
 import { useContext, createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
-import { db } from "../firebase";
+import { auth } from "../../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import {
 	onAuthStateChanged,
@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const userContext = createContext();
-export const useAuth = () => {
+export const useAuthBarangay = () => {
 	return useContext(userContext);
 };
 
@@ -48,7 +48,7 @@ export const UserAuthContext = ({ children }) => {
 	const checkAuthorization = async (email) => {
 		const q = query(
 			collection(db, "Admins"),
-			where("role", "==", "ClenroAdmin")
+			where("role", "==", "BarangayAdmin")
 		);
 		const querySnapshot = await getDocs(q);
 		const emails = [];
@@ -72,13 +72,11 @@ export const UserAuthContext = ({ children }) => {
 	};
 
 	const UserLogin = async (email, password) => {
-		// console.time("Login");
 		const isAuthorized = await checkAuthorization(email);
 		if (isAuthorized) {
 			try {
 				const userCredential = await signInUser(email, password);
 				navigate("/");
-
 				const user = userCredential.user;
 				return user.email;
 			} catch (error) {
@@ -87,7 +85,6 @@ export const UserAuthContext = ({ children }) => {
 		} else {
 			toast.error("You are not authorized to access this page");
 		}
-		// console.timeEnd("Login");
 	};
 
 	const logout = async () => {

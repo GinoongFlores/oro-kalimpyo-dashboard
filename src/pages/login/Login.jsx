@@ -16,11 +16,6 @@ import SlDevs from "../../assets/sldevs.png";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 
-const initialState = {
-	email: "",
-	password: "",
-};
-
 const Login = () => {
 	const { UserLogin } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);

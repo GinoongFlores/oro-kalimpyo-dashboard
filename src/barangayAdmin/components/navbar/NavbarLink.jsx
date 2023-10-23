@@ -16,7 +16,7 @@ const NavbarLink = () => {
 		},
 		{
 			name: "Users",
-			path: "/users",
+			path: "/barangay-users",
 		},
 		{
 			name: "Collectors",

@@ -12,6 +12,8 @@ import { userColumn } from "./UserColumn";
 import DataTable from "../../DataTable/DataTable";
 import Button from "react-bootstrap/Button";
 
+import { useAuth } from "../../../context/UserAuthContext";
+
 import {
 	collection,
 	onSnapshot,
@@ -22,6 +24,9 @@ import {
 
 const UserData = () => {
 	const [userData, setUserData] = useState([]);
+	const { currentUser } = useAuth();
+	const username = currentUser.email.split("@")[0];
+	console.log(username);
 
 	const actionColumn = [
 		{
