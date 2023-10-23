@@ -72,13 +72,11 @@ export const UserAuthContext = ({ children }) => {
 	};
 
 	const UserLogin = async (email, password) => {
-		console.time("Login");
 		const isAuthorized = await checkAuthorization(email);
 		if (isAuthorized) {
 			try {
 				const userCredential = await signInUser(email, password);
 				navigate("/");
-
 				const user = userCredential.user;
 				return user.email;
 			} catch (error) {
@@ -87,7 +85,6 @@ export const UserAuthContext = ({ children }) => {
 		} else {
 			toast.error("You are not authorized to access this page");
 		}
-		console.timeEnd("Login");
 	};
 
 	const logout = async () => {
