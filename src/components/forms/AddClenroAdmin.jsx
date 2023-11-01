@@ -38,11 +38,11 @@ const AddClenroAdmin = () => {
 	const addClenroAdmin = async (id, firstName, lastName, email, password) => {
 		const docRef = doc(db, "Admins", id);
 		const docData = {
+			id,
 			firstName,
 			lastName,
 			email,
 			password,
-			id,
 			role: "ClenroAdmin",
 			createdAt: new Date().toLocaleString(),
 		};
@@ -70,6 +70,7 @@ const AddClenroAdmin = () => {
 							const errorCode = error.code;
 							const errorMessage = error.message;
 							toast.error(errorCode, errorMessage);
+							console.log(errorCode, errorMessage);
 						});
 				}}
 				initialValues={{

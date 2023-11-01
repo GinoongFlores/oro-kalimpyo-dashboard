@@ -56,6 +56,7 @@ const AddBarangayAdmin = () => {
 	) => {
 		const docRef = doc(db, "Admins", id);
 		const docData = {
+			id,
 			firstName,
 			lastName,
 			email,
@@ -63,7 +64,6 @@ const AddBarangayAdmin = () => {
 			address,
 			barangay,
 			philippineNumber,
-			id,
 			role: "BarangayAdmin",
 			createdAt: new Date().toLocaleString(),
 		};
@@ -103,8 +103,8 @@ const AddBarangayAdmin = () => {
 					password: "",
 					confirmPassword: "",
 					address: "",
-					philippineNumber: "",
 					barangay: "",
+					philippineNumber: "",
 				}}
 			>
 				{({ handleSubmit, handleChange, values, touched, errors }) => (
