@@ -22,7 +22,7 @@
 		"@mui/x-data-grid": "^5.17.23",
 		"@mui/x-data-grid-generator": "^5.17.23",
 		"bootstrap": "^5.3.1",
-		"firebase": "^9.17.1",
+		"firebase": "^10.5.2",
 		"formik": "^2.4.3",
 		"patch-package": "^6.5.1",
 		"react": "^18.2.0",
