@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { useState } from "react";
-import { db } from "../../firebase";
+import { db, auth } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -38,11 +38,11 @@ const AddClenroAdmin = () => {
 	const addClenroAdmin = async (id, firstName, lastName, email, password) => {
 		const docRef = doc(db, "Admins", id);
 		const docData = {
+			id,
 			firstName,
 			lastName,
 			email,
 			password,
-			id,
 			role: "ClenroAdmin",
 			createdAt: new Date().toLocaleString(),
 		};
@@ -54,7 +54,7 @@ const AddClenroAdmin = () => {
 			<Formik
 				validationSchema={schema}
 				onSubmit={(values) => {
-					createUserWithEmailAndPassword(values.email, values.password)
+					createUserWithEmailAndPassword(auth, values.email, values.password)
 						.then((userCredential) => {
 							const user = userCredential.user;
 							toast.success("Successfully added a Clenro Admin");
@@ -70,6 +70,7 @@ const AddClenroAdmin = () => {
 							const errorCode = error.code;
 							const errorMessage = error.message;
 							toast.error(errorCode, errorMessage);
+							console.log(errorCode, errorMessage);
 						});
 				}}
 				initialValues={{
