@@ -74,7 +74,7 @@ const ClenroAdmin = () => {
 	};
 
 	const [clenroAdmin, setClenroAdmin] = useState([]);
-	const q = query(collection(db, "Admins"), where("role", "==", "ClenroAdmin"));
+	const q = query(collection(db, "Admin"), where("role", "==", "Clenro Admin"));
 	let unsubscribe;
 	useEffect(() => {
 		unsubscribe = onSnapshot(q, (querySnapshot) => {
