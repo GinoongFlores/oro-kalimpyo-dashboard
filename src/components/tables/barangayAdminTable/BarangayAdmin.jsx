@@ -56,7 +56,7 @@ const BarangayAdmin = () => {
 		);
 
 		if (confirmation) {
-			await deleteDoc(doc(db, "Admins", id))
+			await deleteDoc(doc(db, "Admin", id))
 				.then(() => {
 					toast.success("Successfully deleted a barangay admin");
 				})
@@ -68,8 +68,8 @@ const BarangayAdmin = () => {
 
 	const [barangayAdmin, setBarangayAdmin] = useState([]);
 	const q = query(
-		collection(db, "Admins"),
-		where("role", "==", "BarangayAdmin")
+		collection(db, "Admin"),
+		where("role", "==", "Barangay Admin")
 	);
 
 	let unsubscribe;

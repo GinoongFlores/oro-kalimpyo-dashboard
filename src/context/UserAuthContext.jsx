@@ -47,8 +47,8 @@ export const UserAuthContext = ({ children }) => {
 
 	const checkAuthorization = async (email) => {
 		const q = query(
-			collection(db, "Admins"),
-			where("role", "==", "ClenroAdmin")
+			collection(db, "Admin"),
+			where("role", "==", "Clenro Admin")
 		);
 		const querySnapshot = await getDocs(q);
 		const emails = [];

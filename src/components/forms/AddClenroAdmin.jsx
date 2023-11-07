@@ -36,7 +36,7 @@ const AddClenroAdmin = () => {
 	});
 
 	const addClenroAdmin = async (id, firstName, lastName, email, password) => {
-		const docRef = doc(db, "Admins", id);
+		const docRef = doc(db, "Admin", id);
 		const docData = {
 			id,
 			firstName,

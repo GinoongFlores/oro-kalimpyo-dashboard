@@ -54,7 +54,7 @@ const AddBarangayAdmin = () => {
 		barangay,
 		philippineNumber
 	) => {
-		const docRef = doc(db, "Admins", id);
+		const docRef = doc(db, "Admin", id);
 		const docData = {
 			id,
 			firstName,
@@ -64,7 +64,7 @@ const AddBarangayAdmin = () => {
 			address,
 			barangay,
 			philippineNumber,
-			role: "BarangayAdmin",
+			role: "Barangay Admin",
 			createdAt: new Date().toLocaleString(),
 		};
 		await setDoc(docRef, docData, { merge: true });
@@ -163,7 +163,7 @@ const AddBarangayAdmin = () => {
 								<Form.Label>Email</Form.Label>
 								<Form.Control
 									type="email"
-									placeholder="juandelacruz@gmail.com"
+									placeholder="cdobarangay1@gmail.com"
 									name="email"
 									value={values.email}
 									onChange={handleChange}
@@ -284,8 +284,9 @@ const AddBarangayAdmin = () => {
 							>
 								<Form.Label>Number</Form.Label>
 								<Form.Control
-									type="tel"
+									type="text"
 									placeholder="0912345673"
+									maxLength={11}
 									name="philippineNumber"
 									autoComplete="number"
 									value={values.philippineNumber}
@@ -299,7 +300,9 @@ const AddBarangayAdmin = () => {
 											!(
 												event.ctrlKey &&
 												(event.key === "c" || event.key === "v")
-											)
+											) &&
+											event.key !== "ArrowLeft" &&
+											event.key !== "ArrowRight"
 										) {
 											event.preventDefault();
 										}
