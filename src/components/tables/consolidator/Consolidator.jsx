@@ -24,7 +24,7 @@ import AddConsolidator from "../../forms/AddConsolidator";
 
 const Consolidator = () => {
 	const [consolidatorData, setConsolidatorData] = useState([]);
-	const q = query(collection(db, "Waste Consolidator"));
+	const q = query(collection(db, "Waste Consolidators"));
 	let unsubscribe;
 
 	const getData = () => {
