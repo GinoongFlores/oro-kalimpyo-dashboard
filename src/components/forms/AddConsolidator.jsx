@@ -70,7 +70,7 @@ const AddConsolidator = () => {
 		consolidator_type,
 		number
 	) => {
-		const docRef = doc(db, "Waste Consolidator", id);
+		const docRef = doc(db, "Waste Consolidators", id);
 		const docData = {
 			name,
 			email,
