@@ -49,7 +49,7 @@ __Web Dashboard__
 4. `npm run buid ` or `yarn build` - build the project locally
 
 > [!CAUTION]
-> No `.env` for Firebase database config. Outdated firebase connection is exposed for the sake of public viewing. 
+> No `.env` for Firebase database config. Outdated firebase connection is exposed for the sake of public showcasing. 
 
 # Status 📶
 Revised based on the client's requests
