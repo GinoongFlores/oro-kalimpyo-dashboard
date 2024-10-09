@@ -19,7 +19,7 @@
 
 # Screenshots: 📷
 > [!NOTE]
-> _These screenshots are come from the improved and private version of this repository. This only contains the Web Dashboard, the Mobile Application is on different repository. Sharing this for reference, data is dummy or outdated_.
+> _These screenshots are come from the improved and private version of this repository. This only contains the Web Dashboard, the improved Mobile Application and Web Dashboard are on different repository. Sharing this for reference, no `.env`s for testing only, data is dummy or outdated_.
 
 __Mobile Application__
 
